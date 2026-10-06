@@ -1,0 +1,405 @@
+<script setup lang="ts">
+import { Head, router, usePage } from '@inertiajs/vue3';
+import { computed, ref } from 'vue';
+import ShopNavbar from '@/components/ShopNavbar.vue';
+import ShopFooter from '@/components/ShopFooter.vue';
+
+// Import newly created components
+import ProfileHome from '@/components/profile/ProfileHome.vue';
+import OrderList from '@/components/profile/OrderList.vue';
+import OrderDetail from '@/components/profile/OrderDetail.vue';
+import SavedAddresses from '@/components/profile/SavedAddresses.vue';
+import EditProfile from '@/components/profile/EditProfile.vue';
+
+defineOptions({ layout: null });
+
+const page = usePage();
+
+const props = defineProps<{
+    orders?: any[];
+    addresses?: any[];
+    authUser?: any;
+    debug_info?: any;
+}>();
+
+// authUser: prefer the enriched version sent by ProfileController (includes profile_photo, phone)
+// fall back to Inertia shared auth.user
+const authUser = computed(() => props.authUser ?? page.props.auth?.user);
+
+const activeTab = ref('profile');
+const selectedOrder = ref<any>(null);
+
+// Fallback image urls in case google user content links rotate/expire
+const fallbackAvatar = 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=400';
+const fallbackVase = 'https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?auto=format&fit=crop&q=80&w=600';
+const fallbackBanner = 'https://images.unsplash.com/photo-1617791160505-6f00b046a874?auto=format&fit=crop&q=80&w=1200';
+
+const handleImageError = (e: any, fallbackUrl: string) => {
+    if (e.target.src !== fallbackUrl) {
+        e.target.src = fallbackUrl;
+    }
+};
+
+const handleLogout = () => {
+    if (authUser.value) {
+        router.post('/logout');
+    } else {
+        router.visit('/');
+    }
+};
+
+const navigateToWishlist = () => {
+    router.visit('/wishlist');
+};
+
+const getIconStyle = (tab: string) => ({
+    fontVariationSettings: activeTab.value === tab ? "'FILL' 1" : "'FILL' 0"
+});
+
+const orders = computed(() => props.orders || []);
+const latestOrder = computed(() => orders.value.length > 0 ? orders.value[0] : null);
+
+const statusConfig: Record<string, { label: string; dot: string; badge: string }> = {
+    pending_payment: { label: 'Menunggu Pembayaran', dot: 'bg-amber-400', badge: 'bg-amber-50 text-amber-700 border-amber-100' },
+    processing:     { label: 'Diproses', dot: 'bg-blue-500', badge: 'bg-blue-50 text-blue-700 border-blue-100' },
+    shipped:        { label: 'Dikirim', dot: 'bg-indigo-500 animate-pulse', badge: 'bg-indigo-50 text-indigo-700 border-indigo-100' },
+    delivered:      { label: 'Selesai', dot: 'bg-emerald-500', badge: 'bg-emerald-50 text-emerald-700 border-emerald-100' },
+    cancelled:      { label: 'Dibatalkan', dot: 'bg-red-400', badge: 'bg-red-50 text-red-600 border-red-100' },
+    refunded:       { label: 'Dikembalikan', dot: 'bg-purple-400', badge: 'bg-purple-50 text-purple-700 border-purple-100' },
+};
+
+// Timeline steps per status
+const timelineSteps = [
+    { key: 'pending_payment', label: 'Pesanan Dibuat' },
+    { key: 'processing',      label: 'Diverifikasi' },
+    { key: 'shipped',         label: 'Dikirim' },
+    { key: 'delivered',       label: 'Tiba' },
+];
+const statusOrder = ['pending_payment', 'processing', 'shipped', 'delivered'];
+
+const viewOrderDetail = (order: any) => {
+    selectedOrder.value = order;
+    activeTab.value = 'order_details';
+};
+
+const confirmOrderReceived = (orderId: number) => {
+    router.post(`/orders/${orderId}/confirm-received`, {}, {
+        preserveScroll: true,
+        onSuccess: () => {
+            // Optional: You could show a toast here
+            if (activeTab.value === 'order_details' && selectedOrder.value) {
+                // The prop will be updated from inertia, so let's update selectedOrder if needed
+                const updated = orders.value.find((o: any) => o.id === orderId);
+                if (updated) {
+                    selectedOrder.value = updated;
+                }
+            }
+        }
+    });
+};
+
+const changeTab = (tab: string) => {
+    activeTab.value = tab;
+};
+</script>
+
+<template>
+    <div class="profile-theme antialiased min-h-screen flex flex-col selection:bg-[#8a4853] selection:text-white">
+        <Head title="Profil Pelanggan | Jelita Saung" />
+
+        <!-- Navigation Bar -->
+        <ShopNavbar />
+
+        <!-- Main Workspace -->
+        <main class="flex-grow max-w-[1440px] mx-auto w-full px-[16px] sm:px-[32px] md:px-[80px] py-[36px] md:py-[48px]">
+            <div class="flex flex-col lg:flex-row gap-[24px] lg:gap-[32px] items-start">
+                
+                <!-- Sidebar Navigation -->
+                <aside class="w-full lg:w-[290px] shrink-0">
+                    <div class="bg-surface-container-lowest rounded-2xl p-[20px] sm:p-[24px] shadow-[0px_4px_20px_rgba(0,0,0,0.04)] dark:shadow-none border border-outline-variant/20 sticky top-24">
+                        <!-- User Profile Thumb Header (Mobile Check) -->
+                        <div class="flex items-center gap-[12px] mb-[20px] pb-[16px] border-b border-outline-variant/30 lg:hidden">
+                            <img 
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDFjD0eSvERO90onBKyqX6nuJrxPbZZDN-yHdYDFzeE-V95G2CQojDT9ikhgiTINNC_bncS375Zo_8MzgEWehWyiUiq8FzT2bDrEY4FkcdFVit-sJOaBN0qrxX4eHJYxaKJSYvdoZSpE4mhlKm1ISXFJmFMmjE5f6b4LM3yTQaCyVSSlZTCA9G2Uq8ak_GY84aOY-9-D9I1-3MsslX1QZ5CdAfNqq1YUxI6_7vzSjoA3xOQCEd-NJfG7ToE2CmEX-QW7V84CuxqAGJE" 
+                                @error="handleImageError($event, fallbackAvatar)"
+                                alt="Avatar"
+                                class="w-12 h-12 rounded-full object-cover border-2 border-primary"
+                            />
+                            <div>
+                                <h3 class="font-bold text-[16px] text-on-surface">{{ authUser?.name || 'Pelanggan' }}</h3>
+                                <p class="text-[12px] text-primary font-medium">Anggota Premium</p>
+                            </div>
+                        </div>
+
+                        <div class="space-y-[6px]">
+                            <!-- Profile Tab Button -->
+                            <button 
+                                @click="activeTab = 'profile'"
+                                :class="[
+                                    'flex items-center gap-[12px] px-[18px] py-[14px] rounded-xl font-medium text-[14px] tracking-wide transition-all duration-200 cursor-pointer w-full text-left select-none',
+                                    activeTab === 'profile' 
+                                        ? 'bg-primary-container text-white active-nav-indicator shadow-sm font-semibold' 
+                                        : 'text-on-surface-variant hover:bg-surface-container-low'
+                                ]"
+                            >
+                                <span class="material-symbols-outlined text-[22px]" :style="getIconStyle('profile')">person</span>
+                                <span>Profil</span>
+                            </button>
+
+                            <!-- My Orders Tab Button -->
+                            <button 
+                                @click="activeTab = 'orders'"
+                                :class="[
+                                    'flex items-center gap-[12px] px-[18px] py-[14px] rounded-xl font-medium text-[14px] tracking-wide transition-all duration-200 cursor-pointer w-full text-left select-none',
+                                    (activeTab === 'orders' || activeTab === 'order_details')
+                                        ? 'bg-primary-container text-white active-nav-indicator shadow-sm font-semibold' 
+                                        : 'text-on-surface-variant hover:bg-surface-container-low'
+                                ]"
+                            >
+                                <span class="material-symbols-outlined text-[22px]" :style="getIconStyle('orders')">inventory_2</span>
+                                <span>Pesanan Saya</span>
+                            </button>
+
+                            <!-- Wishlist Direct Link / Action -->
+                            <button 
+                                @click="navigateToWishlist"
+                                class="flex items-center gap-[12px] px-[18px] py-[14px] rounded-xl font-medium text-[14px] tracking-wide text-on-surface-variant hover:bg-surface-container-low transition-all duration-200 cursor-pointer w-full text-left select-none group"
+                            >
+                                <span class="material-symbols-outlined text-[22px] group-hover:text-primary transition-colors">favorite</span>
+                                <span class="flex-grow">Favorit</span>
+                                <span class="material-symbols-outlined text-[16px] opacity-60 group-hover:translate-x-0.5 transition-transform">arrow_forward</span>
+                            </button>
+
+                            <!-- Saved Addresses Tab Button -->
+                            <button 
+                                @click="activeTab = 'addresses'"
+                                :class="[
+                                    'flex items-center gap-[12px] px-[18px] py-[14px] rounded-xl font-medium text-[14px] tracking-wide transition-all duration-200 cursor-pointer w-full text-left select-none',
+                                    activeTab === 'addresses' 
+                                        ? 'bg-primary-container text-white active-nav-indicator shadow-sm font-semibold' 
+                                        : 'text-on-surface-variant hover:bg-surface-container-low'
+                                ]"
+                            >
+                                <span class="material-symbols-outlined text-[22px]" :style="getIconStyle('addresses')">location_on</span>
+                                <span>Alamat Tersimpan</span>
+                            </button>
+
+                        </div>
+
+                        <!-- Logout Action -->
+                        <div class="mt-[32px] pt-[20px] border-t border-outline-variant/30">
+                            <button 
+                                @click="handleLogout"
+                                class="flex items-center gap-[12px] px-[18px] py-[14px] w-full text-left font-medium text-[14px] text-[#ba1a1a] dark:text-[#ffb4ab] hover:bg-[#ba1a1a]/10 dark:hover:bg-[#ffb4ab]/15 rounded-xl transition-all duration-200 cursor-pointer select-none group"
+                            >
+                                <span class="material-symbols-outlined text-[22px] group-hover:-translate-x-0.5 transition-transform">logout</span>
+                                <span>Keluar</span>
+                            </button>
+                        </div>
+                    </div>
+                </aside>
+
+                <!-- Dashboard Content Section -->
+                <section class="flex-grow min-w-0 w-full">
+                    
+                    <ProfileHome 
+                        v-if="activeTab === 'profile'" 
+                        :authUser="authUser"
+                        :latestOrder="latestOrder"
+                        :statusConfig="statusConfig"
+                        :timelineSteps="timelineSteps"
+                        :fallbackAvatar="fallbackAvatar"
+                        :fallbackBanner="fallbackBanner"
+                        @change-tab="changeTab"
+                        @handle-image-error="handleImageError"
+                    />
+
+                    <OrderList 
+                        v-else-if="activeTab === 'orders'"
+                        :orders="orders"
+                        :statusConfig="statusConfig"
+                        :timelineSteps="timelineSteps"
+                        :statusOrder="statusOrder"
+                        @change-tab="changeTab"
+                        @view-order="viewOrderDetail"
+                        @confirm-received="confirmOrderReceived"
+                    />
+
+                    <OrderDetail 
+                        v-else-if="activeTab === 'order_details'"
+                        :selectedOrder="selectedOrder"
+                        :statusConfig="statusConfig"
+                        @change-tab="changeTab"
+                        @confirm-received="confirmOrderReceived"
+                    />
+
+                    <SavedAddresses 
+                        v-else-if="activeTab === 'addresses'"
+                        :authUser="authUser"
+                        :addresses="props.addresses || []"
+                    />
+
+                    <EditProfile 
+                        v-else-if="activeTab === 'edit_profile'"
+                        :authUser="authUser"
+                        :fallbackAvatar="fallbackAvatar"
+                        @change-tab="changeTab"
+                        @handle-image-error="handleImageError"
+                    />
+
+                </section>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <ShopFooter />
+    </div>
+</template>
+
+<style scoped>
+/* Icon ligature protection and explicit font-family to prevent text fallback */
+.material-symbols-outlined {
+    font-family: 'Material Symbols Outlined' !important;
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    font-feature-settings: 'liga' !important;
+    display: inline-block;
+    vertical-align: middle;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Active navigation vertical accent marker */
+.active-nav-indicator {
+    position: relative;
+}
+.active-nav-indicator::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 1.6rem;
+    width: 3.5px;
+    background-color: var(--color-primary, #8a4853);
+    border-radius: 0 4px 4px 0;
+}
+
+/* Bento card interactive hover behavior */
+:deep(.bento-card) {
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease;
+}
+:deep(.bento-card:hover) {
+    transform: translateY(-3px);
+    box-shadow: 0px 16px 48px rgba(0, 0, 0, 0.08);
+}
+
+:deep(.animate-fade-in) {
+    animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(4px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* THEME PRESERVATION (Anti-Black/White Grayscale Fallback Protection & Root Override) */
+.profile-theme {
+    --background: #fbf9f8;
+    --foreground: #1b1c1c;
+    --primary: #8a4853;
+    --primary-foreground: #ffffff;
+    --secondary: #625d5f;
+    --secondary-foreground: #ffffff;
+    --border: #d7c1c3;
+    --outline: #857374;
+
+    --color-primary: #8a4853;
+    --color-on-primary: #ffffff;
+    --color-primary-container: #a6606b;
+    --color-on-primary-container: #fffbff;
+    --color-primary-fixed: #ffd9dd;
+    --color-on-primary-fixed: #3a0915;
+    --color-secondary: #625d5f;
+    --color-on-secondary: #ffffff;
+    --color-secondary-container: #e9e0e3;
+    --color-on-secondary-container: #696365;
+    --color-secondary-fixed-variant: #4a4548;
+    --color-tertiary: #715822;
+    --color-tertiary-fixed: #ffdf9f;
+    --color-on-tertiary-fixed: #261a00;
+    --color-surface: #fbf9f8;
+    --color-surface-dim: #dcd9d9;
+    --color-surface-container-lowest: #ffffff;
+    --color-surface-container-low: #f6f3f2;
+    --color-surface-container: #f0eded;
+    --color-surface-container-highest: #e4e2e1;
+    --color-surface-variant: #e4e2e1;
+    --color-on-surface: #1b1c1c;
+    --color-on-surface-variant: #524345;
+    --color-outline: #857374;
+    --color-outline-variant: #d7c1c3;
+    --color-background: #fbf9f8;
+    --color-on-background: #1b1c1c;
+    --color-error: #ba1a1a;
+    --color-error-container: #ffdad6;
+    --color-on-error: #ffffff;
+
+    background-color: var(--color-background);
+    color: var(--color-on-surface);
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+:root.dark .profile-theme,
+:global(.dark) .profile-theme {
+    --background: #141213;
+    --foreground: #f3f0f0;
+    --primary: #ffb2bc;
+    --primary-foreground: #5a1b24;
+    --secondary: #ccc4c7;
+    --secondary-foreground: #332f31;
+    --border: #524345;
+    --outline: #9c8a8c;
+
+    --color-primary: #ffb2bc;
+    --color-on-primary: #5a1b24;
+    --color-primary-container: #70343e;
+    --color-on-primary-container: #ffd9dd;
+    --color-primary-fixed: #70343e;
+    --color-on-primary-fixed: #ffb2bc;
+    --color-secondary: #ccc4c7;
+    --color-on-secondary: #332f31;
+    --color-secondary-container: #332f31;
+    --color-on-secondary-container: #e9e0e3;
+    --color-secondary-fixed-variant: #ccc4c7;
+    --color-tertiary: #e3c281;
+    --color-tertiary-fixed: #5a430e;
+    --color-on-tertiary-fixed: #ffdf9f;
+    --color-surface: #141213;
+    --color-surface-dim: #1e1a1b;
+    --color-surface-container-lowest: #1a1617;
+    --color-surface-container-low: #221d1e;
+    --color-surface-container: #262122;
+    --color-surface-container-highest: #332d2e;
+    --color-surface-variant: #262122;
+    --color-on-surface: #f3f0f0;
+    --color-on-surface-variant: #ccc4c7;
+    --color-outline: #9c8a8c;
+    --color-outline-variant: #524345;
+    --color-background: #141213;
+    --color-on-background: #f3f0f0;
+    --color-error: #ffb4ab;
+    --color-error-container: #93000a;
+    --color-on-error: #690005;
+
+    background-color: var(--color-background);
+    color: var(--color-on-surface);
+}
+</style>

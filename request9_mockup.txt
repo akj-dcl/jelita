@@ -1,0 +1,756 @@
+<USER_REQUEST>
+bro nih saya kasih mock up untuk create.vue dan edit.vue di folder product tol;ong sesuaikan ya. untuk navbar dan sidebar tetap pakai yang sudah ada ya. 
+1. Create.vue"<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Add New Product - Artisan Admin</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary-fixed": "#261a00",
+                        "secondary": "#625d5f",
+                        "surface-container": "#f0eded",
+                        "surface-container-lowest": "#ffffff",
+                        "outline-variant": "#d7c1c3",
+                        "inverse-on-surface": "#f3f0f0",
+                        "on-error": "#ffffff",
+                        "on-secondary": "#ffffff",
+                        "on-primary-fixed": "#3a0915",
+                        "on-secondary-container": "#696365",
+                        "primary-fixed-dim": "#ffb2bc",
+                        "background": "#fbf9f8",
+                        "error": "#ba1a1a",
+                        "primary-container": "#a6606b",
+                        "tertiary-fixed-dim": "#e3c281",
+                        "on-primary-fixed-variant": "#70343e",
+                        "surface-bright": "#fbf9f8",
+                        "surface-container-highest": "#e4e2e1",
+                        "surface-container-high": "#eae7e7",
+                        "surface-dim": "#dcd9d9",
+                        "tertiary-fixed": "#ffdf9f",
+                        "on-tertiary": "#ffffff",
+                        "surface-container-low": "#f6f3f2",
+                        "primary": "#8a4853",
+                        "on-surface-variant": "#524345",
+                        "on-tertiary-fixed-variant": "#5a430e",
+                        "on-primary": "#ffffff",
+                        "tertiary-container": "#8b7138",
+                        "on-surface": "#1b1c1c",
+                        "on-secondary-fixed": "#1e1a1d",
+                        "error-container": "#ffdad6",
+                        "surface-tint": "#8c4b55",
+                        "primary-fixed": "#ffd9dd",
+                        "on-primary-container": "#fffbff",
+                        "outline": "#857374",
+                        "secondary-fixed": "#e9e0e3",
+                        "inverse-surface": "#303030",
+                        "secondary-fixed-dim": "#ccc4c7",
+                        "on-background": "#1b1c1c",
+                        "surface-variant": "#e4e2e1",
+                        "tertiary": "#715822",
+                        "inverse-primary": "#ffb2bc",
+                        "surface": "#fbf9f8",
+                        "on-tertiary-container": "#fffbff",
+                        "secondary-container": "#e9e0e3",
+                        "on-secondary-fixed-variant": "#4a4548",
+                        "on-error-container": "#93000a"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px",
+                        "2xl": "1rem" // Added for the requested 16px corner radii
+                    },
+                    "spacing": {
+                        "margin-mobile": "16px",
+                        "lg": "40px",
+                        "margin-desktop": "80px",
+                        "xl": "64px",
+                        "sm": "12px",
+                        "base": "8px",
+                        "xs": "4px",
+                        "gutter": "24px",
+                        "md": "24px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Inter"],
+                        "display-lg-mobile": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "body-md": ["Inter"],
+                        "label-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["18px", { "lineHeight": "1.6", "letterSpacing": "0", "fontWeight": "400" }],
+                        "display-lg-mobile": ["32px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+                        "display-lg": ["48px", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+                        "headline-md": ["24px", { "lineHeight": "1.3", "letterSpacing": "-0.01em", "fontWeight": "500" }],
+                        "label-sm": ["12px", { "lineHeight": "1.4", "letterSpacing": "0", "fontWeight": "400" }],
+                        "body-md": ["16px", { "lineHeight": "1.6", "letterSpacing": "0", "fontWeight": "400" }],
+                        "label-md": ["14px", { "lineHeight": "1.4", "letterSpacing": "0.05em", "fontWeight": "500" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .input-field {
+            @apply w-full bg-surface-container-lowest border border-[#E8E8E8] rounded-2xl px-4 py-3 text-on-surface font-body-md text-body-md transition-colors focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary placeholder-secondary;
+        }
+        .card-panel {
+            @apply bg-surface-container-lowest rounded-2xl p-md shadow-[0_4px_20px_rgba(0,0,0,0.04)] mb-md;
+        }
+        .label-text {
+            @apply block text-on-surface-variant font-label-md text-label-md mb-xs;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen flex">
+<!-- SideNavBar -->
+<nav class="h-screen w-64 fixed left-0 top-0 bg-surface dark:bg-surface-dim shadow-sm flex flex-col py-md overflow-y-auto bg-surface-container-low dark:bg-surface-container-low z-50">
+<div class="px-md mb-xl flex items-center gap-sm">
+<img class="w-10 h-10 rounded-full object-cover" data-alt="A minimalist and elegant brand logo for an artisanal management platform. The logo features a delicate, intertwined monogram in a soft dusty rose color, set against a pure white background. The style is modern, refined, and understated, suitable for a high-end light-mode UI." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCpD-zXXJ4oWsx46YP4wYd0BiVKnDYbIMRdkjX-J8kxQQefHlzOKSvaw9dWRLxJaNa_US671dkkludeVVrpL4NLD1zL0WIQivhwJ0cEVB2wX1zJ2UfcElwaRnAdnyV_CybgnfUcS9SL2LJKXjjtCzg0P5GvTqX6EpFBaZur5mxHj6ppMcxnGFpwx6S5PFE-5t-jAiTgerxeq8ovpnJ80ug5swlA7Pd0WzN8bNZ9Wb8m6NaEOGas_wvHvw"/>
+<div>
+<h1 class="font-headline-md text-headline-md text-primary dark:text-primary-fixed-dim font-bold">Artisan Admin</h1>
+<p class="font-label-sm text-label-sm text-secondary">Premium Management</p>
+</div>
+</div>
+<ul class="flex-1 px-sm space-y-xs">
+<li>
+<a class="flex items-center gap-sm px-4 py-3 rounded-lg text-secondary dark:text-secondary-fixed-dim font-label-md text-label-md hover:bg-surface-container-high dark:hover:bg-surface-container-highest transition-colors duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span>Dashboard</span>
+</a>
+</li>
+<li>
+<!-- Active State for Products -->
+<a class="flex items-center gap-sm px-4 py-3 rounded-lg font-label-md text-label-md text-primary dark:text-primary-fixed-dim font-bold border-r-4 border-primary dark:border-primary-fixed-dim bg-secondary-container/30 transition-colors duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined" data-icon="inventory_2" style="font-variation-settings: 'FILL' 1;">inventory_2</span>
+<span>Products</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-sm px-4 py-3 rounded-lg text-secondary dark:text-secondary-fixed-dim font-label-md text-label-md hover:bg-surface-container-high dark:hover:bg-surface-container-highest transition-colors duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined" data-icon="category">category</span>
+<span>Categories</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-sm px-4 py-3 rounded-lg text-secondary dark:text-secondary-fixed-dim font-label-md text-label-md hover:bg-surface-container-high dark:hover:bg-surface-container-highest transition-colors duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined" data-icon="shopping_cart">shopping_cart</span>
+<span>Orders</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-sm px-4 py-3 rounded-lg text-secondary dark:text-secondary-fixed-dim font-label-md text-label-md hover:bg-surface-container-high dark:hover:bg-surface-container-highest transition-colors duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined" data-icon="group">group</span>
+<span>Customers</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-sm px-4 py-3 rounded-lg text-secondary dark:text-secondary-fixed-dim font-label-md text-label-md hover:bg-surface-container-high dark:hover:bg-surface-container-highest transition-colors duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined" data-icon="view_carousel">view_carousel</span>
+<span>Homepage Banner</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-sm px-4 py-3 rounded-lg text-secondary dark:text-secondary-fixed-dim font-label-md text-label-md hover:bg-surface-container-high dark:hover:bg-surface-container-highest transition-colors duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined" data-icon="article">article</span>
+<span>Articles</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-sm px-4 py-3 rounded-lg text-secondary dark:text-secondary-fixed-dim font-label-md text-label-md hover:bg-surface-container-high dark:hover:bg-surface-container-highest transition-colors duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+<span>Reports</span>
+</a>
+</li>
+</ul>
+<div class="px-sm mt-auto">
+<a class="flex items-center gap-sm px-4 py-3 rounded-lg text-secondary dark:text-secondary-fixed-dim font-label-md text-label-md hover:bg-surface-container-high dark:hover:bg-surface-container-highest transition-colors duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span>Settings</span>
+</a>
+</div>
+</nav>
+<!-- Main Content -->
+<main class="ml-64 flex-1 flex flex-col min-h-screen">
+<!-- TopAppBar (Simplified for standard page header needs as requested in layout, omitting the full JSON component to focus on content area structure based on prompt) -->
+<header class="px-margin-desktop py-lg sticky top-0 bg-background/80 backdrop-blur-md z-30">
+<div class="flex items-center text-secondary font-label-md text-label-md mb-xs space-x-2">
+<a class="hover:text-primary transition-colors" href="#">Dashboard</a>
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+<a class="hover:text-primary transition-colors" href="#">Products</a>
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+<span class="text-on-surface">Add New</span>
+</div>
+<div class="flex justify-between items-center">
+<h2 class="font-display-lg-mobile md:font-display-lg text-display-lg-mobile md:text-display-lg text-on-surface">Add New Product</h2>
+</div>
+</header>
+<!-- Content Area -->
+<div class="px-margin-desktop pb-[120px] max-w-[1440px] mx-auto w-full flex-1">
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-gutter items-start">
+<!-- Left Column (Main Details) -->
+<div class="lg:col-span-2 space-y-md">
+<!-- General Information -->
+<section class="card-panel">
+<div class="mb-sm">
+<label class="label-text" for="product-title">Product Title</label>
+<input class="input-field" id="product-title" placeholder="e.g. Handwoven Rattan Basket" type="text"/>
+</div>
+<div>
+<label class="label-text" for="product-description">Description</label>
+<!-- Fake Rich Text Editor -->
+<div class="border border-[#E8E8E8] rounded-2xl overflow-hidden focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition-colors">
+<div class="bg-surface-container-low px-3 py-2 border-b border-[#E8E8E8] flex gap-2 text-secondary">
+<button class="p-1 hover:text-primary transition-colors rounded hover:bg-surface-container-high"><span class="material-symbols-outlined text-[18px]">format_bold</span></button>
+<button class="p-1 hover:text-primary transition-colors rounded hover:bg-surface-container-high"><span class="material-symbols-outlined text-[18px]">format_italic</span></button>
+<button class="p-1 hover:text-primary transition-colors rounded hover:bg-surface-container-high"><span class="material-symbols-outlined text-[18px]">format_underlined</span></button>
+<div class="w-[1px] h-4 bg-outline-variant my-auto mx-1"></div>
+<button class="p-1 hover:text-primary transition-colors rounded hover:bg-surface-container-high"><span class="material-symbols-outlined text-[18px]">format_list_bulleted</span></button>
+</div>
+<textarea class="w-full bg-surface-container-lowest px-4 py-3 text-on-surface font-body-md text-body-md focus:outline-none placeholder-secondary border-none resize-y" id="product-description" placeholder="Describe the craftsmanship, materials, and details..." rows="6"></textarea>
+</div>
+</div>
+</section>
+<!-- Media -->
+<section class="card-panel">
+<h3 class="font-headline-md text-headline-md text-on-surface mb-sm">Media</h3>
+<div class="border-2 border-dashed border-outline-variant rounded-2xl p-lg text-center flex flex-col items-center justify-center bg-surface-container-low/50 hover:bg-surface-container-low transition-colors cursor-pointer group">
+<div class="w-16 h-16 rounded-full bg-secondary-container flex items-center justify-center text-primary mb-4 group-hover:scale-105 transition-transform duration-300">
+<span class="material-symbols-outlined" style="font-size: 32px;">cloud_upload</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface mb-1">Drag and drop images here</p>
+<p class="font-label-sm text-label-sm text-secondary mb-4">or <span class="text-primary cursor-pointer hover:underline">browse files</span></p>
+<p class="font-label-sm text-label-sm text-secondary">Accepts JPG, PNG, WEBP. High quality recommended.</p>
+</div>
+<!-- Empty state placeholder for uploaded images -->
+<div class="mt-sm grid grid-cols-4 gap-sm opacity-50">
+<div class="aspect-square bg-surface-container-high rounded-lg flex items-center justify-center border border-outline-variant border-dashed"><span class="material-symbols-outlined text-secondary">image</span></div>
+<div class="aspect-square bg-surface-container-high rounded-lg flex items-center justify-center border border-outline-variant border-dashed"><span class="material-symbols-outlined text-secondary">image</span></div>
+</div>
+</section>
+</div>
+<!-- Right Column (Sidebar Settings) -->
+<div class="lg:col-span-1 space-y-md">
+<!-- Status -->
+<section class="card-panel">
+<h3 class="font-headline-md text-headline-md text-on-surface mb-sm">Status</h3>
+<div class="relative">
+<select class="input-field appearance-none cursor-pointer pr-10">
+<option value="draft">Draft</option>
+<option value="active">Active</option>
+<option value="scheduled">Scheduled</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-secondary pointer-events-none">expand_more</span>
+</div>
+</section>
+<!-- Pricing -->
+<section class="card-panel">
+<h3 class="font-headline-md text-headline-md text-on-surface mb-sm">Pricing</h3>
+<div class="space-y-sm">
+<div>
+<label class="label-text" for="price">Price</label>
+<div class="relative">
+<span class="absolute left-4 top-1/2 -translate-y-1/2 text-secondary font-body-md">Rp</span>
+<input class="input-field pl-12" id="price" placeholder="0.00" type="text"/>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-sm">
+<div>
+<label class="label-text" for="compare-price">Compare-at price</label>
+<div class="relative">
+<span class="absolute left-3 top-1/2 -translate-y-1/2 text-secondary font-body-md text-sm">Rp</span>
+<input class="input-field pl-10 text-sm" id="compare-price" placeholder="0.00" type="text"/>
+</div>
+</div>
+<div>
+<label class="label-text" for="cost-price">Cost per item</label>
+<div class="relative">
+<span class="absolute left-3 top-1/2 -translate-y-1/2 text-secondary font-body-md text-sm">Rp</span>
+<input class="input-field pl-10 text-sm" id="cost-price" placeholder="0.00" type="text"/>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Inventory -->
+<section class="card-panel">
+<h3 class="font-headline-md text-headline-md text-on-surface mb-sm">Inventory</h3>
+<div class="space-y-sm">
+<div>
+<label class="label-text" for="sku">SKU (Stock Keeping Unit)</label>
+<input class="input-field" id="sku" placeholder="e.g. ART-RAT-001" type="text"/>
+</div>
+<div>
+<label class="label-text" for="barcode">Barcode (ISBN, UPC, GTIN, etc.)</label>
+<input class="input-field" id="barcode" placeholder="" type="text"/>
+</div>
+<div>
+<label class="label-text" for="stock">Stock Quantity</label>
+<input class="input-field" id="stock" placeholder="0" type="number"/>
+</div>
+</div>
+</section>
+<!-- Organization -->
+<section class="card-panel">
+<h3 class="font-headline-md text-headline-md text-on-surface mb-sm">Organization</h3>
+<div class="space-y-sm">
+<div>
+<label class="label-text" for="category">Category</label>
+<div class="relative">
+<select class="input-field appearance-none cursor-pointer pr-10" id="category">
+<option value="">Select category...</option>
+<option value="woven">Woven Goods</option>
+<option value="ceramics">Ceramics</option>
+<option value="woodwork">Woodwork</option>
+<option value="textiles">Textiles</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-secondary pointer-events-none">expand_more</span>
+</div>
+</div>
+<div>
+<label class="label-text" for="tags">Tags</label>
+<input class="input-field" id="tags" placeholder="e.g. handmade, vintage, rattan" type="text"/>
+<p class="font-label-sm text-label-sm text-secondary mt-1">Separate tags with a comma</p>
+</div>
+</div>
+</section>
+</div>
+</div>
+</div>
+<!-- Footer Action Bar -->
+<div class="fixed bottom-0 left-64 right-0 bg-surface-container-lowest/90 backdrop-blur-md border-t border-[#E8E8E8] py-4 px-margin-desktop z-40 flex justify-end items-center gap-sm shadow-[0_-4px_20px_rgba(0,0,0,0.02)]">
+<button class="px-6 py-3 rounded-full font-label-md text-label-md text-primary bg-transparent hover:bg-secondary-container/50 transition-colors">
+                Discard
+            </button>
+<button class="px-6 py-3 rounded-full font-label-md text-label-md text-on-primary bg-primary hover:bg-primary/90 shadow-sm transition-all hover:shadow-md transform hover:-translate-y-0.5">
+                Save Product
+            </button>
+</div>
+</main>
+</body></html>"
+
+2. Edit.vue "<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Edit Product - Artisan Management</title>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Google Fonts: Inter -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary-fixed": "#261a00",
+                        "secondary": "#625d5f",
+                        "surface-container": "#f0eded",
+                        "surface-container-lowest": "#ffffff",
+                        "outline-variant": "#d7c1c3",
+                        "inverse-on-surface": "#f3f0f0",
+                        "on-error": "#ffffff",
+                        "on-secondary": "#ffffff",
+                        "on-primary-fixed": "#3a0915",
+                        "on-secondary-container": "#696365",
+                        "primary-fixed-dim": "#ffb2bc",
+                        "background": "#fbf9f8",
+                        "error": "#ba1a1a",
+                        "primary-container": "#a6606b",
+                        "tertiary-fixed-dim": "#e3c281",
+                        "on-primary-fixed-variant": "#70343e",
+                        "surface-bright": "#fbf9f8",
+                        "surface-container-highest": "#e4e2e1",
+                        "surface-container-high": "#eae7e7",
+                        "surface-dim": "#dcd9d9",
+                        "tertiary-fixed": "#ffdf9f",
+                        "on-tertiary": "#ffffff",
+                        "surface-container-low": "#f6f3f2",
+                        "primary": "#8a4853",
+                        "on-surface-variant": "#524345",
+                        "on-tertiary-fixed-variant": "#5a430e",
+                        "on-primary": "#ffffff",
+                        "tertiary-container": "#8b7138",
+                        "on-surface": "#1b1c1c",
+                        "on-secondary-fixed": "#1e1a1d",
+                        "error-container": "#ffdad6",
+                        "surface-tint": "#8c4b55",
+                        "primary-fixed": "#ffd9dd",
+                        "on-primary-container": "#fffbff",
+                        "outline": "#857374",
+                        "secondary-fixed": "#e9e0e3",
+                        "inverse-surface": "#303030",
+                        "secondary-fixed-dim": "#ccc4c7",
+                        "on-background": "#1b1c1c",
+                        "surface-variant": "#e4e2e1",
+                        "tertiary": "#715822",
+                        "inverse-primary": "#ffb2bc",
+                        "surface": "#fbf9f8",
+                        "on-tertiary-container": "#fffbff",
+                        "secondary-container": "#e9e0e3",
+                        "on-secondary-fixed-variant": "#4a4548",
+                        "on-error-container": "#93000a"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin-mobile": "16px",
+                        "lg": "40px",
+                        "margin-desktop": "80px",
+                        "xl": "64px",
+                        "sm": "12px",
+                        "base": "8px",
+                        "xs": "4px",
+                        "gutter": "24px",
+                        "md": "24px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Inter"],
+                        "display-lg-mobile": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "body-md": ["Inter"],
+                        "label-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["18px", { "lineHeight": "1.6", "letterSpacing": "0", "fontWeight": "400" }],
+                        "display-lg-mobile": ["32px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+                        "display-lg": ["48px", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+                        "headline-md": ["24px", { "lineHeight": "1.3", "letterSpacing": "-0.01em", "fontWeight": "500" }],
+                        "label-sm": ["12px", { "lineHeight": "1.4", "letterSpacing": "0", "fontWeight": "400" }],
+                        "body-md": ["16px", { "lineHeight": "1.6", "letterSpacing": "0", "fontWeight": "400" }],
+                        "label-md": ["14px", { "lineHeight": "1.4", "letterSpacing": "0.05em", "fontWeight": "500" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        /* Hide scrollbar for clean aesthetic */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background-color: #e4e2e1;
+            border-radius: 9999px;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md text-body-md antialiased flex">
+<!-- Sidebar Navigation (Reused Shared Component) -->
+<aside class="h-screen w-64 fixed left-0 top-0 bg-surface shadow-sm border-r border-surface-container-low hidden md:flex flex-col py-md overflow-y-auto z-40">
+<!-- Brand / Header -->
+<div class="px-md mb-lg flex items-center space-x-sm">
+<div class="w-10 h-10 rounded-full overflow-hidden bg-surface-container-high shrink-0">
+<img alt="Admin Profile Image" class="w-full h-full object-cover" data-alt="A professional yet approachable headshot of an artisanal workshop manager, featuring a woman with warm, friendly features looking directly at the camera. She is set against a soft, naturally lit, out-of-focus background typical of a modern, airy design studio. The lighting is high-key and flattering, conveying a sense of premium management and trust within a soft luxury brand aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB0WznP8QdrEvI-jY1UK9FPMW3CLx3a7sK_SAMNPS4fJ8YpRhNqMJrpYqV5kZepi2L4SMZe6p25LreyvltbQsXNZSTbZisvePuwnUI5iqtD5mm55ayquH-FsjKAsPYgcKRu1Mq5x5VXVIeVNQzV2OOdL29F0MQUHEVG9iUPZAbybP4s_h28TdAG6QZWjyIbuKkRKSZcPTMxdmi2qnp6U9sasj-EDOZzTTRSdG3fIDnLteodYOxL3riozw"/>
+</div>
+<div>
+<h1 class="font-headline-md text-headline-md text-primary font-bold tracking-tight">Artisan Admin</h1>
+<p class="font-label-sm text-label-sm text-secondary">Premium Management</p>
+</div>
+</div>
+<!-- Navigation Links -->
+<nav class="flex-1 px-sm space-y-xs">
+<!-- Dashboard (Inactive) -->
+<a class="flex items-center px-sm py-sm rounded-DEFAULT text-secondary hover:bg-surface-container-high transition-colors duration-200 ease-in-out font-label-md text-label-md group" href="#">
+<span class="material-symbols-outlined mr-sm text-[20px] group-hover:text-on-surface-variant transition-colors">dashboard</span>
+                Dashboard
+            </a>
+<!-- Products (Active) -->
+<a class="flex items-center px-sm py-sm rounded-DEFAULT text-primary font-bold border-r-4 border-primary bg-secondary-container/30 transition-colors duration-200 ease-in-out font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined mr-sm text-[20px]" style="font-variation-settings: 'FILL' 1;">inventory_2</span>
+                Products
+            </a>
+<!-- Categories (Inactive) -->
+<a class="flex items-center px-sm py-sm rounded-DEFAULT text-secondary hover:bg-surface-container-high transition-colors duration-200 ease-in-out font-label-md text-label-md group" href="#">
+<span class="material-symbols-outlined mr-sm text-[20px] group-hover:text-on-surface-variant transition-colors">category</span>
+                Categories
+            </a>
+<!-- Orders (Inactive) -->
+<a class="flex items-center px-sm py-sm rounded-DEFAULT text-secondary hover:bg-surface-container-high transition-colors duration-200 ease-in-out font-label-md text-label-md group" href="#">
+<span class="material-symbols-outlined mr-sm text-[20px] group-hover:text-on-surface-variant transition-colors">shopping_cart</span>
+                Orders
+            </a>
+<!-- Customers (Inactive) -->
+<a class="flex items-center px-sm py-sm rounded-DEFAULT text-secondary hover:bg-surface-container-high transition-colors duration-200 ease-in-out font-label-md text-label-md group" href="#">
+<span class="material-symbols-outlined mr-sm text-[20px] group-hover:text-on-surface-variant transition-colors">group</span>
+                Customers
+            </a>
+<!-- Homepage Banner (Inactive) -->
+<a class="flex items-center px-sm py-sm rounded-DEFAULT text-secondary hover:bg-surface-container-high transition-colors duration-200 ease-in-out font-label-md text-label-md group" href="#">
+<span class="material-symbols-outlined mr-sm text-[20px] group-hover:text-on-surface-variant transition-colors">view_carousel</span>
+                Homepage Banner
+            </a>
+<!-- Articles (Inactive) -->
+<a class="flex items-center px-sm py-sm rounded-DEFAULT text-secondary hover:bg-surface-container-high transition-colors duration-200 ease-in-out font-label-md text-label-md group" href="#">
+<span class="material-symbols-outlined mr-sm text-[20px] group-hover:text-on-surface-variant transition-colors">article</span>
+                Articles
+            </a>
+<!-- Reports (Inactive) -->
+<a class="flex items-center px-sm py-sm rounded-DEFAULT text-secondary hover:bg-surface-container-high transition-colors duration-200 ease-in-out font-label-md text-label-md group" href="#">
+<span class="material-symbols-outlined mr-sm text-[20px] group-hover:text-on-surface-variant transition-colors">analytics</span>
+                Reports
+            </a>
+</nav>
+<!-- Bottom Actions -->
+<div class="px-sm mt-auto pt-md border-t border-surface-container-low">
+<a class="flex items-center px-sm py-sm rounded-DEFAULT text-secondary hover:bg-surface-container-high transition-colors duration-200 ease-in-out font-label-md text-label-md group" href="#">
+<span class="material-symbols-outlined mr-sm text-[20px] group-hover:text-on-surface-variant transition-colors">settings</span>
+                Settings
+            </a>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="w-full md:ml-64 min-h-screen pb-[100px]">
+<!-- Header Section -->
+<header class="px-margin-mobile md:px-margin-desktop py-lg max-w-[1200px] mx-auto">
+<!-- Breadcrumbs -->
+<nav class="flex items-center space-x-xs text-secondary font-label-sm text-label-sm mb-sm">
+<a class="hover:text-primary transition-colors" href="#">Products</a>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<span class="text-on-surface-variant">Edit Product</span>
+</nav>
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-md">
+<div class="flex items-center space-x-md">
+<h2 class="font-display-lg-mobile text-display-lg-mobile md:font-display-lg md:text-display-lg text-on-background">Edit Product: Petal Ceramic Vase</h2>
+<!-- Status Badge -->
+<span class="inline-flex items-center space-x-xs bg-[#e8f5e9] text-[#2e7d32] px-sm py-xs rounded-full font-label-sm text-label-sm">
+<span class="w-2 h-2 rounded-full bg-[#4caf50]"></span>
+<span>Active</span>
+</span>
+</div>
+<!-- Top Right Actions (Optional - keeping minimalist as per instructions) -->
+<button class="text-secondary hover:text-primary transition-colors flex items-center font-label-md text-label-md">
+<span class="material-symbols-outlined mr-xs text-[18px]">history</span>
+                    View History
+                </button>
+</div>
+</header>
+<!-- Form Grid Layout -->
+<form class="px-margin-mobile md:px-margin-desktop max-w-[1200px] mx-auto grid grid-cols-1 lg:grid-cols-3 gap-gutter">
+<!-- Left Column: General Info & Media -->
+<div class="lg:col-span-2 space-y-gutter">
+<!-- General Information Card -->
+<section class="bg-surface-container-lowest rounded-xl shadow-[0px_4px_20px_rgba(0,0,0,0.04)] p-lg">
+<h3 class="font-headline-md text-headline-md text-on-surface mb-md">General Information</h3>
+<div class="space-y-md">
+<!-- Product Name -->
+<div>
+<label class="block font-label-md text-label-md text-on-surface-variant mb-xs" for="product_name">Product Name</label>
+<input class="w-full bg-surface-bright border border-outline-variant rounded-DEFAULT px-md py-sm focus:border-primary focus:ring-1 focus:ring-primary transition-colors outline-none text-on-surface font-body-md text-body-md placeholder:text-secondary" id="product_name" name="product_name" type="text" value="Petal Ceramic Vase"/>
+</div>
+<!-- Description -->
+<div>
+<label class="block font-label-md text-label-md text-on-surface-variant mb-xs flex justify-between" for="product_description">
+<span>Description</span>
+<span class="text-secondary font-label-sm text-label-sm font-normal">HTML allowed</span>
+</label>
+<textarea class="w-full bg-surface-bright border border-outline-variant rounded-DEFAULT px-md py-sm focus:border-primary focus:ring-1 focus:ring-primary transition-colors outline-none text-on-surface font-body-md text-body-md placeholder:text-secondary resize-y" id="product_description" name="product_description" rows="6">Crafted from locally sourced, high-fire stoneware, the Petal Ceramic Vase features a distinctive fluted rim inspired by organic botanical forms. Each piece is hand-thrown on the wheel and finished with our signature matte silk glaze in a soft dusty rose hue, resulting in subtle, unique variations that make every vase one-of-a-kind. Perfect for minimalist floral arrangements or as a standalone sculptural statement in any modern living space.</textarea>
+</div>
+</div>
+</section>
+<!-- Media Card -->
+<section class="bg-surface-container-lowest rounded-xl shadow-[0px_4px_20px_rgba(0,0,0,0.04)] p-lg">
+<div class="flex items-center justify-between mb-md">
+<h3 class="font-headline-md text-headline-md text-on-surface">Media</h3>
+<span class="text-secondary font-label-sm text-label-sm">4 / 10 images uploaded</span>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-sm">
+<!-- Image 1 (Main) -->
+<div class="relative aspect-square rounded-lg overflow-hidden group border border-outline-variant/30">
+<img alt="Main Product Image" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="A beautifully hand-thrown ceramic vase, characterized by a smooth matte silk glaze in a muted dusty rose color. The vase features a distinctive petal-like fluted rim and sits elegantly on a light oak wooden table. The lighting is soft and natural, casting delicate, ambient shadows that highlight the artisanal texture and craftsmanship. The overall aesthetic is minimalist, serene, and luxurious, typical of a high-end home decor editorial shoot." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCCUXrfZ-NyMojQsceHZn03DtOgRWw5LS_mz7PZJtccTw_JQ3FZvjJMKVTtHG-ro715gyZjFbOd25YHhtfx8BI7T-hDkuCvLiRDym9e3KRciz4lA7C2TOeuz_hMfURF1bT0wsSXtfg8aiz5zapBTGKMn4Inh8Cxk7cCChI6XHLscURN5m-WrUey__ivC3Q_-f5dAVYp91uR-IE0S604J5yUDXn4sdgJ6H0AY6CUf3-nZPOEDXaMZWSM5w"/>
+<div class="absolute inset-0 bg-on-surface/0 group-hover:bg-on-surface/10 transition-colors flex items-start justify-end p-xs opacity-0 group-hover:opacity-100">
+<button class="w-8 h-8 rounded-full bg-surface-container-lowest shadow-sm flex items-center justify-center text-error hover:bg-error-container transition-colors" type="button">
+<span class="material-symbols-outlined text-[16px]">delete</span>
+</button>
+</div>
+<div class="absolute bottom-sm left-sm bg-surface-container-lowest/90 backdrop-blur-sm px-xs py-[2px] rounded text-[10px] font-label-md text-on-surface border border-outline-variant/50">Main</div>
+</div>
+<!-- Image 2 -->
+<div class="relative aspect-square rounded-lg overflow-hidden group border border-outline-variant/30">
+<img alt="Detail Product Image" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="A close-up, high-resolution shot focusing on the delicate fluted petal-like rim of a handmade stoneware vase. The matte silk glaze reveals subtle, organic variations in texture and color, reflecting soft, diffused natural light. The background is a gently blurred, warm off-white surface, emphasizing the tactile quality and artisanal elegance of the ceramic piece. The mood is calm and sophisticated." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC2b5J3-EsBs9Zy2yEuBpVawOBNrWRaVncHSCMQYSwlIDb0CRfcaDE3m6eRqXxZi-MJE6xD4Hei2GHH6ddmd6-Dr1m6emxRyEouwBaomZKCKGdpKkZqYzuknEAPeqsv9t9vhAw42OxdO96tGOs0B4-hVKb_xV05PkfPZmV0e57Dz9CeZGF9dSC_xemS-teyElJBsqUBJwtOhwtDPTqxFCBHtxdZGyedI1Albrk_QTwgEg_2yog6H7GZzQ"/>
+<div class="absolute inset-0 bg-on-surface/0 group-hover:bg-on-surface/10 transition-colors flex items-start justify-end p-xs opacity-0 group-hover:opacity-100">
+<button class="w-8 h-8 rounded-full bg-surface-container-lowest shadow-sm flex items-center justify-center text-error hover:bg-error-container transition-colors" type="button">
+<span class="material-symbols-outlined text-[16px]">delete</span>
+</button>
+</div>
+</div>
+<!-- Image 3 -->
+<div class="relative aspect-square rounded-lg overflow-hidden group border border-outline-variant/30">
+<img alt="Lifestyle Product Image" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="A stylish lifestyle photograph of a hand-crafted ceramic vase in a muted blush pink tone, positioned slightly off-center against a crisp white linen background. The vase's smooth, unglazed bottom provides a subtle contrast to its softly glazed upper body. Soft, directional window light creates a gentle gradient of illumination across its curved surface, evoking a sense of tranquil luxury and modern minimalism." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCxLNU3QAaMON2B42fByvQmrMV43DzU5DAUw74yFL2KPE2fd4ETAe5PXT99XiSyRyWU3WGJJkVGFMfVjDkBTGWqRUu1a5MRGIB533GzjMomG4j_ZOOPZoefurrE47sVmb3zYC_cnYeq5MNUxcf26U2QnS-FPJNlkiuejfaQ8QKDJP4L-fXfEzZRIJYXzgHeBZNkl6abBqGfN7zeT1yQ_8vZ9IerAVq6r4O1WKfAOT8_dwyfnpQEcoyLwg"/>
+<div class="absolute inset-0 bg-on-surface/0 group-hover:bg-on-surface/10 transition-colors flex items-start justify-end p-xs opacity-0 group-hover:opacity-100">
+<button class="w-8 h-8 rounded-full bg-surface-container-lowest shadow-sm flex items-center justify-center text-error hover:bg-error-container transition-colors" type="button">
+<span class="material-symbols-outlined text-[16px]">delete</span>
+</button>
+</div>
+</div>
+<!-- Image 4 -->
+<div class="relative aspect-square rounded-lg overflow-hidden group border border-outline-variant/30">
+<img alt="Top View Product Image" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="A top-down view into the opening of a beautifully crafted artisanal ceramic vase. The interior is finished with a smooth, glossy glaze that contrasts slightly with the matte, textural exterior. The rim is irregularly shaped, resembling an organic flower petal. The lighting is even and bright, highlighting the structural integrity and handmade nature of the piece against a pristine, soft-toned background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCdVkDRoaKkEjLQ5wL3pjcVYWeT7shf3nhpPG5Uyqv-ljjOggFLuOz5uCe8T_7GPI9yDEtWxAQP-M0BbO9yEoX0NbOLRoCQJMV29QXeTYd9v4oDe5eVQcbHGaMMw4vB0cWVnEUQ-QVjGfOGkjAqy9vrJB9bqkpwcNEO1e2176jjyE_PlDkqFkuJglosR9ERCqqwwakxfYU9bnWQ6-xmJmMPXJxRGE7_pEiE9gGqMp0g1IfaMj4pCRkUyQ"/>
+<div class="absolute inset-0 bg-on-surface/0 group-hover:bg-on-surface/10 transition-colors flex items-start justify-end p-xs opacity-0 group-hover:opacity-100">
+<button class="w-8 h-8 rounded-full bg-surface-container-lowest shadow-sm flex items-center justify-center text-error hover:bg-error-container transition-colors" type="button">
+<span class="material-symbols-outlined text-[16px]">delete</span>
+</button>
+</div>
+</div>
+<!-- Add More Button -->
+<button class="relative aspect-square rounded-lg border-2 border-dashed border-outline-variant hover:border-primary bg-surface-bright flex flex-col items-center justify-center text-secondary hover:text-primary transition-all group" type="button">
+<span class="material-symbols-outlined mb-xs text-[24px] group-hover:scale-110 transition-transform">add_photo_alternate</span>
+<span class="font-label-md text-label-md">Add more</span>
+</button>
+</div>
+</section>
+</div>
+<!-- Right Column: Pricing, Inventory, Organization -->
+<div class="lg:col-span-1 space-y-gutter">
+<!-- Pricing Card -->
+<section class="bg-surface-container-lowest rounded-xl shadow-[0px_4px_20px_rgba(0,0,0,0.04)] p-lg">
+<h3 class="font-headline-md text-headline-md text-on-surface mb-md">Pricing</h3>
+<div>
+<label class="block font-label-md text-label-md text-on-surface-variant mb-xs" for="price">Base Price</label>
+<div class="relative">
+<div class="absolute inset-y-0 left-0 pl-md flex items-center pointer-events-none">
+<span class="text-secondary font-body-md text-body-md">$</span>
+</div>
+<input class="w-full bg-surface-bright border border-outline-variant rounded-DEFAULT pl-xl pr-md py-sm focus:border-primary focus:ring-1 focus:ring-primary transition-colors outline-none text-on-surface font-body-md text-body-md placeholder:text-secondary" id="price" name="price" type="text" value="85.00"/>
+</div>
+</div>
+</section>
+<!-- Inventory Card -->
+<section class="bg-surface-container-lowest rounded-xl shadow-[0px_4px_20px_rgba(0,0,0,0.04)] p-lg">
+<h3 class="font-headline-md text-headline-md text-on-surface mb-md">Inventory</h3>
+<div class="space-y-md">
+<div>
+<label class="block font-label-md text-label-md text-on-surface-variant mb-xs flex items-center" for="sku">
+                                SKU (Stock Keeping Unit)
+                                <span class="material-symbols-outlined text-[14px] ml-xs text-secondary cursor-help" title="A unique identifier for this item">help</span>
+</label>
+<input class="w-full bg-surface-bright border border-outline-variant rounded-DEFAULT px-md py-sm focus:border-primary focus:ring-1 focus:ring-primary transition-colors outline-none text-on-surface font-body-md text-body-md placeholder:text-secondary" id="sku" name="sku" type="text" value="ART-001"/>
+</div>
+<div>
+<label class="block font-label-md text-label-md text-on-surface-variant mb-xs" for="quantity">Available Quantity</label>
+<input class="w-full bg-surface-bright border border-outline-variant rounded-DEFAULT px-md py-sm focus:border-primary focus:ring-1 focus:ring-primary transition-colors outline-none text-on-surface font-body-md text-body-md placeholder:text-secondary" id="quantity" name="quantity" type="number" value="172"/>
+</div>
+</div>
+</section>
+<!-- Organization Card -->
+<section class="bg-surface-container-lowest rounded-xl shadow-[0px_4px_20px_rgba(0,0,0,0.04)] p-lg">
+<h3 class="font-headline-md text-headline-md text-on-surface mb-md">Organization</h3>
+<div class="space-y-md">
+<div>
+<label class="block font-label-md text-label-md text-on-surface-variant mb-xs" for="category">Category</label>
+<div class="relative">
+<select class="w-full bg-surface-bright border border-outline-variant rounded-DEFAULT px-md py-sm focus:border-primary focus:ring-1 focus:ring-primary transition-colors outline-none text-on-surface font-body-md text-body-md appearance-none" id="category" name="category">
+<option selected="" value="home_decor">Home Decor</option>
+<option value="tableware">Tableware</option>
+<option value="sculpture">Sculpture</option>
+</select>
+<div class="absolute inset-y-0 right-0 pr-md flex items-center pointer-events-none text-secondary">
+<span class="material-symbols-outlined">expand_more</span>
+</div>
+</div>
+</div>
+<div>
+<label class="block font-label-md text-label-md text-on-surface-variant mb-xs" for="collection">Collection</label>
+<div class="relative">
+<select class="w-full bg-surface-bright border border-outline-variant rounded-DEFAULT px-md py-sm focus:border-primary focus:ring-1 focus:ring-primary transition-colors outline-none text-on-surface font-body-md text-body-md appearance-none" id="collection" name="collection">
+<option selected="" value="earthen">Earthen Collection</option>
+<option value="monochrome">Monochrome Series</option>
+<option value="raw">Raw Materials</option>
+</select>
+<div class="absolute inset-y-0 right-0 pr-md flex items-center pointer-events-none text-secondary">
+<span class="material-symbols-outlined">expand_more</span>
+</div>
+</div>
+</div>
+<div>
+<label class="block font-label-md text-label-md text-on-surface-variant mb-xs">Tags</label>
+<div class="flex flex-wrap gap-xs mb-sm">
+<span class="inline-flex items-center bg-surface-container-high px-sm py-xs rounded-full font-label-sm text-label-sm text-on-surface">
+                                    Handmade
+                                    <button class="ml-xs text-secondary hover:text-error transition-colors" type="button"><span class="material-symbols-outlined text-[14px]">close</span></button>
+</span>
+<span class="inline-flex items-center bg-surface-container-high px-sm py-xs rounded-full font-label-sm text-label-sm text-on-surface">
+                                    Minimalist
+                                    <button class="ml-xs text-secondary hover:text-error transition-colors" type="button"><span class="material-symbols-outlined text-[14px]">close</span></button>
+</span>
+<span class="inline-flex items-center bg-surface-container-high px-sm py-xs rounded-full font-label-sm text-label-sm text-on-surface">
+                                    Dusty Rose
+                                    <button class="ml-xs text-secondary hover:text-error transition-colors" type="button"><span class="material-symbols-outlined text-[14px]">close</span></button>
+</span>
+</div>
+<input class="w-full bg-surface-bright border border-outline-variant rounded-DEFAULT px-md py-sm focus:border-primary focus:ring-1 focus:ring-primary transition-colors outline-none text-on-surface font-body-md text-body-md placeholder:text-secondary" placeholder="Add tags separated by comma..." type="text"/>
+</div>
+</div>
+</section>
+</div>
+</form>
+</main>
+<!-- Sticky Footer Action Bar -->
+<div class="fixed bottom-0 md:left-64 right-0 bg-surface-container-lowest/80 backdrop-blur-xl border-t border-surface-container-highest py-md px-margin-mobile md:px-margin-desktop z-30 shadow-[0px_-4px_20px_rgba(0,0,0,0.02)]">
+<div class="max-w-[1200px] mx-auto flex flex-col sm:flex-row items-center justify-between gap-md">
+<!-- Left Action -->
+<button class="w-full sm:w-auto bg-transparent text-error hover:bg-error-container/50 px-lg py-[10px] rounded-full font-label-md text-label-md transition-colors flex items-center justify-center" type="button">
+<span class="material-symbols-outlined mr-xs text-[18px]">delete</span>
+                Delete Product
+            </button>
+<!-- Right Actions -->
+<div class="w-full sm:w-auto flex items-center space-x-sm">
+<button class="flex-1 sm:flex-none bg-surface-bright border border-outline-variant text-primary hover:bg-primary-fixed px-lg py-[10px] rounded-full font-label-md text-label-md transition-colors" type="button">
+                    Preview
+                </button>
+<button class="flex-1 sm:flex-none bg-primary text-on-primary hover:bg-surface-tint px-lg py-[10px] rounded-full font-label-md text-label-md transition-colors shadow-sm" type="button">
+                    Save Changes
+                </button>
+</div>
+</div>
+</div>
+</body></html>"
+</USER_REQUEST>
+<ADDITIONAL_METADATA>
+The current local time is: 2026-08-23T14:30:05+07:00.
+
+The user's current state is as follows:
+Active Document: /Users/agustokenyjia/Herd/E-Commerce/routes/web.php (LANGUAGE_PHP)
+Cursor is on line: 1
+Other open documents:
+- /Users/agustokenyjia/Herd/E-Commerce/routes/web.php (LANGUAGE_PHP)
+- /Users/agustokenyjia/Herd/E-Commerce/resources/js/pages/admin/Dashboard.vue (LANGUAGE_VUE)
+- /Users/agustokenyjia/Herd/E-Commerce/resources/js/layouts/AdminLayout.vue (LANGUAGE_VUE)
+- /Users/agustokenyjia/Herd/E-Commerce/resources/js/pages/Welcome.vue (LANGUAGE_VUE)
+- /Users/agustokenyjia/Herd/E-Commerce/resources/js/pages/Cart.vue (LANGUAGE_VUE)
+Browser State:
+  Page 5746688F1E06426FC9E964BB1A8383A6 (Edit Product - Admin - Laravel) - http://e-commerce.test/admin/products/2/edit [ACTIVE]
+    Viewport: 1512x772, Page Height: 1390
+Running terminal commands:
+- npm run dev (in /Users/agustokenyjia/Herd/E-Commerce, running for 45m18s)
+</ADDITIONAL_METADATA>
