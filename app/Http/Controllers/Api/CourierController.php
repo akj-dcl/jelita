@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 class CourierController extends Controller
 {
@@ -17,8 +18,8 @@ class CourierController extends Controller
 
         try {
             $response = Http::withHeaders([
-                'key' => env('RAJAONGKIR_API_KEY')
-            ])->timeout(3)->get('https://rajaongkir.komerce.id/api/v1/destination/domestic-destination', [
+                'key' => config('services.rajaongkir.key')
+            ])->timeout(10)->get('https://rajaongkir.komerce.id/api/v1/destination/domestic-destination', [
                 'search' => $search,
                 'limit' => 10,
                 'offset' => 0
@@ -27,8 +28,13 @@ class CourierController extends Controller
             if ($response->successful()) {
                 return response()->json($response->json()['data'] ?? []);
             }
+
+            Log::warning('RajaOngkir Search Failed', [
+                'status' => $response->status(),
+                'response' => $response->body()
+            ]);
         } catch (\Exception $e) {
-            // Fallback for demo if API fails
+            Log::error('RajaOngkir Search Exception: ' . $e->getMessage());
         }
 
         return response()->json([
@@ -48,8 +54,8 @@ class CourierController extends Controller
 
         try {
             $response = Http::withHeaders([
-                'key' => env('RAJAONGKIR_API_KEY')
-            ])->timeout(5)->asForm()->post('https://rajaongkir.komerce.id/api/v1/calculate/domestic-cost', [
+                'key' => config('services.rajaongkir.key')
+            ])->timeout(10)->asForm()->post('https://rajaongkir.komerce.id/api/v1/calculate/domestic-cost', [
                 'origin' => $request->origin,
                 'destination' => $request->destination,
                 'weight' => $request->weight,
@@ -60,8 +66,13 @@ class CourierController extends Controller
                 // Komerce returns an array of services directly in 'data'
                 return response()->json($response->json()['data'] ?? []);
             }
+
+            Log::warning('RajaOngkir Cost Calculation Failed', [
+                'status' => $response->status(),
+                'response' => $response->body()
+            ]);
         } catch (\Exception $e) {
-            // Fallback
+            Log::error('RajaOngkir Cost Exception: ' . $e->getMessage());
         }
 
         // Dummy Data Fallback (matching Komerce format)
