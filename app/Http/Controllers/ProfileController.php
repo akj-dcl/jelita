@@ -18,7 +18,7 @@ class ProfileController extends Controller
 
         // Fetch orders for the logged-in user with items and payment
         $orders = Order::where('user_id', $userId)
-            ->with(['items', 'payment', 'reviews'])
+            ->with(['items.product', 'payment', 'reviews'])
             ->latest()
             ->get()
             ->map(function ($order) {
@@ -50,6 +50,9 @@ class ProfileController extends Controller
                             'product_price' => $i->product_price,
                             'quantity'      => $i->quantity,
                             'subtotal'      => $i->subtotal,
+                            'product_image' => $i->product && $i->product->image
+                                ? (str_starts_with($i->product->image, 'http') ? $i->product->image : asset('storage/' . $i->product->image))
+                                : null,
                             'review'        => $review ? [
                                 'rating' => $review->rating,
                                 'comment' => $review->comment

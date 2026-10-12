@@ -65,7 +65,7 @@ const showConfirmPassword = ref(false);
                             <img 
                                 class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105" 
                                 alt="High-end minimalist photograph of artisanal pottery and woven textiles in a bright, sun-drenched studio" 
-                                src="https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?auto=format&fit=crop&q=80&w=1000" 
+                                src="/storage/template/daftar.jpg" 
                             />
                         </div>
                     </div>

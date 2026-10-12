@@ -98,7 +98,7 @@ const chartSeries = [{
         <!-- Revenue -->
         <Card class="bg-surface-container-lowest border-0 soft-elevation flex flex-col justify-between min-h-[140px] gap-sm rounded-xl p-md overflow-hidden">
           <div class="flex justify-between items-start">
-            <span class="text-on-surface-variant font-label-md text-label-md tracking-wider">PENDAPATAN</span>
+            <span class="text-on-surface-variant font-label-md text-label-md tracking-wider">PENDAPATAN BERSIH</span>
             <div class="bg-tertiary-fixed p-2 rounded-lg">
               <span class="material-symbols-outlined text-tertiary" style="font-variation-settings: 'FILL' 1;">payments</span>
             </div>

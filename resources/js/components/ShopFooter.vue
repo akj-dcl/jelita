@@ -23,9 +23,9 @@ import { Link } from '@inertiajs/vue3';
                 <h4 class="font-label-md text-primary font-bold uppercase tracking-wider">Tautan Cepat</h4>
                 <ul class="space-y-2">
                     <li><Link :href="'/shop'" class="text-on-surface-variant hover:text-primary underline-offset-4 hover:underline transition-all">Semua Produk</Link></li>
-                    <li><a class="text-on-surface-variant hover:text-primary underline-offset-4 hover:underline transition-all" href="#">Cerita Kami</a></li>
-                    <li><a class="text-on-surface-variant hover:text-primary underline-offset-4 hover:underline transition-all" href="#">Produk Terbaru</a></li>
-                    <li><a class="text-on-surface-variant hover:text-primary underline-offset-4 hover:underline transition-all" href="#">Grosir</a></li>
+                    <li><Link :href="'/story'" class="text-on-surface-variant hover:text-primary underline-offset-4 hover:underline transition-all">Cerita Kami</Link></li>
+                    <li><Link :href="'/shop'" class="text-on-surface-variant hover:text-primary underline-offset-4 hover:underline transition-all">Produk Terbaru</Link></li>
+                    <li><Link :href="'/collections'" class="text-on-surface-variant hover:text-primary underline-offset-4 hover:underline transition-all">Koleksi</Link></li>
                 </ul>
             </div>
             <div class="space-y-4">

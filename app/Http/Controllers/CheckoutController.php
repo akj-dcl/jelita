@@ -20,15 +20,28 @@ class CheckoutController extends Controller
 
         $items = [];
         if ($cart) {
-            $items = $cart->items()->with(['product.images'])->get()->map(function ($item) {
+            $items = $cart->items()->with(['product.images', 'product.category', 'variant'])->get()->map(function ($item) {
+                $name = $item->product->name;
+                $price = $item->product->price;
+                $weight = $item->product->weight ?? 500;
+
+                if ($item->variant) {
+                    $name .= ' - ' . $item->variant->name;
+                    $price = $item->variant->price;
+                    if ($item->variant->weight) {
+                        $weight = $item->variant->weight;
+                    }
+                }
+
                 return [
                     'id'         => $item->id,
                     'product_id' => $item->product_id,
-                    'name'       => $item->product->name,
+                    'variant_id' => $item->variant_id,
+                    'name'       => $name,
                     'category'   => $item->product->category ? $item->product->category->name : 'Uncategorized',
-                    'price'      => $item->product->price,
+                    'price'      => $price,
                     'quantity'   => $item->quantity,
-                    'weight'     => $item->product->weight ?? 500,
+                    'weight'     => $weight,
                     'image'      => $item->product->images->first()
                         ? asset('storage/' . $item->product->images->first()->image_path)
                         : 'https://placehold.co/400',
@@ -53,13 +66,15 @@ class CheckoutController extends Controller
 
     public function store(Request $request)
     {
+        $isCod = $request->payment_method === 'cod' || $request->courier === 'cod';
+
         $request->validate([
             'email'          => 'required|email',
             'firstName'      => 'required|string',
             'lastName'       => 'nullable|string',
             'address'        => 'required|string',
             'phone'          => 'required|string',
-            'destination_id' => 'required',
+            'destination_id' => $isCod ? 'nullable' : 'required',
             'destination_label' => 'nullable|string',
             'courier'        => 'required|string',
 
@@ -68,8 +83,8 @@ class CheckoutController extends Controller
             'tax'            => 'required|numeric',
             'total'          => 'required|numeric',
 
-            'payment_method' => 'required|in:bank_transfer,qris',
-            'payment_proof'  => 'required|image|max:5120',
+            'payment_method' => 'required|in:bank_transfer,qris,cod',
+            'payment_proof'  => $isCod ? 'nullable|image|max:5120' : 'required|image|max:5120',
         ]);
 
         try {
@@ -81,7 +96,7 @@ class CheckoutController extends Controller
             $order = Order::create([
                 'user_id'         => $userId,
                 'order_number'    => 'ORD-' . strtoupper(Str::random(10)),
-                'status'          => 'pending_payment',
+                'status'          => $isCod ? 'processing' : 'pending_payment',
                 'subtotal'        => $request->subtotal,
                 'shipping_cost'   => $request->shippingCost,
                 'tax'             => $request->tax,
@@ -91,23 +106,31 @@ class CheckoutController extends Controller
                 'ship_name'       => trim($request->firstName . ' ' . $request->lastName),
                 'ship_phone'      => $request->phone,
                 'ship_address'    => $request->address,
-                'ship_city'       => $request->destination_label ?? $request->destination_id,
+                'ship_city'       => $request->destination_label ?? ($request->destination_id ?? 'COD'),
                 'ship_province'   => '',
                 'ship_postal_code'=> $request->postalCode ?? '',
-                'notes'           => null,
+                'notes'           => $isCod ? 'Metode Pembayaran: COD (Bayar di Tempat)' : null,
             ]);
 
-            // Save cart items as order items
+            // Save cart items as order items with variant name and price
             $cart = Cart::where('user_id', $userId)->first();
             if ($cart) {
-                foreach ($cart->items()->with('product')->get() as $item) {
+                foreach ($cart->items()->with(['product', 'variant'])->get() as $item) {
+                    $productName = $item->product->name;
+                    $price = $item->product->price;
+
+                    if ($item->variant) {
+                        $productName .= ' - ' . $item->variant->name;
+                        $price = $item->variant->price;
+                    }
+
                     OrderItem::create([
                         'order_id'      => $order->id,
                         'product_id'    => $item->product_id,
-                        'product_name'  => $item->product->name,
-                        'product_price' => $item->product->price,
+                        'product_name'  => $productName,
+                        'product_price' => $price,
                         'quantity'      => $item->quantity,
-                        'subtotal'      => $item->product->price * $item->quantity,
+                        'subtotal'      => $price * $item->quantity,
                     ]);
                 }
                 // Clear the cart after order is placed
@@ -115,7 +138,10 @@ class CheckoutController extends Controller
             }
 
             // Handle payment proof upload
-            $path = $request->file('payment_proof')->store('payments', 'public');
+            $path = null;
+            if ($request->hasFile('payment_proof')) {
+                $path = $request->file('payment_proof')->store('payments', 'public');
+            }
 
             // Create Payment (map to actual payments columns)
             Payment::create([

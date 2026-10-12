@@ -7,6 +7,7 @@ import ShopFooter from '@/components/ShopFooter.vue';
 const props = defineProps<{
     categories: Array<any>;
     products: Array<any>;
+    reviews?: Array<any>;
 }>();
 
 // FAQ Accordion state
@@ -37,7 +38,7 @@ const toggleFaq = (index: number) => {
             <!-- Hero Banner -->
             <section class="relative min-h-[600px] md:min-h-[819px] flex items-center overflow-hidden">
                 <div class="absolute inset-0 z-0">
-                    <div class="w-full h-full bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDN8OyoWB4cjKGT1D8xW7ahfQBe-yYLtOA2DliSb8RITyAGP2hDEziMjXBlwXfD5MmSxnO8u_xBZQqRnErO9di9iuqNQ6QjMXzpeulk9FHYu42_rVO9rR_HcmIuuihNnPz7Pn20C1SWSguDoiMc85Bi1ux56DYQPrfHbVhwdfZGSCNjZx60os3P6pVujdcfgefLKq7g0lK4hZUCne9uTWgZrVWEkUneLCB-7URENLrXdn8s_dycQEWfPc1LFgX9kbIn8LFilhhBSPBJ')"></div>
+                    <div class="w-full h-full bg-cover bg-center" style="background-image: url('/storage/template/banner-utama-home.jpg')"></div>
                     <div class="absolute inset-0 bg-white/20"></div>
                 </div>
                 <div class="relative z-10 w-full max-w-[1440px] mx-auto px-margin-mobile md:px-margin-desktop py-16">
@@ -46,13 +47,13 @@ const toggleFaq = (index: number) => {
                         <p class="text-lg text-secondary mb-10 leading-relaxed">
                             Setiap produk merupakan hasil pembinaan keterampilan yang dibuat dengan dedikasi tinggi, menghadirkan kualitas terbaik sekaligus mendukung pemberdayaan perempuan.
                         </p>
-                        <div class="flex flex-wrap gap-6">
-                            <button class="bg-dusty-rose text-white px-10 py-3 rounded-full font-label-md text-label-md hover:opacity-90 transition-all active:scale-95 shadow-sm cursor-pointer">
+                        <div class="flex flex-wrap gap-4 sm:gap-6">
+                            <Link href="/shop" class="bg-dusty-rose text-white px-8 sm:px-10 py-3 rounded-full font-label-md text-label-md hover:opacity-90 transition-all active:scale-95 shadow-sm cursor-pointer inline-flex items-center justify-center">
                                 Belanja Koleksi
-                            </button>
-                            <button class="bg-pale-pink text-dusty-rose px-10 py-3 rounded-full font-label-md text-label-md hover:bg-white transition-all active:scale-95 shadow-sm cursor-pointer">
+                            </Link>
+                            <Link href="/story" class="bg-pale-pink text-dusty-rose px-8 sm:px-10 py-3 rounded-full font-label-md text-label-md hover:bg-white transition-all active:scale-95 shadow-sm cursor-pointer inline-flex items-center justify-center">
                                 Cerita Kami
-                            </button>
+                            </Link>
                         </div>
                     </div>
                 </div>
@@ -65,8 +66,9 @@ const toggleFaq = (index: number) => {
                     <h2 class="text-3xl font-bold text-on-background">Jelajahi Berdasarkan Kategori</h2>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-gutter h-[600px] md:h-[500px]">
-                    <div v-for="(category, index) in props.categories.slice(0, 4)" :key="category.id"
-                         :class="['relative group overflow-hidden rounded-xl shadow-[0px_4px_20px_rgba(0,0,0,0.04)] cursor-pointer', index === 0 ? 'md:col-span-2' : (index === 3 ? 'md:col-span-4 h-[200px] md:h-auto' : '')]">
+                    <Link v-for="(category, index) in props.categories.slice(0, 4)" :key="category.id"
+                         :href="`/shop?category=${category.slug}`"
+                         :class="['relative group overflow-hidden rounded-xl shadow-[0px_4px_20px_rgba(0,0,0,0.04)] cursor-pointer block', index === 0 ? 'md:col-span-2' : (index === 3 ? 'md:col-span-4 h-[200px] md:h-auto' : '')]">
                         <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110" :style="`background-image: url('${category.image ? '/storage/' + category.image : 'https://placehold.co/600x400/e2e8f0/64748b?text=' + encodeURIComponent(category.name)}')`"></div>
                         <div class="absolute inset-0 bg-black/10 group-hover:bg-black/20 transition-all"></div>
                         <div class="absolute inset-0 flex items-center justify-center p-6">
@@ -74,7 +76,7 @@ const toggleFaq = (index: number) => {
                                 <span class="text-2xl font-bold text-on-surface">{{ category.name }}</span>
                             </div>
                         </div>
-                    </div>
+                    </Link>
                     <div v-if="props.categories.length === 0" class="md:col-span-4 text-center py-10 text-secondary">
                         Belum ada kategori yang tersedia.
                     </div>
@@ -112,7 +114,7 @@ const toggleFaq = (index: number) => {
             <section class="py-16 max-w-[1440px] mx-auto px-margin-mobile md:px-margin-desktop">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
                     <div class="relative rounded-xl overflow-hidden shadow-xl aspect-square">
-                        <img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBGC7m-jXjETlY0QvsqAevknML0Y2UiSAReTzDZPo-bFuPK9Y6zY9IeChg_-lhwhmxKnPDENd-09pJteGs-aiIlawVGY6RgqO9fqM85747Yr7VJuqkR4w9pvtdN0IGYjpJiDrqrGV7Sep3Xk5B3sqshYx7BesUOQI33x4CzEDI6w0IGv_2m3em-3094nEXdWp5lwmUMWADQ-HRYaa_u7E9CXLlU2CzuwsNEwcWD4usAjfxaNCj5dIGeAZ501FoB_F71eYuKhgL5B42U" alt="Weaving process"/>
+                        <img class="w-full h-full object-cover" src="/storage/template/home-misi-kami.jpg" alt="Weaving process"/>
                     </div>
                     <div class="space-y-10">
                         <span class="text-gold font-label-md uppercase tracking-[0.2em] block">Misi Kami</span>
@@ -123,7 +125,7 @@ const toggleFaq = (index: number) => {
                         <p class="text-md text-secondary leading-relaxed">
                             Dengan memilih Jelita Saung, Anda tidak hanya membawa pulang produk berkualitas premium, tetapi juga ikut berkontribusi dalam program rehabilitasi dan pemberdayaan ekonomi yang berkelanjutan.
                         </p>
-                        <button class="text-dusty-rose border border-dusty-rose px-10 py-3 rounded-full hover:bg-dusty-rose hover:text-white transition-all cursor-pointer">Baca Selengkapnya</button>
+                        <Link href="/story" class="text-dusty-rose border border-dusty-rose px-10 py-3 rounded-full hover:bg-dusty-rose hover:text-white transition-all cursor-pointer inline-block text-center">Baca Selengkapnya</Link>
                     </div>
                 </div>
             </section>
@@ -166,40 +168,33 @@ const toggleFaq = (index: number) => {
             <section class="py-16 max-w-[1440px] mx-auto px-margin-mobile md:px-margin-desktop text-center">
                 <span class="text-gold font-label-md uppercase tracking-[0.2em] mb-1 block">Ulasan</span>
                 <h2 class="text-3xl font-bold mb-16">Suara Apresiasi</h2>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
-                    <div class="bg-white p-10 rounded-xl shadow-[0px_4px_20px_rgba(0,0,0,0.04)] italic">
-                        <div class="flex justify-center text-gold mb-6">
-                            <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
-                            <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
-                            <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
-                            <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
-                            <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+                <div v-if="props.reviews && props.reviews.length > 0" class="grid grid-cols-1 md:grid-cols-3 gap-10">
+                    <div v-for="review in props.reviews.slice(0, 3)" :key="review.id"
+                        class="bg-white p-10 rounded-xl shadow-[0px_4px_20px_rgba(0,0,0,0.04)] italic flex flex-col justify-between text-center">
+                        <div>
+                            <div class="flex justify-center text-gold mb-6 gap-1">
+                                <span v-for="i in 5" :key="i"
+                                    class="material-symbols-outlined"
+                                    :style="i <= review.rating ? 'font-variation-settings: \'FILL\' 1;' : ''">
+                                    star
+                                </span>
+                            </div>
+                            <p class="text-on-surface-variant mb-6 leading-relaxed line-clamp-4">
+                                "{{ review.comment }}"
+                            </p>
                         </div>
-                        <p class="text-on-surface-variant mb-6 leading-relaxed">"Syal sutra yang saya beli sangat menakjubkan. Kualitas dan dedikasi dalam pembuatannya benar-benar terasa. Sebuah karya seni sejati."</p>
-                        <span class="font-label-md text-primary not-italic">— Sarah J.</span>
-                    </div>
-                    <div class="bg-white p-10 rounded-xl shadow-[0px_4px_20px_rgba(0,0,0,0.04)] italic">
-                        <div class="flex justify-center text-gold mb-6">
-                            <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
-                            <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
-                            <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
-                            <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
-                            <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+                        <div>
+                            <span class="font-label-md text-primary not-italic block font-semibold">
+                                — {{ review.user_name }}
+                            </span>
+                            <p v-if="review.product_name" class="text-xs text-secondary not-italic mt-1 line-clamp-1">
+                                {{ review.product_name }}
+                            </p>
                         </div>
-                        <p class="text-on-surface-variant mb-6 leading-relaxed">"Saya sangat menyukai tas rotan saya! Dibuat dengan sangat baik dan awet. Mengetahui ini mendukung misi yang hebat membuatnya semakin istimewa."</p>
-                        <span class="font-label-md text-primary not-italic">— Maya R.</span>
                     </div>
-                    <div class="bg-white p-10 rounded-xl shadow-[0px_4px_20px_rgba(0,0,0,0.04)] italic">
-                        <div class="flex justify-center text-gold mb-6">
-                            <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
-                            <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
-                            <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
-                            <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
-                            <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
-                        </div>
-                        <p class="text-on-surface-variant mb-6 leading-relaxed">"Kemasan elegan dan pengiriman sangat cepat. Set keramiknya kini menjadi daya tarik utama di meja makan saya."</p>
-                        <span class="font-label-md text-primary not-italic">— David K.</span>
-                    </div>
+                </div>
+                <div v-else class="text-secondary py-8 italic">
+                    Belum ada ulasan dari pelanggan.
                 </div>
             </section>
 

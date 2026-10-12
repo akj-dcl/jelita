@@ -23,7 +23,7 @@ class DashboardController extends Controller
         $todayOrders = Order::whereDate('created_at', Carbon::today())->count();
         $revenueLast30Days = Order::where('created_at', '>=', $thirtyDaysAgo)
             ->whereIn('status', ['processing', 'shipped', 'delivered'])
-            ->sum('total');
+            ->sum('subtotal');
         $lowStockCount = Product::where('stock', '<=', 5)->count();
         $totalCustomers = User::where('role', 'customer')->count();
         $pendingPayment = Order::where('status', 'pending_payment')->count();
@@ -49,7 +49,7 @@ class DashboardController extends Controller
         // Ensure dates without orders have 0 revenue if possible, or frontend can handle it
         $revenueChartData = Order::where('created_at', '>=', $thirtyDaysAgo)
             ->whereIn('status', ['processing', 'shipped', 'delivered'])
-            ->select(DB::raw('DATE(created_at) as date'), DB::raw('SUM(total) as daily_revenue'))
+            ->select(DB::raw('DATE(created_at) as date'), DB::raw('SUM(subtotal) as daily_revenue'))
             ->groupBy('date')
             ->orderBy('date')
             ->get();

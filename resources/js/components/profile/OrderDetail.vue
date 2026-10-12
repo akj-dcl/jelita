@@ -17,6 +17,7 @@ const formatCurrency = (amount: number) =>
 const paymentMethodLabel: Record<string, string> = {
     bank_transfer: 'Transfer Bank (BRI)',
     qris: 'QRIS',
+    cod: 'COD (Bayar di Tempat)',
 };
 
 const paymentStatusLabel: Record<string, string> = {
@@ -65,67 +66,69 @@ const submitReview = () => {
 <template>
     <div class="w-full animate-fade-in" v-if="selectedOrder">
         <!-- Breadcrumbs & Title -->
-        <div class="mb-lg flex flex-col sm:flex-row justify-between sm:items-end gap-4">
+        <div class="mb-6 sm:mb-lg flex flex-col sm:flex-row justify-between sm:items-end gap-3 sm:gap-4">
             <div>
-                <nav class="flex items-center space-x-xs text-on-surface-variant mb-base flex-wrap gap-y-1">
-                    <button class="font-label-sm text-label-sm hover:text-primary" @click="$emit('change-tab', 'profile')">Beranda</button>
+                <nav class="flex items-center space-x-1 text-on-surface-variant mb-1.5 flex-wrap gap-y-1 text-xs sm:text-sm">
+                    <button class="hover:text-primary cursor-pointer" @click="$emit('change-tab', 'profile')">Beranda</button>
                     <span class="material-symbols-outlined text-[14px]">chevron_right</span>
-                    <button class="font-label-sm text-label-sm hover:text-primary" @click="$emit('change-tab', 'orders')">Riwayat Pesanan</button>
+                    <button class="hover:text-primary cursor-pointer" @click="$emit('change-tab', 'orders')">Riwayat Pesanan</button>
                     <span class="material-symbols-outlined text-[14px]">chevron_right</span>
-                    <span class="font-label-sm text-label-sm text-primary">Pesanan #{{ selectedOrder.order_number }}</span>
+                    <span class="text-primary font-semibold truncate max-w-[160px] sm:max-w-none">Pesanan #{{ selectedOrder.order_number }}</span>
                 </nav>
-                <div class="flex items-center gap-sm">
-                    <h1 class="font-display-lg-mobile md:font-display-lg text-display-lg-mobile md:text-display-lg font-bold text-on-surface">Detail Pesanan</h1>
-                    <span :class="['px-sm py-xs rounded-full font-label-sm text-label-sm border', getStatusConfig(selectedOrder.status, statusConfig).badge]">
+                <div class="flex flex-wrap items-center gap-2">
+                    <h1 class="text-2xl sm:text-3xl font-bold text-on-surface">Detail Pesanan</h1>
+                    <span :class="['px-2.5 py-0.5 rounded-full text-xs font-semibold border', getStatusConfig(selectedOrder.status, statusConfig).badge]">
                         {{ getStatusConfig(selectedOrder.status, statusConfig).label }}
                     </span>
                 </div>
-                <p class="font-body-lg text-body-lg text-secondary mt-xs">Dibuat pada {{ selectedOrder.created_at }}</p>
+                <p class="text-secondary text-xs sm:text-sm mt-1">Dibuat pada {{ selectedOrder.created_at }}</p>
             </div>
             
-            <div class="flex items-center gap-2">
+            <div class="flex flex-wrap sm:flex-nowrap items-center gap-2 w-full sm:w-auto">
                 <a :href="`/orders/${selectedOrder.id}/invoice`" target="_blank"
-                    class="bg-surface-variant text-on-surface-variant hover:text-primary hover:bg-primary/10 px-md py-sm rounded-lg font-label-md text-label-md transition-all flex items-center gap-xs shadow-sm">
+                    class="flex-1 sm:flex-initial justify-center bg-surface-variant text-on-surface-variant hover:text-primary hover:bg-primary/10 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all flex items-center gap-1.5 shadow-xs cursor-pointer">
                     <span class="material-symbols-outlined text-[18px]">receipt_long</span>
                     Cetak Invoice
                 </a>
                 
                 <button v-if="selectedOrder.status === 'shipped'" @click="confirmReceived"
-                    class="bg-emerald-600 text-white px-md py-sm rounded-lg font-label-md text-label-md hover:opacity-90 transition-all flex items-center gap-xs shadow-sm shadow-emerald-500/20 active:scale-95">
+                    class="flex-1 sm:flex-initial justify-center bg-emerald-600 text-white px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold hover:opacity-90 transition-all flex items-center gap-1.5 shadow-xs shadow-emerald-500/20 active:scale-95 cursor-pointer">
                     <span class="material-symbols-outlined text-[18px]">check_circle</span>
                     Konfirmasi Diterima
                 </button>
             </div>
         </div>
 
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-lg">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-6">
             <!-- Left Column: Items -->
-            <div class="lg:col-span-2 space-y-lg">
+            <div class="lg:col-span-2 space-y-4 sm:space-y-6">
                 <!-- Order Items -->
-                <section class="bg-surface-container-lowest p-md md:p-lg rounded-xl shadow-[0px_4px_20px_rgba(0,0,0,0.04)]">
-                    <h2 class="font-label-md text-label-md uppercase tracking-widest text-primary mb-md">Daftar Produk</h2>
-                    <div class="space-y-md">
+                <section class="bg-surface-container-lowest p-4 sm:p-6 rounded-2xl shadow-[0px_4px_20px_rgba(0,0,0,0.04)] border border-outline-variant/20">
+                    <h2 class="text-xs font-bold uppercase tracking-widest text-primary mb-4">Daftar Produk</h2>
+                    <div class="space-y-4">
                         <div v-for="item in selectedOrder.items" :key="item.id"
-                            class="flex flex-col sm:flex-row gap-md py-sm border-b border-surface-variant last:border-0 last:pb-0">
-                            <div class="flex gap-md flex-grow">
-                                <!-- Image Fallback -->
-                                <div class="w-20 h-24 bg-surface-variant rounded-lg overflow-hidden flex-shrink-0 flex items-center justify-center">
-                                    <span class="material-symbols-outlined text-outline text-3xl">image</span>
-                                </div>
-                                <div class="flex-grow min-w-0 flex flex-col justify-center">
-                                    <h3 class="font-label-md text-label-md font-bold text-on-surface line-clamp-2">
-                                        {{ item.product_name }}</h3>
-                                    <p class="font-body-md text-body-md text-secondary mt-1">{{ item.quantity }} x {{ formatCurrency(item.product_price) }}</p>
-                                </div>
+                            class="flex gap-3 sm:gap-4 py-3 border-b border-surface-variant last:border-0 last:pb-0">
+                            <!-- Product Image -->
+                            <div class="w-16 h-20 sm:w-20 sm:h-24 bg-surface-variant rounded-xl overflow-hidden flex-shrink-0 flex items-center justify-center">
+                                <img v-if="item.product_image" :src="item.product_image" :alt="item.product_name"
+                                    class="w-full h-full object-cover" />
+                                <span v-else class="material-symbols-outlined text-outline text-2xl sm:text-3xl">image</span>
                             </div>
-                            <div class="flex sm:flex-col justify-between sm:justify-center items-center sm:items-end gap-2">
-                                <p class="font-label-md text-label-md font-bold text-primary">{{ formatCurrency(item.subtotal) }}</p>
-                                <div v-if="selectedOrder.status === 'delivered'">
-                                    <button v-if="!item.review" @click="openReviewModal(item)" class="text-xs bg-primary text-white px-3 py-1 rounded-full hover:bg-primary/90 transition-colors">
-                                        Beri Ulasan
-                                    </button>
-                                    <div v-else class="flex text-soft-gold" title="Ulasan Anda">
-                                        <span v-for="i in 5" :key="i" class="material-symbols-outlined text-[14px]" :style="i <= item.review.rating ? 'font-variation-settings: \'FILL\' 1;' : ''">star</span>
+                            <div class="flex-grow min-w-0 flex flex-col justify-between">
+                                <div>
+                                    <h3 class="text-xs sm:text-sm font-bold text-on-surface line-clamp-2">
+                                        {{ item.product_name }}</h3>
+                                    <p class="text-xs text-secondary mt-0.5">{{ item.quantity }} x {{ formatCurrency(item.product_price) }}</p>
+                                </div>
+                                <div class="flex items-center justify-between sm:justify-end gap-2 mt-2">
+                                    <p class="text-xs sm:text-sm font-bold text-primary">{{ formatCurrency(item.subtotal) }}</p>
+                                    <div v-if="selectedOrder.status === 'delivered'">
+                                        <button v-if="!item.review" @click="openReviewModal(item)" class="text-[11px] sm:text-xs bg-primary text-white px-3 py-1 rounded-full hover:bg-primary/90 transition-colors cursor-pointer">
+                                            Beri Ulasan
+                                        </button>
+                                        <div v-else class="flex text-soft-gold" title="Ulasan Anda">
+                                            <span v-for="i in 5" :key="i" class="material-symbols-outlined text-[14px]" :style="i <= item.review.rating ? 'font-variation-settings: \'FILL\' 1;' : ''">star</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -134,7 +137,7 @@ const submitReview = () => {
                 </section>
 
                 <!-- Shipping Address -->
-                <section class="bg-surface-container-lowest p-md md:p-lg rounded-xl shadow-[0px_4px_20px_rgba(0,0,0,0.04)]">
+                <section class="bg-surface-container-lowest p-4 sm:p-6 rounded-2xl shadow-[0px_4px_20px_rgba(0,0,0,0.04)] border border-outline-variant/20">
                     <div class="flex items-center gap-sm mb-md text-primary">
                         <span class="material-symbols-outlined">location_on</span>
                         <h2 class="font-label-md text-label-md uppercase tracking-widest">Alamat Pengiriman</h2>
@@ -153,11 +156,11 @@ const submitReview = () => {
             </div>
 
             <!-- Right Column: Summary & Payment -->
-            <div class="space-y-lg">
+            <div class="space-y-4 sm:space-y-6">
                 <!-- Order Summary -->
-                <section class="bg-surface-container-lowest p-md md:p-lg rounded-xl shadow-[0px_4px_20px_rgba(0,0,0,0.04)]">
-                    <h2 class="font-label-md text-label-md uppercase tracking-widest text-primary mb-md">Rincian Pembayaran</h2>
-                    <div class="space-y-sm text-sm text-on-surface-variant mb-md border-b border-surface-variant pb-md">
+                <section class="bg-surface-container-lowest p-4 sm:p-6 rounded-2xl shadow-[0px_4px_20px_rgba(0,0,0,0.04)] border border-outline-variant/20">
+                    <h2 class="text-xs font-bold uppercase tracking-widest text-primary mb-4">Rincian Pembayaran</h2>
+                    <div class="space-y-2.5 text-xs sm:text-sm text-on-surface-variant mb-4 border-b border-surface-variant pb-4">
                         <div class="flex justify-between">
                             <span>Subtotal Produk</span>
                             <span class="font-medium text-on-surface">{{ formatCurrency(selectedOrder.subtotal) }}</span>
@@ -172,17 +175,17 @@ const submitReview = () => {
                         </div>
                     </div>
                     <div class="flex justify-between items-center">
-                        <span class="font-label-lg text-label-lg font-bold text-on-surface">Total Belanja</span>
-                        <span class="font-headline-sm text-headline-sm font-bold text-primary">{{ formatCurrency(selectedOrder.total) }}</span>
+                        <span class="font-bold text-sm sm:text-base text-on-surface">Total Belanja</span>
+                        <span class="font-bold text-base sm:text-xl text-primary">{{ formatCurrency(selectedOrder.total) }}</span>
                     </div>
                 </section>
 
                 <!-- Payment Status -->
-                <section v-if="selectedOrder.payment" class="bg-surface-container-lowest p-md rounded-xl shadow-[0px_4px_20px_rgba(0,0,0,0.04)] border-l-4 border-primary">
-                    <h2 class="text-xs font-bold uppercase tracking-widest text-secondary mb-3">Status Pembayaran</h2>
+                <section v-if="selectedOrder.payment" class="bg-surface-container-lowest p-4 sm:p-6 rounded-2xl shadow-[0px_4px_20px_rgba(0,0,0,0.04)] border-l-4 border-primary border border-outline-variant/20">
+                    <h2 class="text-xs font-bold uppercase tracking-widest text-secondary mb-2.5">Status Pembayaran</h2>
                     <div>
-                        <p class="font-medium text-on-surface">{{ paymentMethodLabel[selectedOrder.payment.method] || selectedOrder.payment.method }}</p>
-                        <p class="text-sm mt-1 text-primary font-bold">{{ paymentStatusLabel[selectedOrder.payment.status] || selectedOrder.payment.status }}</p>
+                        <p class="font-semibold text-xs sm:text-sm text-on-surface">{{ paymentMethodLabel[selectedOrder.payment.method] || selectedOrder.payment.method }}</p>
+                        <p class="text-xs sm:text-sm mt-1 text-primary font-bold">{{ paymentStatusLabel[selectedOrder.payment.status] || selectedOrder.payment.status }}</p>
                         
                         <!-- Bukti bayar thumbnail -->
                         <a v-if="selectedOrder.payment.transfer_proof" :href="selectedOrder.payment.transfer_proof" target="_blank" class="block mt-3">

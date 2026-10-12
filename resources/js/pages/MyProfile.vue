@@ -111,26 +111,85 @@ const changeTab = (tab: string) => {
         <ShopNavbar />
 
         <!-- Main Workspace -->
-        <main class="flex-grow max-w-[1440px] mx-auto w-full px-[16px] sm:px-[32px] md:px-[80px] py-[36px] md:py-[48px]">
-            <div class="flex flex-col lg:flex-row gap-[24px] lg:gap-[32px] items-start">
-                
-                <!-- Sidebar Navigation -->
-                <aside class="w-full lg:w-[290px] shrink-0">
-                    <div class="bg-surface-container-lowest rounded-2xl p-[20px] sm:p-[24px] shadow-[0px_4px_20px_rgba(0,0,0,0.04)] dark:shadow-none border border-outline-variant/20 sticky top-24">
-                        <!-- User Profile Thumb Header (Mobile Check) -->
-                        <div class="flex items-center gap-[12px] mb-[20px] pb-[16px] border-b border-outline-variant/30 lg:hidden">
+        <main class="flex-grow max-w-[1440px] mx-auto w-full px-4 sm:px-8 md:px-[80px] py-5 sm:py-8 md:py-12">
+            
+            <!-- Mobile Compact Header & Tab Bar (lg:hidden) -->
+            <div class="lg:hidden w-full mb-6">
+                <!-- User mini info bar on mobile -->
+                <div class="bg-surface-container-lowest rounded-2xl p-3 sm:p-4 border border-outline-variant/20 shadow-sm flex items-center justify-between gap-3 mb-3">
+                    <div class="flex items-center gap-3 min-w-0">
+                        <div class="w-11 h-11 rounded-full overflow-hidden border-2 border-primary shrink-0 bg-primary/10 flex items-center justify-center">
                             <img 
-                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDFjD0eSvERO90onBKyqX6nuJrxPbZZDN-yHdYDFzeE-V95G2CQojDT9ikhgiTINNC_bncS375Zo_8MzgEWehWyiUiq8FzT2bDrEY4FkcdFVit-sJOaBN0qrxX4eHJYxaKJSYvdoZSpE4mhlKm1ISXFJmFMmjE5f6b4LM3yTQaCyVSSlZTCA9G2Uq8ak_GY84aOY-9-D9I1-3MsslX1QZ5CdAfNqq1YUxI6_7vzSjoA3xOQCEd-NJfG7ToE2CmEX-QW7V84CuxqAGJE" 
+                                v-if="authUser?.profile_photo"
+                                :src="authUser.profile_photo" 
                                 @error="handleImageError($event, fallbackAvatar)"
                                 alt="Avatar"
-                                class="w-12 h-12 rounded-full object-cover border-2 border-primary"
+                                class="w-full h-full object-cover"
                             />
-                            <div>
-                                <h3 class="font-bold text-[16px] text-on-surface">{{ authUser?.name || 'Pelanggan' }}</h3>
-                                <p class="text-[12px] text-primary font-medium">Anggota Premium</p>
-                            </div>
+                            <span v-else class="font-bold text-primary text-base">
+                                {{ (authUser?.name || 'C').charAt(0).toUpperCase() }}
+                            </span>
                         </div>
+                        <div class="min-w-0">
+                            <h3 class="font-bold text-sm text-on-surface truncate">{{ authUser?.name || 'Pelanggan' }}</h3>
+                            <p class="text-[11px] text-primary font-medium truncate">{{ authUser?.email || '' }}</p>
+                        </div>
+                    </div>
+                    <button 
+                        @click="handleLogout"
+                        class="p-2 rounded-xl text-error hover:bg-error/10 transition-all shrink-0 cursor-pointer active:scale-95 flex items-center gap-1 text-xs font-semibold"
+                        title="Keluar"
+                    >
+                        <span class="material-symbols-outlined text-[18px]">logout</span>
+                        <span class="hidden sm:inline">Keluar</span>
+                    </button>
+                </div>
 
+                <!-- Mobile Horizontal Tabs Bar -->
+                <div class="bg-surface-container-lowest rounded-2xl p-1.5 border border-outline-variant/20 shadow-sm flex items-center gap-1.5 overflow-x-auto no-scrollbar">
+                    <button 
+                        @click="activeTab = 'profile'"
+                        class="flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold transition-all shrink-0 cursor-pointer active:scale-95"
+                        :class="activeTab === 'profile' ? 'bg-primary-container text-white shadow-xs' : 'text-on-surface-variant hover:bg-surface-container-low'"
+                    >
+                        <span class="material-symbols-outlined text-[18px]">person</span>
+                        <span>Profil</span>
+                    </button>
+
+                    <button 
+                        @click="activeTab = 'orders'"
+                        class="flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold transition-all shrink-0 cursor-pointer active:scale-95"
+                        :class="(activeTab === 'orders' || activeTab === 'order_details') ? 'bg-primary-container text-white shadow-xs' : 'text-on-surface-variant hover:bg-surface-container-low'"
+                    >
+                        <span class="material-symbols-outlined text-[18px]">inventory_2</span>
+                        <span>Pesanan Saya</span>
+                        <span v-if="orders.length > 0" class="ml-0.5 px-1.5 py-0.2 rounded-full text-[10px] font-bold" :class="(activeTab === 'orders' || activeTab === 'order_details') ? 'bg-white text-primary' : 'bg-primary/10 text-primary'">{{ orders.length }}</span>
+                    </button>
+
+                    <button 
+                        @click="activeTab = 'addresses'"
+                        class="flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold transition-all shrink-0 cursor-pointer active:scale-95"
+                        :class="activeTab === 'addresses' ? 'bg-primary-container text-white shadow-xs' : 'text-on-surface-variant hover:bg-surface-container-low'"
+                    >
+                        <span class="material-symbols-outlined text-[18px]">location_on</span>
+                        <span>Alamat</span>
+                    </button>
+
+                    <button 
+                        @click="navigateToWishlist"
+                        class="flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold text-on-surface-variant hover:bg-surface-container-low transition-all shrink-0 cursor-pointer active:scale-95"
+                    >
+                        <span class="material-symbols-outlined text-[18px]">favorite</span>
+                        <span>Favorit</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="flex flex-col lg:flex-row gap-6 lg:gap-8 items-start">
+                
+                <!-- Desktop Sidebar Navigation (hidden on mobile, sticky on desktop) -->
+                <aside class="hidden lg:block w-[290px] shrink-0 sticky top-24">
+                    <div class="bg-surface-container-lowest rounded-2xl p-[20px] sm:p-[24px] shadow-[0px_4px_20px_rgba(0,0,0,0.04)] dark:shadow-none border border-outline-variant/20">
                         <div class="space-y-[6px]">
                             <!-- Profile Tab Button -->
                             <button 

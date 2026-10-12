@@ -93,14 +93,44 @@ const applyPromo = () => {
     }
 };
 
+// Delivery type state
+const deliveryType = ref<'shipping' | 'cod'>('shipping');
+
+watch(deliveryType, (val) => {
+    if (val === 'cod') {
+        shippingCost.value = 0;
+        selectedShippingService.value = 'COD';
+    } else {
+        if (shippingOptions.value.length > 0) {
+            selectedShippingService.value = shippingOptions.value[0].service;
+            shippingCost.value = shippingOptions.value[0].cost;
+        } else {
+            shippingCost.value = 0;
+            selectedShippingService.value = '';
+        }
+    }
+});
+
 const handleContinueToPayment = () => {
-    if (!form.value.email || !form.value.firstName || !form.value.address || !form.value.phone || !form.value.destination_id || shippingCost.value === 0) {
-        alert('Mohon lengkapi alamat pengiriman dan pilih metode pengiriman yang tersedia.');
-        return;
+    if (deliveryType.value === 'cod') {
+        if (!form.value.email || !form.value.firstName || !form.value.phone || !form.value.address) {
+            alert('Mohon lengkapi email, nama, nomor telepon, dan alamat untuk pesanan COD.');
+            return;
+        }
+        shippingCost.value = 0;
+        form.value.courier = 'cod';
+        form.value.destination_id = 'cod';
+        form.value.destination_label = 'COD / Ambil di Tempat';
+    } else {
+        if (!form.value.email || !form.value.firstName || !form.value.address || !form.value.phone || !form.value.destination_id || shippingCost.value === 0) {
+            alert('Mohon lengkapi alamat pengiriman dan pilih metode pengiriman yang tersedia.');
+            return;
+        }
     }
     // Set to local storage to simulate passing data to payment
     localStorage.setItem('checkoutData', JSON.stringify({
         form: form.value,
+        deliveryType: deliveryType.value,
         total: total.value,
         subtotal: subtotal.value,
         shippingCost: shippingCost.value,
@@ -263,28 +293,66 @@ onMounted(() => {
                         <div class="space-y-4">
                             <div>
                                 <label class="block text-sm font-medium mb-2 text-on-surface-variant">Alamat Email <span class="text-red-500">*</span></label>
-                                <input v-model="form.email" type="email" placeholder="nama@contoh.com" class="w-full h-14 px-4 rounded-2xl border border-outline-variant focus:border-primary focus:ring-2 focus:ring-primary/20 bg-surface text-on-surface transition-all duration-200 outline-none" required />
+                                <input v-model="form.email" type="email" placeholder="nama@contoh.com" class="w-full h-14 px-4 rounded-2xl border border-outline-variant focus:border-primary focus:ring-2 focus:ring-primary/20 bg-surface text-black dark:text-white transition-all duration-200 outline-none" required />
                             </div>
+                        </div>
+                    </section>
+
+                    <!-- Delivery Method Type -->
+                    <section class="bg-surface-container-low/40 p-6 sm:p-8 rounded-3xl border border-outline-variant/30 shadow-sm">
+                        <h2 class="font-headline-md text-2xl font-bold text-on-surface mb-4">Opsi Pemesanan</h2>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <label 
+                                class="flex items-start gap-4 p-5 rounded-2xl border-2 cursor-pointer transition-all"
+                                :class="deliveryType === 'shipping' ? 'border-primary bg-primary/5 shadow-xs' : 'border-outline-variant/40 bg-surface hover:border-primary/40'"
+                            >
+                                <input type="radio" value="shipping" v-model="deliveryType" class="mt-1 h-5 w-5 text-primary accent-primary" />
+                                <div>
+                                    <div class="flex items-center gap-2">
+                                        <span class="material-symbols-outlined text-primary text-[20px]">local_shipping</span>
+                                        <p class="font-bold text-base text-on-surface">Pengiriman Ekspedisi</p>
+                                    </div>
+                                    <p class="text-xs text-on-surface-variant mt-1 leading-relaxed">Kirim ke alamat via kurir (JNE, POS, TIKI). Bayar via transfer atau QRIS.</p>
+                                </div>
+                            </label>
+
+                            <label 
+                                class="flex items-start gap-4 p-5 rounded-2xl border-2 cursor-pointer transition-all"
+                                :class="deliveryType === 'cod' ? 'border-primary bg-primary/5 shadow-xs' : 'border-outline-variant/40 bg-surface hover:border-primary/40'"
+                            >
+                                <input type="radio" value="cod" v-model="deliveryType" class="mt-1 h-5 w-5 text-primary accent-primary" />
+                                <div>
+                                    <div class="flex items-center gap-2">
+                                        <span class="material-symbols-outlined text-primary text-[20px]">payments</span>
+                                        <p class="font-bold text-base text-on-surface">COD / Bayar di Tempat</p>
+                                    </div>
+                                    <p class="text-xs text-on-surface-variant mt-1 leading-relaxed">Bayar tunai di tempat / ambil langsung di Saung Jelita. Bebas ongkos kirim (Rp 0).</p>
+                                </div>
+                            </label>
                         </div>
                     </section>
 
                     <!-- Shipping Address -->
                     <section class="bg-surface-container-low/40 p-6 sm:p-8 rounded-3xl border border-outline-variant/30 shadow-sm">
-                        <h2 class="font-headline-md text-2xl font-bold text-on-surface mb-6">Alamat Pengiriman</h2>
+                        <h2 class="font-headline-md text-2xl font-bold text-on-surface mb-6">
+                            {{ deliveryType === 'cod' ? 'Informasi Penerima (COD)' : 'Alamat Pengiriman' }}
+                        </h2>
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
                             <div class="sm:col-span-1">
                                 <label class="block text-sm font-medium mb-2 text-on-surface-variant">Nama Depan <span class="text-red-500">*</span></label>
-                                <input v-model="form.firstName" type="text" class="w-full h-14 px-4 rounded-2xl border border-outline-variant focus:border-primary focus:ring-2 focus:ring-primary/20 bg-surface text-on-surface transition-all outline-none" required />
+                                <input v-model="form.firstName" type="text" class="w-full h-14 px-4 rounded-2xl border border-outline-variant focus:border-primary focus:ring-2 focus:ring-primary/20 bg-surface text-black dark:text-white transition-all outline-none" required />
                             </div>
                             <div class="sm:col-span-1">
                                 <label class="block text-sm font-medium mb-2 text-on-surface-variant">Nama Belakang</label>
-                                <input v-model="form.lastName" type="text" class="w-full h-14 px-4 rounded-2xl border border-outline-variant focus:border-primary focus:ring-2 focus:ring-primary/20 bg-surface text-on-surface transition-all outline-none" />
+                                <input v-model="form.lastName" type="text" class="w-full h-14 px-4 rounded-2xl border border-outline-variant focus:border-primary focus:ring-2 focus:ring-primary/20 bg-surface text-black dark:text-white transition-all outline-none" />
                             </div>
                             <div class="sm:col-span-2">
-                                <label class="block text-sm font-medium mb-2 text-on-surface-variant">Alamat <span class="text-red-500">*</span></label>
-                                <input v-model="form.address" type="text" placeholder="Jl. Sudirman No. 45" class="w-full h-14 px-4 rounded-2xl border border-outline-variant focus:border-primary focus:ring-2 focus:ring-primary/20 bg-surface text-on-surface transition-all outline-none" required />
+                                <label class="block text-sm font-medium mb-2 text-on-surface-variant">
+                                    {{ deliveryType === 'cod' ? 'Alamat Pengantaran / Lokasi Anda' : 'Alamat' }} <span class="text-red-500">*</span>
+                                </label>
+                                <input v-model="form.address" type="text" :placeholder="deliveryType === 'cod' ? 'Jl. Contoh No. 12 (atau Catatan Ambil di Tempat)' : 'Jl. Sudirman No. 45'" class="w-full h-14 px-4 rounded-2xl border border-outline-variant focus:border-primary focus:ring-2 focus:ring-primary/20 bg-surface text-black dark:text-white transition-all outline-none" required />
                             </div>
-                            <div class="sm:col-span-2 relative">
+                            <div v-if="deliveryType === 'shipping'" class="sm:col-span-2 relative">
                                 <label class="block text-sm font-medium mb-2 text-on-surface-variant">Kota/Kecamatan Tujuan <span class="text-red-500">*</span></label>
                                 <div class="relative">
                                     <input 
@@ -314,17 +382,17 @@ onMounted(() => {
                             </div>
                             <div class="sm:col-span-1">
                                 <label class="block text-sm font-medium mb-2 text-on-surface-variant">Kode Pos</label>
-                                <input v-model="form.postalCode" type="text" class="w-full h-14 px-4 rounded-2xl border border-outline-variant focus:border-primary focus:ring-2 focus:ring-primary/20 bg-surface text-on-surface transition-all outline-none" />
+                                <input v-model="form.postalCode" type="text" class="w-full h-14 px-4 rounded-2xl border border-outline-variant focus:border-primary focus:ring-2 focus:ring-primary/20 bg-surface text-black dark:text-white transition-all outline-none" />
                             </div>
                             <div class="sm:col-span-1">
-                                <label class="block text-sm font-medium mb-2 text-on-surface-variant">Nomor Telepon <span class="text-red-500">*</span></label>
-                                <input v-model="form.phone" type="tel" class="w-full h-14 px-4 rounded-2xl border border-outline-variant focus:border-primary focus:ring-2 focus:ring-primary/20 bg-surface text-on-surface transition-all outline-none" required />
+                                <label class="block text-sm font-medium mb-2 text-on-surface-variant">Nomor Telepon (WhatsApp) <span class="text-red-500">*</span></label>
+                                <input v-model="form.phone" type="tel" class="w-full h-14 px-4 rounded-2xl border border-outline-variant focus:border-primary focus:ring-2 focus:ring-primary/20 bg-surface text-black dark:text-white transition-all outline-none" required />
                             </div>
                         </div>
                     </section>
 
-                    <!-- Shipping Method via RajaOngkir -->
-                    <section class="bg-surface-container-low/40 p-6 sm:p-8 rounded-3xl border border-outline-variant/30 shadow-sm">
+                    <!-- Shipping Method via RajaOngkir (Only for standard shipping) -->
+                    <section v-if="deliveryType === 'shipping'" class="bg-surface-container-low/40 p-6 sm:p-8 rounded-3xl border border-outline-variant/30 shadow-sm">
                         <h2 class="font-headline-md text-2xl font-bold text-on-surface mb-6">Metode Pengiriman</h2>
                         
                         <div class="mb-6">
@@ -371,12 +439,27 @@ onMounted(() => {
                         </div>
                     </section>
 
+                    <!-- COD Delivery Info Section -->
+                    <section v-else class="bg-surface-container-low/40 p-6 sm:p-8 rounded-3xl border border-outline-variant/30 shadow-sm">
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 rounded-2xl bg-amber-500/15 border border-amber-500/30 flex items-center justify-center shrink-0">
+                                <span class="material-symbols-outlined text-amber-600 text-2xl">handshake</span>
+                            </div>
+                            <div>
+                                <h2 class="font-headline-md text-xl font-bold text-on-surface">Layanan COD / Bayar di Tempat Aktif</h2>
+                                <p class="text-sm text-on-surface-variant mt-1 leading-relaxed">
+                                    Bebas ongkos kirim (Rp 0). Anda tidak perlu membayar sekarang — pembayaran tunai akan dilakukan saat barang diserahkan atau saat Anda mengambil di Saung Jelita (Rutan Perempuan Kelas IIA Bandung).
+                                </p>
+                            </div>
+                        </div>
+                    </section>
+
                     <div class="pt-2 flex justify-between items-center gap-4">
                         <button 
                             @click="handleContinueToPayment" 
                             class="w-full px-10 py-4 bg-primary text-white font-bold text-base rounded-full shadow-[0px_8px_30px_rgba(138,72,83,0.25)] hover:opacity-95 active:scale-[0.98] transition-all cursor-pointer"
                         >
-                            Lanjutkan ke Pembayaran
+                            {{ deliveryType === 'cod' ? 'Lanjutkan ke Pembayaran COD' : 'Lanjutkan ke Pembayaran' }}
                         </button>
                     </div>
                 </div>
@@ -415,7 +498,9 @@ onMounted(() => {
                             </div>
                             <div class="flex justify-between">
                                 <span>Ongkos Kirim</span>
-                                <span class="text-on-surface font-semibold">{{ formatRupiah(shippingCost) }}</span>
+                                <span class="text-on-surface font-semibold">
+                                    {{ deliveryType === 'cod' ? 'Rp 0 (Bebas Ongkir / COD)' : formatRupiah(shippingCost) }}
+                                </span>
                             </div>
                             <div class="flex justify-between">
                                 <span>Estimasi Pajak (PPN 11%)</span>

@@ -11,13 +11,13 @@ class OrderController extends Controller
 {
     public function index()
     {
-        $orders = Order::with(['user', 'items', 'payment'])->latest()->paginate(15);
+        $orders = Order::with(['user', 'items.product', 'payment'])->latest()->paginate(15);
         
         $stats = [
             'pending_payment' => Order::where('status', 'pending_payment')->count(),
             'processing' => Order::where('status', 'processing')->count(),
             'total' => Order::count(),
-            'revenue' => Order::whereIn('status', ['processing', 'shipped', 'delivered'])->sum('total')
+            'revenue' => Order::whereIn('status', ['processing', 'shipped', 'delivered'])->sum('subtotal')
         ];
 
         $ordersData = $orders->through(function ($order) {
@@ -48,6 +48,9 @@ class OrderController extends Controller
                     'product_price' => $i->product_price,
                     'quantity'      => $i->quantity,
                     'subtotal'      => $i->subtotal,
+                    'product_image' => $i->product && $i->product->image
+                        ? (str_starts_with($i->product->image, 'http') ? $i->product->image : asset('storage/' . $i->product->image))
+                        : null,
                 ]),
                 'payment' => $payment ? [
                     'id'             => $payment->id,

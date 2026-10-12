@@ -119,7 +119,7 @@
     <div class="invoice-box">
         <div class="header">
             <div class="logo">
-                <h1>LaraCommerce</h1>
+                <h1>Jelita Saung</h1>
             </div>
             <div class="invoice-details" style="text-align: right;">
                 <h2>INVOICE</h2>

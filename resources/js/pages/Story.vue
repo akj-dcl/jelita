@@ -25,7 +25,7 @@ import ShopFooter from '@/components/ShopFooter.vue';
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-24 items-center mb-24">
                 <div class="rounded-2xl overflow-hidden aspect-square shadow-[0px_12px_40px_rgba(0,0,0,0.08)]">
-                    <img src="https://placehold.co/800x800/e2e8f0/64748b?text=Artisan+Workshop" alt="Our Workshop" class="w-full h-full object-cover" />
+                    <img src="/storage/template/cerita-sejarah-singkat.jpg" alt="Our Workshop" class="w-full h-full object-cover" />
                 </div>
                 <div>
                     <h2 class="font-display-md text-3xl text-primary font-bold mb-6">Sejarah Singkat Jelita Saung</h2>
@@ -55,7 +55,7 @@ import ShopFooter from '@/components/ShopFooter.vue';
                     </p>
                 </div>
                 <div class="order-1 md:order-2 rounded-2xl overflow-hidden aspect-square shadow-[0px_12px_40px_rgba(0,0,0,0.08)]">
-                    <img src="https://placehold.co/800x800/e2e8f0/64748b?text=Quality+Materials" alt="Our Materials" class="w-full h-full object-cover" />
+                    <img src="/storage/template/cerita-filosofi-kami.jpg" alt="Our Materials" class="w-full h-full object-cover" />
                 </div>
             </div>
             

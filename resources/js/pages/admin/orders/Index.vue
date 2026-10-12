@@ -223,7 +223,7 @@ const translateStatus = (status: string) => {
                                         {{ order.payment?.status === 'paid' ? 'Terverifikasi' : order.payment?.status === 'failed' ? 'Ditolak' : 'Menunggu' }}
                                     </span>
                                     <p class="text-xs text-on-surface-variant mt-1">
-                                        {{ order.payment?.method === 'bank_transfer' ? 'Transfer BRI' : order.payment?.method === 'qris' ? 'QRIS' : '-' }}
+                                        {{ order.payment?.method === 'bank_transfer' ? 'Transfer BRI' : order.payment?.method === 'qris' ? 'QRIS' : order.payment?.method === 'cod' ? 'COD' : '-' }}
                                     </p>
                                 </td>
 
@@ -333,12 +333,18 @@ const translateStatus = (status: string) => {
                     <div>
                         <h3 class="font-semibold text-sm text-on-surface-variant uppercase tracking-wider mb-3">Produk Dipesan</h3>
                         <div class="space-y-2">
-                            <div v-for="(item, i) in selectedOrder.items" :key="i" class="flex justify-between items-center p-3 bg-surface-container-low rounded-xl text-sm">
-                                <div>
-                                    <p class="font-semibold">{{ item.product_name }}</p>
-                                    <p class="text-xs text-on-surface-variant">{{ item.quantity }}x {{ formatCurrency(item.product_price) }}</p>
+                            <div v-for="(item, i) in selectedOrder.items" :key="i" class="flex justify-between items-center p-3 bg-surface-container-low rounded-xl text-sm gap-3">
+                                <div class="flex items-center gap-3 min-w-0">
+                                    <div class="w-12 h-12 bg-surface-variant rounded-lg overflow-hidden flex-shrink-0 flex items-center justify-center">
+                                        <img v-if="item.product_image" :src="item.product_image" :alt="item.product_name" class="w-full h-full object-cover" />
+                                        <span v-else class="material-symbols-outlined text-outline text-xl">image</span>
+                                    </div>
+                                    <div class="min-w-0">
+                                        <p class="font-semibold truncate">{{ item.product_name }}</p>
+                                        <p class="text-xs text-on-surface-variant">{{ item.quantity }}x {{ formatCurrency(item.product_price) }}</p>
+                                    </div>
                                 </div>
-                                <p class="font-bold text-primary">{{ formatCurrency(item.subtotal) }}</p>
+                                <p class="font-bold text-primary flex-shrink-0">{{ formatCurrency(item.subtotal) }}</p>
                             </div>
                         </div>
                     </div>
@@ -355,17 +361,22 @@ const translateStatus = (status: string) => {
 
                     <!-- Payment Proof -->
                     <div v-if="selectedOrder.payment">
-                        <h3 class="font-semibold text-sm text-on-surface-variant uppercase tracking-wider mb-3">Bukti Pembayaran</h3>
+                        <h3 class="font-semibold text-sm text-on-surface-variant uppercase tracking-wider mb-3">Informasi Pembayaran</h3>
                         <div class="flex items-center gap-3 mb-3">
                             <span :class="['px-3 py-1 rounded-full text-xs font-semibold', paymentStatusColor[selectedOrder.payment.status] || 'bg-gray-100 text-gray-600']">
                                 {{ selectedOrder.payment.status === 'paid' ? '✅ Terverifikasi' : selectedOrder.payment.status === 'failed' ? '❌ Ditolak' : '⏳ Menunggu Verifikasi' }}
+                            </span>
+                            <span class="text-xs font-semibold text-on-surface-variant uppercase px-2 py-0.5 bg-surface-container rounded-md">
+                                {{ selectedOrder.payment.method === 'bank_transfer' ? 'Transfer BRI' : selectedOrder.payment.method === 'qris' ? 'QRIS' : selectedOrder.payment.method === 'cod' ? 'COD (Bayar di Tempat)' : selectedOrder.payment.method }}
                             </span>
                         </div>
                         <a v-if="selectedOrder.payment.transfer_proof" :href="selectedOrder.payment.transfer_proof" target="_blank">
                             <img :src="selectedOrder.payment.transfer_proof" alt="Bukti Pembayaran"
                                 class="max-w-full max-h-64 rounded-xl border border-surface-container object-contain hover:opacity-90 transition-opacity" />
                         </a>
-                        <p v-else class="text-sm text-on-surface-variant italic">Belum ada bukti pembayaran.</p>
+                        <p v-else class="text-sm text-on-surface-variant italic">
+                            {{ selectedOrder.payment.method === 'cod' ? 'Pesanan COD: Pembayaran tunai saat barang diterima.' : 'Belum ada bukti pembayaran.' }}
+                        </p>
                     </div>
 
                     <!-- Actions -->

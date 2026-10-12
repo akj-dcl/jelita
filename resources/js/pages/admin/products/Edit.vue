@@ -95,18 +95,18 @@ const submit = () => {
           <section class="bg-surface-container-lowest rounded-2xl p-md shadow-[0_4px_20px_rgba(0,0,0,0.04)] mb-md">
             <div class="mb-sm">
               <label class="block text-on-surface-variant font-label-md text-label-md mb-xs" for="product-title">Nama Produk</label>
-              <input v-model="form.name" @input="generateSlug" class="w-full bg-surface-container-lowest border border-[#E8E8E8] rounded-2xl px-4 py-3 text-on-surface font-body-md text-body-md transition-colors focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary placeholder-secondary" id="product-title" placeholder="Misalnya: Anyaman Rotan" type="text" required/>
+              <input v-model="form.name" @input="generateSlug" class="w-full bg-surface-container-lowest border border-[#E8E8E8] rounded-2xl px-4 py-3 text-black dark:text-white font-body-md text-body-md transition-colors focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary placeholder-secondary" id="product-title" placeholder="Misalnya: Anyaman Rotan" type="text" required/>
               <div v-if="form.errors.name" class="text-error text-sm mt-1">{{ form.errors.name }}</div>
             </div>
             <div class="mb-sm">
               <label class="block text-on-surface-variant font-label-md text-label-md mb-xs" for="product-slug">Slug</label>
-              <input v-model="form.slug" class="w-full bg-surface-container-lowest border border-[#E8E8E8] rounded-2xl px-4 py-3 text-on-surface font-body-md text-body-md transition-colors focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary placeholder-secondary" id="product-slug" placeholder="Misalnya: anyaman-rotan" type="text" required/>
+              <input v-model="form.slug" class="w-full bg-surface-container-lowest border border-[#E8E8E8] rounded-2xl px-4 py-3 text-black dark:text-white font-body-md text-body-md transition-colors focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary placeholder-secondary" id="product-slug" placeholder="Misalnya: anyaman-rotan" type="text" required/>
               <div v-if="form.errors.slug" class="text-error text-sm mt-1">{{ form.errors.slug }}</div>
             </div>
             <div>
               <label class="block text-on-surface-variant font-label-md text-label-md mb-xs" for="product-description">Deskripsi</label>
               <div class="border border-[#E8E8E8] rounded-2xl overflow-hidden focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition-colors">
-                <textarea v-model="form.description" class="w-full bg-surface-container-lowest px-4 py-3 text-on-surface font-body-md text-body-md focus:outline-none placeholder-secondary border-none resize-y" id="product-description" placeholder="Jelaskan karya, bahan, dan detail..." rows="6"></textarea>
+                <textarea v-model="form.description" class="w-full bg-surface-container-lowest px-4 py-3 text-black dark:text-white font-body-md text-body-md focus:outline-none placeholder-secondary border-none resize-y" id="product-description" placeholder="Jelaskan karya, bahan, dan detail..." rows="6"></textarea>
               </div>
               <div v-if="form.errors.description" class="text-error text-sm mt-1">{{ form.errors.description }}</div>
             </div>
@@ -185,27 +185,27 @@ const submit = () => {
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div class="sm:col-span-2">
                     <label class="block text-xs font-semibold text-on-surface-variant mb-1">Nama Varian *</label>
-                    <input v-model="variant.name" class="w-full bg-surface-container-lowest border border-[#E8E8E8] rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary" placeholder="Contoh: Lavender 100g" required />
+                    <input v-model="variant.name" class="w-full bg-surface-container-lowest border border-[#E8E8E8] rounded-xl px-3 py-2 text-sm text-black dark:text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary" placeholder="Contoh: Lavender 100g" required />
                     <p class="text-[10px] text-secondary mt-1">Gunakan gabungan spesifikasi (Contoh: Vanilla - Kecil - Merah Muda).</p>
                   </div>
                   <div>
                     <label class="block text-xs font-semibold text-on-surface-variant mb-1">SKU</label>
-                    <input v-model="variant.sku" class="w-full bg-surface-container-lowest border border-[#E8E8E8] rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary" placeholder="Contoh: LAT-LAV-100" />
+                    <input v-model="variant.sku" class="w-full bg-surface-container-lowest border border-[#E8E8E8] rounded-xl px-3 py-2 text-sm text-black dark:text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary" placeholder="Contoh: LAT-LAV-100" />
                   </div>
                   <div>
                     <label class="block text-xs font-semibold text-on-surface-variant mb-1">Harga *</label>
                     <div class="relative">
                       <span class="absolute left-3 top-1/2 -translate-y-1/2 text-secondary text-xs">Rp</span>
-                      <input v-model="variant.price" type="number" class="w-full bg-surface-container-lowest border border-[#E8E8E8] rounded-xl px-3 py-2 pl-9 text-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary" placeholder="0" required />
+                      <input v-model="variant.price" type="number" class="w-full bg-surface-container-lowest border border-[#E8E8E8] rounded-xl px-3 py-2 pl-9 text-sm text-black dark:text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary" placeholder="0" required />
                     </div>
                   </div>
                   <div>
                     <label class="block text-xs font-semibold text-on-surface-variant mb-1">Stok</label>
-                    <input v-model="variant.stock" type="number" class="w-full bg-surface-container-lowest border border-[#E8E8E8] rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary" placeholder="0" />
+                    <input v-model="variant.stock" type="number" class="w-full bg-surface-container-lowest border border-[#E8E8E8] rounded-xl px-3 py-2 text-sm text-black dark:text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary" placeholder="0" />
                   </div>
                   <div>
                     <label class="block text-xs font-semibold text-on-surface-variant mb-1">Berat (gram)</label>
-                    <input v-model="variant.weight" type="number" class="w-full bg-surface-container-lowest border border-[#E8E8E8] rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary" placeholder="0" />
+                    <input v-model="variant.weight" type="number" class="w-full bg-surface-container-lowest border border-[#E8E8E8] rounded-xl px-3 py-2 text-sm text-black dark:text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary" placeholder="0" />
                   </div>
                 </div>
               </div>
@@ -219,7 +219,7 @@ const submit = () => {
           <section class="bg-surface-container-lowest rounded-2xl p-md shadow-[0_4px_20px_rgba(0,0,0,0.04)] mb-md">
             <h3 class="font-headline-md text-headline-md text-on-surface mb-sm">Status</h3>
             <div class="relative">
-              <select v-model="form.status" class="w-full bg-surface-container-lowest border border-[#E8E8E8] rounded-2xl px-4 py-3 text-on-surface font-body-md text-body-md transition-colors focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary placeholder-secondary appearance-none cursor-pointer pr-10">
+              <select v-model="form.status" class="w-full bg-surface-container-lowest border border-[#E8E8E8] rounded-2xl px-4 py-3 text-black dark:text-white font-body-md text-body-md transition-colors focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary placeholder-secondary appearance-none cursor-pointer pr-10">
                 <option value="draft">Draf</option>
                 <option value="active">Aktif</option>
               </select>
@@ -236,7 +236,7 @@ const submit = () => {
                 <label class="block text-on-surface-variant font-label-md text-label-md mb-xs" for="price">Harga</label>
                 <div class="relative">
                   <span class="absolute left-4 top-1/2 -translate-y-1/2 text-secondary font-body-md">Rp</span>
-                  <input v-model="form.price" class="w-full bg-surface-container-lowest border border-[#E8E8E8] rounded-2xl px-4 py-3 text-on-surface font-body-md text-body-md transition-colors focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary placeholder-secondary pl-12" id="price" placeholder="0" type="number" required/>
+                  <input v-model="form.price" class="w-full bg-surface-container-lowest border border-[#E8E8E8] rounded-2xl px-4 py-3 text-black dark:text-white font-body-md text-body-md transition-colors focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary placeholder-secondary pl-12" id="price" placeholder="0" type="number" required/>
                 </div>
                 <p class="text-xs text-on-surface-variant mt-2 leading-relaxed">Harga awal/dasar. Jika produk memiliki varian ukuran/warna, harga varian di bawah akan menggantikan harga ini.</p>
                 <div v-if="form.errors.price" class="text-error text-sm mt-1">{{ form.errors.price }}</div>
@@ -250,12 +250,12 @@ const submit = () => {
             <div class="space-y-sm">
               <div>
                 <label class="block text-on-surface-variant font-label-md text-label-md mb-xs" for="sku">SKU</label>
-                <input v-model="form.sku" class="w-full bg-surface-container-lowest border border-[#E8E8E8] rounded-2xl px-4 py-3 text-on-surface font-body-md text-body-md transition-colors focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary placeholder-secondary" id="sku" placeholder="Misalnya: ART-RAT-001" type="text"/>
+                <input v-model="form.sku" class="w-full bg-surface-container-lowest border border-[#E8E8E8] rounded-2xl px-4 py-3 text-black dark:text-white font-body-md text-body-md transition-colors focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary placeholder-secondary" id="sku" placeholder="Misalnya: ART-RAT-001" type="text"/>
                 <div v-if="form.errors.sku" class="text-error text-sm mt-1">{{ form.errors.sku }}</div>
               </div>
               <div>
                 <label class="block text-on-surface-variant font-label-md text-label-md mb-xs" for="stock">Jumlah Stok</label>
-                <input v-model="form.stock" class="w-full bg-surface-container-lowest border border-[#E8E8E8] rounded-2xl px-4 py-3 text-on-surface font-body-md text-body-md transition-colors focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary placeholder-secondary" id="stock" placeholder="0" type="number" required/>
+                <input v-model="form.stock" class="w-full bg-surface-container-lowest border border-[#E8E8E8] rounded-2xl px-4 py-3 text-black dark:text-white font-body-md text-body-md transition-colors focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary placeholder-secondary" id="stock" placeholder="0" type="number" required/>
                 <div v-if="form.errors.stock" class="text-error text-sm mt-1">{{ form.errors.stock }}</div>
               </div>
             </div>
@@ -268,7 +268,7 @@ const submit = () => {
               <div>
                 <label class="block text-on-surface-variant font-label-md text-label-md mb-xs" for="category">Kategori</label>
                 <div class="relative">
-                  <select v-model="form.category_id" class="w-full bg-surface-container-lowest border border-[#E8E8E8] rounded-2xl px-4 py-3 text-on-surface font-body-md text-body-md transition-colors focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary placeholder-secondary appearance-none cursor-pointer pr-10" id="category" required>
+                  <select v-model="form.category_id" class="w-full bg-surface-container-lowest border border-[#E8E8E8] rounded-2xl px-4 py-3 text-black dark:text-white font-body-md text-body-md transition-colors focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary placeholder-secondary appearance-none cursor-pointer pr-10" id="category" required>
                     <option value="" disabled>Pilih kategori...</option>
                     <template v-for="cat in categories" :key="cat.id">
                       <option v-if="!cat.children || cat.children.length === 0" :value="cat.id">{{ cat.name }}</option>

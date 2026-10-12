@@ -66,7 +66,7 @@ const submit = () => {
             <div class="space-y-md">
               <div>
                 <label class="block text-on-surface-variant font-label-md text-label-md mb-xs" for="name">Nama Kategori</label>
-                <input v-model="form.name" @input="generateSlug" class="w-full bg-surface-container-lowest border border-[#E8E8E8] rounded-2xl px-4 py-3 text-on-surface font-body-md text-body-md transition-colors focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary placeholder-secondary" id="name" placeholder="Misalnya: Tas Rajut" type="text" required/>
+                <input v-model="form.name" @input="generateSlug" class="w-full bg-surface-container-lowest border border-[#E8E8E8] rounded-2xl px-4 py-3 text-black dark:text-white font-body-md text-body-md transition-colors focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary placeholder-secondary" id="name" placeholder="Misalnya: Tas Rajut" type="text" required/>
                 <div v-if="form.errors.name" class="text-error text-sm mt-1">{{ form.errors.name }}</div>
               </div>
               <div>
@@ -74,13 +74,13 @@ const submit = () => {
                   Slug
                   <span class="material-symbols-outlined text-[14px] ml-xs text-secondary cursor-help" title="Versi nama yang ramah URL. Biasanya huruf kecil semua dan hanya berisi huruf, angka, dan tanda hubung.">help</span>
                 </label>
-                <input v-model="form.slug" class="w-full bg-surface-container-lowest border border-[#E8E8E8] rounded-2xl px-4 py-3 text-on-surface font-body-md text-body-md transition-colors focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary placeholder-secondary" id="slug" placeholder="Misalnya: tas-rajut" type="text" required/>
+                <input v-model="form.slug" class="w-full bg-surface-container-lowest border border-[#E8E8E8] rounded-2xl px-4 py-3 text-black dark:text-white font-body-md text-body-md transition-colors focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary placeholder-secondary" id="slug" placeholder="Misalnya: tas-rajut" type="text" required/>
                 <div v-if="form.errors.slug" class="text-error text-sm mt-1">{{ form.errors.slug }}</div>
               </div>
               <div>
                 <label class="block text-on-surface-variant font-label-md text-label-md mb-xs" for="parent_id">Kategori Induk (Opsional)</label>
                 <div class="relative">
-                  <select v-model="form.parent_id" class="w-full bg-surface-container-lowest border border-[#E8E8E8] rounded-2xl px-4 py-3 appearance-none text-on-surface font-body-md text-body-md transition-colors focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary" id="parent_id">
+                  <select v-model="form.parent_id" class="w-full bg-surface-container-lowest border border-[#E8E8E8] rounded-2xl px-4 py-3 appearance-none text-black dark:text-white font-body-md text-body-md transition-colors focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary" id="parent_id">
                     <option value="">-- Tanpa Induk (Kategori Utama) --</option>
                     <option v-for="cat in props.parentCategories" :key="cat.id" :value="cat.id">{{ cat.name }}</option>
                   </select>
@@ -91,7 +91,7 @@ const submit = () => {
               <div>
                 <label class="block text-on-surface-variant font-label-md text-label-md mb-xs" for="description">Deskripsi</label>
                 <div class="border border-[#E8E8E8] rounded-2xl overflow-hidden focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition-colors">
-                  <textarea v-model="form.description" class="w-full bg-surface-container-lowest px-4 py-3 text-on-surface font-body-md text-body-md focus:outline-none placeholder-secondary border-none resize-y" id="description" placeholder="Deskripsikan kategori..." rows="5"></textarea>
+                  <textarea v-model="form.description" class="w-full bg-surface-container-lowest px-4 py-3 text-black dark:text-white font-body-md text-body-md focus:outline-none placeholder-secondary border-none resize-y" id="description" placeholder="Deskripsikan kategori..." rows="5"></textarea>
                 </div>
                 <div v-if="form.errors.description" class="text-error text-sm mt-1">{{ form.errors.description }}</div>
               </div>
