@@ -82,44 +82,44 @@ watch(searchQuery, (value) => {
           </div>
         </Card>
         
-        <Card class="bg-surface-container-lowest p-md rounded-xl border-0 shadow-[0px_4px_20px_rgba(0,0,0,0.04)] flex flex-row items-center justify-between !gap-0">
+        <Card class="bg-surface-container-lowest p-md rounded-xl border border-transparent dark:border-outline-variant/30 shadow-[0px_4px_20px_rgba(0,0,0,0.04)] dark:shadow-none flex flex-row items-center justify-between !gap-0">
           <div>
             <p class="text-label-sm text-on-surface-variant uppercase tracking-tight">Terverifikasi</p>
             <h4 class="text-headline-md font-bold text-on-surface mt-1">{{ stats?.verified || 0 }}</h4>
           </div>
-          <div class="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center text-green-700 shrink-0">
+          <div class="w-12 h-12 rounded-full bg-green-100 dark:bg-emerald-950/40 flex items-center justify-center text-green-700 dark:text-emerald-400 shrink-0">
             <span class="material-symbols-outlined text-[24px]">verified</span>
           </div>
         </Card>
         
-        <Card class="bg-surface-container-lowest p-md rounded-xl border-0 shadow-[0px_4px_20px_rgba(0,0,0,0.04)] flex flex-row items-center justify-between !gap-0">
+        <Card class="bg-surface-container-lowest p-md rounded-xl border border-transparent dark:border-outline-variant/30 shadow-[0px_4px_20px_rgba(0,0,0,0.04)] dark:shadow-none flex flex-row items-center justify-between !gap-0">
           <div>
             <p class="text-label-sm text-on-surface-variant uppercase tracking-tight">Belum Verifikasi</p>
             <h4 class="text-headline-md font-bold text-on-surface mt-1">{{ stats?.unverified || 0 }}</h4>
           </div>
-          <div class="w-12 h-12 rounded-full bg-amber-100 flex items-center justify-center text-amber-700 shrink-0">
+          <div class="w-12 h-12 rounded-full bg-amber-100 dark:bg-amber-950/40 flex items-center justify-center text-amber-700 dark:text-amber-400 shrink-0">
             <span class="material-symbols-outlined text-[24px]">pending</span>
           </div>
         </Card>
         
-        <Card class="bg-surface-container-lowest p-md rounded-xl border-0 shadow-[0px_4px_20px_rgba(0,0,0,0.04)] flex flex-row items-center justify-between !gap-0">
+        <Card class="bg-surface-container-lowest p-md rounded-xl border border-transparent dark:border-outline-variant/30 shadow-[0px_4px_20px_rgba(0,0,0,0.04)] dark:shadow-none flex flex-row items-center justify-between !gap-0">
           <div>
             <p class="text-label-sm text-on-surface-variant uppercase tracking-tight">Baru Bulan Ini</p>
             <h4 class="text-headline-md font-bold text-on-surface mt-1">{{ stats?.new_this_month || 0 }}</h4>
           </div>
-          <div class="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center text-blue-700 shrink-0">
+          <div class="w-12 h-12 rounded-full bg-blue-100 dark:bg-blue-950/40 flex items-center justify-center text-blue-700 dark:text-blue-400 shrink-0">
             <span class="material-symbols-outlined text-[24px]">person_add</span>
           </div>
         </Card>
       </div>
 
       <!-- Elegant Customer List Card -->
-      <Card class="bg-white rounded-xl border-0 shadow-[0px_4px_20px_rgba(0,0,0,0.04)] overflow-hidden mb-lg">
+      <Card class="bg-surface-container-lowest border border-transparent dark:border-outline-variant/30 rounded-xl shadow-[0px_4px_20px_rgba(0,0,0,0.04)] dark:shadow-none overflow-hidden mb-lg">
         <div class="p-md border-b border-surface-container flex flex-wrap items-center justify-between gap-md">
           <div class="flex items-center gap-md w-full md:w-auto">
             <div class="relative w-full md:w-80">
               <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant/50 text-[20px]">search</span>
-              <Input v-model="searchQuery" class="pl-10 pr-md py-sm rounded-lg border-outline-variant bg-surface-container-lowest focus-visible:ring-1 focus-visible:ring-primary transition-colors text-label-md w-full h-10" placeholder="Cari pelanggan berdasarkan nama atau email..." type="text" />
+              <Input v-model="searchQuery" class="pl-10 pr-md py-sm rounded-lg border-outline-variant bg-surface-container-low/50 focus-visible:ring-1 focus-visible:ring-primary transition-colors text-label-md w-full h-10 text-on-surface" placeholder="Cari pelanggan berdasarkan nama atau email..." type="text" />
             </div>
           </div>
         </div>

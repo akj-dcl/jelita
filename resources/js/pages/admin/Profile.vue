@@ -57,19 +57,19 @@ const updatePassword = () => {
             </div>
 
             <!-- Profile Info Form -->
-            <Card class="bg-white rounded-xl border-0 shadow-[0px_4px_20px_rgba(0,0,0,0.04)] mb-lg p-lg">
+            <Card class="bg-surface-container-lowest border border-transparent dark:border-outline-variant/30 rounded-xl shadow-[0px_4px_20px_rgba(0,0,0,0.04)] dark:shadow-none mb-lg p-lg">
                 <h3 class="text-lg font-bold text-on-surface mb-6">Informasi Profil</h3>
                 
                 <form @submit.prevent="updateProfile" class="flex flex-col gap-md">
                     <div>
                         <label class="block text-label-md font-bold text-on-surface mb-xs">Nama</label>
-                        <Input v-model="profileForm.name" type="text" class="h-12 border-outline-variant focus-visible:ring-primary" required />
+                        <Input v-model="profileForm.name" type="text" class="h-12 border-outline-variant bg-surface-container-low/50 text-on-surface focus-visible:ring-primary" required />
                         <span v-if="profileForm.errors.name" class="text-error text-sm mt-1">{{ profileForm.errors.name }}</span>
                     </div>
 
                     <div>
                         <label class="block text-label-md font-bold text-on-surface mb-xs">Alamat Email</label>
-                        <Input v-model="profileForm.email" type="email" class="h-12 border-outline-variant focus-visible:ring-primary" required />
+                        <Input v-model="profileForm.email" type="email" class="h-12 border-outline-variant bg-surface-container-low/50 text-on-surface focus-visible:ring-primary" required />
                         <span v-if="profileForm.errors.email" class="text-error text-sm mt-1">{{ profileForm.errors.email }}</span>
                     </div>
 
@@ -85,25 +85,25 @@ const updatePassword = () => {
             </Card>
 
             <!-- Password Form -->
-            <Card class="bg-white rounded-xl border-0 shadow-[0px_4px_20px_rgba(0,0,0,0.04)] p-lg">
+            <Card class="bg-surface-container-lowest border border-transparent dark:border-outline-variant/30 rounded-xl shadow-[0px_4px_20px_rgba(0,0,0,0.04)] dark:shadow-none p-lg">
                 <h3 class="text-lg font-bold text-on-surface mb-6">Ganti Password</h3>
                 
                 <form @submit.prevent="updatePassword" class="flex flex-col gap-md">
                     <div>
                         <label class="block text-label-md font-bold text-on-surface mb-xs">Password Saat Ini</label>
-                        <Input v-model="passwordForm.current_password" type="password" class="h-12 border-outline-variant focus-visible:ring-primary" required />
+                        <Input v-model="passwordForm.current_password" type="password" class="h-12 border-outline-variant bg-surface-container-low/50 text-on-surface focus-visible:ring-primary" required />
                         <span v-if="passwordForm.errors.current_password" class="text-error text-sm mt-1">{{ passwordForm.errors.current_password }}</span>
                     </div>
 
                     <div>
                         <label class="block text-label-md font-bold text-on-surface mb-xs">Password Baru</label>
-                        <Input v-model="passwordForm.new_password" type="password" class="h-12 border-outline-variant focus-visible:ring-primary" required />
+                        <Input v-model="passwordForm.new_password" type="password" class="h-12 border-outline-variant bg-surface-container-low/50 text-on-surface focus-visible:ring-primary" required />
                         <span v-if="passwordForm.errors.new_password" class="text-error text-sm mt-1">{{ passwordForm.errors.new_password }}</span>
                     </div>
 
                     <div>
                         <label class="block text-label-md font-bold text-on-surface mb-xs">Konfirmasi Password Baru</label>
-                        <Input v-model="passwordForm.new_password_confirmation" type="password" class="h-12 border-outline-variant focus-visible:ring-primary" required />
+                        <Input v-model="passwordForm.new_password_confirmation" type="password" class="h-12 border-outline-variant bg-surface-container-low/50 text-on-surface focus-visible:ring-primary" required />
                     </div>
 
                     <div class="flex items-center gap-4 mt-4">

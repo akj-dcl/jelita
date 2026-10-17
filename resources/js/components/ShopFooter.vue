@@ -50,10 +50,10 @@ import { Link } from '@inertiajs/vue3';
             </div>
         </div>
         <div class="border-t border-outline-variant/30 py-6 text-center px-margin-mobile flex flex-col md:flex-row justify-between items-center gap-4 max-w-[1440px] mx-auto">
-            <p class="text-label-sm text-on-surface-variant-fixed-variant">© 2024 Jelita Saung Rutan Perempuan Kelas II A Bandung. Memberdayakan Kerajinan.</p>
+            <p class="text-label-sm text-on-surface-variant/80">© 2024 Jelita Saung Rutan Perempuan Kelas II A Bandung. Memberdayakan Kerajinan.</p>
             <div class="flex gap-4">
-                <span class="material-symbols-outlined text-on-surface-variant-fixed-variant hover:text-primary cursor-pointer">share</span>
-                <span class="material-symbols-outlined text-on-surface-variant-fixed-variant hover:text-primary cursor-pointer">language</span>
+                <span class="material-symbols-outlined text-on-surface-variant/80 hover:text-primary cursor-pointer">share</span>
+                <span class="material-symbols-outlined text-on-surface-variant/80 hover:text-primary cursor-pointer">language</span>
             </div>
         </div>
     </footer>

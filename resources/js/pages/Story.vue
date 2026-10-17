@@ -59,12 +59,12 @@ import ShopFooter from '@/components/ShopFooter.vue';
                 </div>
             </div>
             
-            <div class="mt-32 text-center bg-surface-container-low rounded-3xl p-12 shadow-sm">
+            <div class="mt-32 text-center bg-surface-container-low rounded-3xl p-12 shadow-sm border border-transparent dark:border-outline-variant/30">
                 <h2 class="font-display-md text-3xl text-on-surface font-bold mb-6">Rasakan Pengalaman Kerajinan Kami</h2>
                 <p class="text-on-surface-variant text-lg max-w-2xl mx-auto mb-10">
                     Jelajahi koleksi karya seni buatan tangan kami dan temukan barang sempurna yang sesuai dengan gaya Anda.
                 </p>
-                <Link href="/shop" class="bg-primary text-white hover:bg-primary-container px-8 py-4 rounded-full font-bold shadow-md transition-all hover:shadow-lg hover:-translate-y-1 inline-block">
+                <Link href="/shop" class="bg-primary text-white dark:text-primary-foreground hover:bg-primary/90 px-8 py-4 rounded-full font-bold shadow-md transition-all hover:shadow-lg hover:-translate-y-1 inline-block">
                     Jelajahi Koleksi
                 </Link>
             </div>
@@ -73,29 +73,3 @@ import ShopFooter from '@/components/ShopFooter.vue';
         <ShopFooter />
     </div>
 </template>
-
-<style scoped>
-.welcome-theme {
-    /* Scoped theme variables matching the Jelita Saung palette */
-    --background: #fbf9f8;
-    --foreground: #1b1c1c;
-    --primary: #8a4853;
-    --primary-foreground: #ffffff;
-    --secondary: #625d5f;
-    --secondary-foreground: #ffffff;
-    --border: #d7c1c3;
-    --outline: #857374;
-}
-
-:global(.dark) .welcome-theme {
-    /* Dark mode adjustments if the system theme is dark */
-    --background: #141213;
-    --foreground: #f3f0f0;
-    --primary: #ffb2bc;
-    --primary-foreground: #5a1b24;
-    --secondary: #ccc4c7;
-    --secondary-foreground: #332f31;
-    --border: #524345;
-    --outline: #9c8a8c;
-}
-</style>

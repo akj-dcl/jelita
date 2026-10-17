@@ -78,33 +78,33 @@ const getStatusClass = (status: boolean) => {
 
       <!-- Stats Bar -->
       <div class="grid grid-cols-1 md:grid-cols-3 gap-md mb-lg">
-        <Card class="bg-white p-md rounded-xl border-0 soft-elevation flex flex-col gap-xs min-h-[120px] justify-center">
+        <Card class="bg-surface-container-lowest border border-transparent dark:border-outline-variant/30 p-md rounded-xl soft-elevation flex flex-col gap-xs min-h-[120px] justify-center">
           <span class="text-on-surface-variant font-label-md text-label-md">Total Kategori</span>
           <span class="text-headline-md font-headline-md text-on-surface font-bold">{{ categories.total }}</span>
         </Card>
-        <Card class="bg-white p-md rounded-xl border-0 soft-elevation flex flex-col gap-xs min-h-[120px] justify-center">
+        <Card class="bg-surface-container-lowest border border-transparent dark:border-outline-variant/30 p-md rounded-xl soft-elevation flex flex-col gap-xs min-h-[120px] justify-center">
           <span class="text-on-surface-variant font-label-md text-label-md">Kategori Aktif</span>
           <span class="text-headline-md font-headline-md text-on-surface font-bold">-</span>
         </Card>
-        <Card class="bg-white p-md rounded-xl border-0 soft-elevation flex flex-col gap-xs min-h-[120px] justify-center">
+        <Card class="bg-surface-container-lowest border border-transparent dark:border-outline-variant/30 p-md rounded-xl soft-elevation flex flex-col gap-xs min-h-[120px] justify-center">
           <span class="text-on-surface-variant font-label-md text-label-md">Kategori Draf</span>
           <span class="text-headline-md font-headline-md text-on-surface font-bold">-</span>
         </Card>
       </div>
 
       <!-- Table Filters & Actions -->
-      <Card class="bg-white rounded-xl border-0 soft-elevation overflow-hidden">
+      <Card class="bg-surface-container-lowest border border-transparent dark:border-outline-variant/30 rounded-xl soft-elevation overflow-hidden">
         <div class="p-md border-b border-surface-container flex flex-wrap items-center justify-between gap-md">
           <div class="flex items-center gap-md w-full md:w-auto">
             <div class="relative w-full md:w-80">
               <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant/50 text-[20px]">search</span>
-              <Input v-model="searchQuery" class="pl-10 pr-md py-sm rounded-lg border-outline-variant bg-surface-container-lowest focus-visible:ring-1 focus-visible:ring-primary transition-colors text-label-md w-full h-10" placeholder="Cari kategori..." type="text" />
+              <Input v-model="searchQuery" class="pl-10 pr-md py-sm rounded-lg border-outline-variant bg-surface-container-low/50 focus-visible:ring-1 focus-visible:ring-primary transition-colors text-label-md w-full h-10 text-on-surface" placeholder="Cari kategori..." type="text" />
             </div>
           </div>
           <div class="flex items-center gap-sm w-full md:w-auto">
             <span class="text-label-sm font-label-sm text-on-surface-variant font-bold">Aksi Massal:</span>
             <Select>
-              <SelectTrigger class="w-[140px] h-10 border-outline-variant bg-white">
+              <SelectTrigger class="w-[140px] h-10 border-outline-variant bg-surface-container-lowest text-on-surface">
                 <SelectValue placeholder="Dipilih (0)" />
               </SelectTrigger>
               <SelectContent>

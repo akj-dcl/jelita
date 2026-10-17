@@ -80,19 +80,19 @@ const formatDate = (date: string) => {
 }
 
 const statusColor: Record<string, string> = {
-    pending_payment: 'bg-amber-100 text-amber-700 border-amber-200',
-    processing: 'bg-blue-100 text-blue-700 border-blue-200',
-    shipped:    'bg-indigo-100 text-indigo-700 border-indigo-200',
-    delivered:  'bg-green-100 text-green-700 border-green-200',
-    cancelled:  'bg-red-100 text-red-600 border-red-200',
-    refunded:   'bg-purple-100 text-purple-700 border-purple-200',
+    pending_payment: 'bg-amber-100 text-amber-700 border-amber-200 dark:bg-amber-950/40 dark:text-amber-400 dark:border-amber-800/50',
+    processing: 'bg-blue-100 text-blue-700 border-blue-200 dark:bg-blue-950/40 dark:text-blue-400 dark:border-blue-800/50',
+    shipped:    'bg-indigo-100 text-indigo-700 border-indigo-200 dark:bg-indigo-950/40 dark:text-indigo-400 dark:border-indigo-800/50',
+    delivered:  'bg-green-100 text-green-700 border-green-200 dark:bg-emerald-950/40 dark:text-emerald-400 dark:border-emerald-800/50',
+    cancelled:  'bg-red-100 text-red-600 border-red-200 dark:bg-rose-950/40 dark:text-rose-400 dark:border-rose-800/50',
+    refunded:   'bg-purple-100 text-purple-700 border-purple-200 dark:bg-purple-950/40 dark:text-purple-400 dark:border-purple-800/50',
 }
 
 const paymentStatusColor: Record<string, string> = {
-    pending: 'bg-amber-100 text-amber-700',
-    paid:    'bg-green-100 text-green-700',
-    expired: 'bg-orange-100 text-orange-600',
-    failed:  'bg-red-100 text-red-600',
+    pending: 'bg-amber-100 text-amber-700 dark:bg-amber-950/40 dark:text-amber-400',
+    paid:    'bg-green-100 text-green-700 dark:bg-emerald-950/40 dark:text-emerald-400',
+    expired: 'bg-orange-100 text-orange-600 dark:bg-orange-950/40 dark:text-orange-400',
+    failed:  'bg-red-100 text-red-600 dark:bg-rose-950/40 dark:text-rose-400',
 }
 
 const translateStatus = (status: string) => {
@@ -133,36 +133,36 @@ const translateStatus = (status: string) => {
 
             <!-- Stats -->
             <div class="grid grid-cols-2 md:grid-cols-4 gap-gutter mb-lg">
-                <div class="bg-white rounded-xl shadow-sm border border-surface-container p-4 flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-full bg-amber-100 flex items-center justify-center">
-                        <span class="material-symbols-outlined text-amber-600 text-[20px]">pending</span>
+                <div class="bg-white dark:bg-card rounded-xl shadow-sm border border-surface-container dark:border-outline-variant/30 p-4 flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-full bg-amber-100 dark:bg-amber-950/40 flex items-center justify-center">
+                        <span class="material-symbols-outlined text-amber-600 dark:text-amber-400 text-[20px]">pending</span>
                     </div>
                     <div>
                         <p class="text-xs text-on-surface-variant">Menunggu</p>
                         <p class="font-bold text-on-surface text-lg">{{ stats?.pending_payment || 0 }}</p>
                     </div>
                 </div>
-                <div class="bg-white rounded-xl shadow-sm border border-surface-container p-4 flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center">
-                        <span class="material-symbols-outlined text-blue-600 text-[20px]">manufacturing</span>
+                <div class="bg-white dark:bg-card rounded-xl shadow-sm border border-surface-container dark:border-outline-variant/30 p-4 flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-950/40 flex items-center justify-center">
+                        <span class="material-symbols-outlined text-blue-600 dark:text-blue-400 text-[20px]">manufacturing</span>
                     </div>
                     <div>
                         <p class="text-xs text-on-surface-variant">Diproses</p>
                         <p class="font-bold text-on-surface text-lg">{{ stats?.processing || 0 }}</p>
                     </div>
                 </div>
-                <div class="bg-white rounded-xl shadow-sm border border-surface-container p-4 flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center">
-                        <span class="material-symbols-outlined text-green-600 text-[20px]">shopping_bag</span>
+                <div class="bg-white dark:bg-card rounded-xl shadow-sm border border-surface-container dark:border-outline-variant/30 p-4 flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-full bg-green-100 dark:bg-green-950/40 flex items-center justify-center">
+                        <span class="material-symbols-outlined text-green-600 dark:text-green-400 text-[20px]">shopping_bag</span>
                     </div>
                     <div>
                         <p class="text-xs text-on-surface-variant">Total Pesanan</p>
                         <p class="font-bold text-on-surface text-lg">{{ stats?.total || 0 }}</p>
                     </div>
                 </div>
-                <div class="bg-white rounded-xl shadow-sm border border-surface-container p-4 flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center">
-                        <span class="material-symbols-outlined text-purple-600 text-[20px]">payments</span>
+                <div class="bg-white dark:bg-card rounded-xl shadow-sm border border-surface-container dark:border-outline-variant/30 p-4 flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-full bg-purple-100 dark:bg-purple-950/40 flex items-center justify-center">
+                        <span class="material-symbols-outlined text-purple-600 dark:text-purple-400 text-[20px]">payments</span>
                     </div>
                     <div>
                         <p class="text-xs text-on-surface-variant">Pendapatan</p>
@@ -172,8 +172,8 @@ const translateStatus = (status: string) => {
             </div>
 
             <!-- Orders Table -->
-            <div class="bg-white rounded-2xl shadow-sm border border-surface-container overflow-hidden">
-                <div class="p-4 border-b border-surface-container">
+            <div class="bg-white dark:bg-card rounded-2xl shadow-sm border border-surface-container dark:border-outline-variant/30 overflow-hidden">
+                <div class="p-4 border-b border-surface-container dark:border-outline-variant/30">
                     <h4 class="font-semibold text-on-surface text-lg">Daftar Pesanan</h4>
                 </div>
 
@@ -313,44 +313,44 @@ const translateStatus = (status: string) => {
 
         <!-- Order Detail Modal -->
         <div v-if="showModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm" @click.self="closeModal">
-            <div class="bg-white rounded-3xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto text-gray-900">
-                <div class="p-6 border-b border-gray-200 flex justify-between items-start">
+            <div class="bg-white dark:bg-card border border-transparent dark:border-outline-variant/30 rounded-3xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto text-gray-900 dark:text-gray-100">
+                <div class="p-6 border-b border-gray-200 dark:border-outline-variant/30 flex justify-between items-start">
                     <div>
-                        <h2 class="font-bold text-xl text-gray-900">Order #{{ selectedOrder?.order_number }}</h2>
-                        <p class="text-sm text-gray-500 mt-1">{{ selectedOrder ? formatDate(selectedOrder.created_at) : '' }}</p>
+                        <h2 class="font-bold text-xl text-gray-900 dark:text-gray-100">Order #{{ selectedOrder?.order_number }}</h2>
+                        <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">{{ selectedOrder ? formatDate(selectedOrder.created_at) : '' }}</p>
                     </div>
-                    <button @click="closeModal" class="p-2 rounded-full hover:bg-gray-100 transition-colors">
-                        <span class="material-symbols-outlined text-gray-500">close</span>
+                    <button @click="closeModal" class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-surface-container-high transition-colors">
+                        <span class="material-symbols-outlined text-gray-500 dark:text-gray-400">close</span>
                     </button>
                 </div>
 
                 <div class="p-6 space-y-6" v-if="selectedOrder">
                     <!-- Customer Info -->
                     <div>
-                        <h3 class="font-bold text-xs text-gray-500 uppercase tracking-wider mb-3">Informasi Pembeli</h3>
+                        <h3 class="font-bold text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-3">Informasi Pembeli</h3>
                         <div class="grid grid-cols-2 gap-3 text-sm">
-                            <div><p class="text-gray-500 text-xs">Nama</p><p class="font-semibold text-gray-900">{{ selectedOrder.customer_name }}</p></div>
-                            <div><p class="text-gray-500 text-xs">Email</p><p class="font-semibold text-gray-900">{{ selectedOrder.customer_email }}</p></div>
-                            <div><p class="text-gray-500 text-xs">Telepon</p><p class="font-semibold text-gray-900">{{ selectedOrder.ship_phone }}</p></div>
-                            <div><p class="text-gray-500 text-xs">Kurir</p><p class="font-semibold text-gray-900 uppercase">{{ selectedOrder.shipping_method }}</p></div>
-                            <div v-if="selectedOrder.tracking_number"><p class="text-gray-500 text-xs">Nomor Resi</p><p class="font-semibold text-primary">{{ selectedOrder.tracking_number }}</p></div>
-                            <div class="col-span-2"><p class="text-gray-500 text-xs">Alamat Pengiriman</p><p class="font-semibold text-gray-900">{{ selectedOrder.ship_address }}, {{ selectedOrder.ship_city }}</p></div>
+                            <div><p class="text-gray-500 dark:text-gray-400 text-xs">Nama</p><p class="font-semibold text-gray-900 dark:text-gray-100">{{ selectedOrder.customer_name }}</p></div>
+                            <div><p class="text-gray-500 dark:text-gray-400 text-xs">Email</p><p class="font-semibold text-gray-900 dark:text-gray-100">{{ selectedOrder.customer_email }}</p></div>
+                            <div><p class="text-gray-500 dark:text-gray-400 text-xs">Telepon</p><p class="font-semibold text-gray-900 dark:text-gray-100">{{ selectedOrder.ship_phone }}</p></div>
+                            <div><p class="text-gray-500 dark:text-gray-400 text-xs">Kurir</p><p class="font-semibold text-gray-900 dark:text-gray-100 uppercase">{{ selectedOrder.shipping_method }}</p></div>
+                            <div v-if="selectedOrder.tracking_number"><p class="text-gray-500 dark:text-gray-400 text-xs">Nomor Resi</p><p class="font-semibold text-primary">{{ selectedOrder.tracking_number }}</p></div>
+                            <div class="col-span-2"><p class="text-gray-500 dark:text-gray-400 text-xs">Alamat Pengiriman</p><p class="font-semibold text-gray-900 dark:text-gray-100">{{ selectedOrder.ship_address }}, {{ selectedOrder.ship_city }}</p></div>
                         </div>
                     </div>
 
                     <!-- Items -->
                     <div>
-                        <h3 class="font-bold text-xs text-gray-500 uppercase tracking-wider mb-3">Produk Dipesan</h3>
+                        <h3 class="font-bold text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-3">Produk Dipesan</h3>
                         <div class="space-y-2">
-                            <div v-for="(item, i) in selectedOrder.items" :key="i" class="flex justify-between items-center p-3 bg-gray-50 rounded-xl text-sm gap-3 border border-gray-100">
+                            <div v-for="(item, i) in selectedOrder.items" :key="i" class="flex justify-between items-center p-3 bg-gray-50 dark:bg-surface-container-low rounded-xl text-sm gap-3 border border-gray-100 dark:border-outline-variant/30">
                                 <div class="flex items-center gap-3 min-w-0">
-                                    <div class="w-12 h-12 bg-gray-100 rounded-lg overflow-hidden flex-shrink-0 flex items-center justify-center">
+                                    <div class="w-12 h-12 bg-gray-100 dark:bg-surface-container-high rounded-lg overflow-hidden flex-shrink-0 flex items-center justify-center">
                                         <img v-if="item.product_image" :src="item.product_image" :alt="item.product_name" class="w-full h-full object-cover" />
                                         <span v-else class="material-symbols-outlined text-gray-400 text-xl">image</span>
                                     </div>
                                     <div class="min-w-0">
-                                        <p class="font-semibold text-gray-900 truncate">{{ item.product_name }}</p>
-                                        <p class="text-xs text-gray-500">{{ item.quantity }}x {{ formatCurrency(item.product_price) }}</p>
+                                        <p class="font-semibold text-gray-900 dark:text-gray-100 truncate">{{ item.product_name }}</p>
+                                        <p class="text-xs text-gray-500 dark:text-gray-400">{{ item.quantity }}x {{ formatCurrency(item.product_price) }}</p>
                                     </div>
                                 </div>
                                 <p class="font-bold text-primary flex-shrink-0">{{ formatCurrency(item.subtotal) }}</p>
@@ -359,31 +359,31 @@ const translateStatus = (status: string) => {
                     </div>
 
                     <!-- Totals -->
-                    <div class="bg-gray-50 rounded-xl p-4 space-y-2 text-sm border border-gray-100">
-                        <div class="flex justify-between text-gray-600"><span>Subtotal</span><span class="font-semibold text-gray-900">{{ formatCurrency(selectedOrder.subtotal) }}</span></div>
-                        <div class="flex justify-between text-gray-600"><span>Ongkir</span><span class="font-semibold text-gray-900">{{ formatCurrency(selectedOrder.shipping_cost) }}</span></div>
-                        <div class="flex justify-between text-gray-600"><span>Pajak (11%)</span><span class="font-semibold text-gray-900">{{ formatCurrency(selectedOrder.tax) }}</span></div>
-                        <div class="flex justify-between font-bold text-base border-t border-gray-200 pt-2 mt-2">
-                            <span class="text-gray-900">Total</span><span class="text-primary font-bold">{{ formatCurrency(selectedOrder.total) }}</span>
+                    <div class="bg-gray-50 dark:bg-surface-container-low rounded-xl p-4 space-y-2 text-sm border border-gray-100 dark:border-outline-variant/30">
+                        <div class="flex justify-between text-gray-600 dark:text-gray-400"><span>Subtotal</span><span class="font-semibold text-gray-900 dark:text-gray-100">{{ formatCurrency(selectedOrder.subtotal) }}</span></div>
+                        <div class="flex justify-between text-gray-600 dark:text-gray-400"><span>Ongkir</span><span class="font-semibold text-gray-900 dark:text-gray-100">{{ formatCurrency(selectedOrder.shipping_cost) }}</span></div>
+                        <div class="flex justify-between text-gray-600 dark:text-gray-400"><span>Pajak (11%)</span><span class="font-semibold text-gray-900 dark:text-gray-100">{{ formatCurrency(selectedOrder.tax) }}</span></div>
+                        <div class="flex justify-between font-bold text-base border-t border-gray-200 dark:border-outline-variant/30 pt-2 mt-2">
+                            <span class="text-gray-900 dark:text-gray-100">Total</span><span class="text-primary font-bold">{{ formatCurrency(selectedOrder.total) }}</span>
                         </div>
                     </div>
 
                     <!-- Payment Proof -->
                     <div v-if="selectedOrder.payment">
-                        <h3 class="font-bold text-xs text-gray-500 uppercase tracking-wider mb-3">Informasi Pembayaran</h3>
+                        <h3 class="font-bold text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-3">Informasi Pembayaran</h3>
                         <div class="flex items-center gap-3 mb-3">
-                            <span :class="['px-3 py-1 rounded-full text-xs font-semibold', paymentStatusColor[selectedOrder.payment.status] || 'bg-gray-100 text-gray-600']">
+                            <span :class="['px-3 py-1 rounded-full text-xs font-semibold', paymentStatusColor[selectedOrder.payment.status] || 'bg-gray-100 dark:bg-surface-container-high text-gray-600 dark:text-gray-300']">
                                 {{ selectedOrder.payment.status === 'paid' ? '✅ Terverifikasi' : selectedOrder.payment.status === 'failed' ? '❌ Ditolak' : '⏳ Menunggu Verifikasi' }}
                             </span>
-                            <span class="text-xs font-semibold text-gray-700 uppercase px-2 py-0.5 bg-gray-100 rounded-md">
+                            <span class="text-xs font-semibold text-gray-700 dark:text-gray-200 uppercase px-2 py-0.5 bg-gray-100 dark:bg-surface-container-high rounded-md">
                                 {{ selectedOrder.payment.method === 'bank_transfer' ? 'Transfer BRI' : selectedOrder.payment.method === 'qris' ? 'QRIS' : selectedOrder.payment.method === 'cod' ? 'COD (Bayar di Tempat)' : selectedOrder.payment.method }}
                             </span>
                         </div>
                         <a v-if="selectedOrder.payment.transfer_proof" :href="selectedOrder.payment.transfer_proof" target="_blank">
                             <img :src="selectedOrder.payment.transfer_proof" alt="Bukti Pembayaran"
-                                class="max-w-full max-h-64 rounded-xl border border-gray-200 object-contain hover:opacity-90 transition-opacity" />
+                                class="max-w-full max-h-64 rounded-xl border border-gray-200 dark:border-outline-variant/30 object-contain hover:opacity-90 transition-opacity" />
                         </a>
-                        <p v-else class="text-sm text-gray-500 italic">
+                        <p v-else class="text-sm text-gray-500 dark:text-gray-400 italic">
                             {{ selectedOrder.payment.method === 'cod' ? 'Pesanan COD: Pembayaran tunai saat barang diterima.' : 'Belum ada bukti pembayaran.' }}
                         </p>
                     </div>
@@ -408,7 +408,7 @@ const translateStatus = (status: string) => {
                             Kirim Pesanan
                         </button>
                         <a :href="`/admin/orders/${selectedOrder.id}/invoice`" target="_blank"
-                            class="flex-1 flex items-center justify-center gap-2 py-3 border border-gray-200 text-gray-700 rounded-xl font-semibold hover:bg-gray-50 transition-colors">
+                            class="flex-1 flex items-center justify-center gap-2 py-3 border border-gray-200 dark:border-outline-variant/50 text-gray-700 dark:text-gray-200 rounded-xl font-semibold hover:bg-gray-50 dark:hover:bg-surface-container-high transition-colors">
                             <span class="material-symbols-outlined text-[18px]">print</span>
                             Cetak Invoice
                         </a>
@@ -419,28 +419,28 @@ const translateStatus = (status: string) => {
 
         <!-- Ship Order Modal -->
         <div v-if="showShipModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm" @click.self="closeShipModal">
-            <div class="bg-white rounded-3xl shadow-2xl w-full max-w-[420px] text-gray-900">
-                <div class="p-6 border-b border-gray-200 flex justify-between items-start">
+            <div class="bg-white dark:bg-card border border-transparent dark:border-outline-variant/30 rounded-3xl shadow-2xl w-full max-w-[420px] text-gray-900 dark:text-gray-100">
+                <div class="p-6 border-b border-gray-200 dark:border-outline-variant/30 flex justify-between items-start">
                     <div>
-                        <h2 class="font-bold text-xl text-gray-900">Kirim Pesanan</h2>
-                        <p class="text-sm text-gray-500 mt-1">Order #{{ selectedOrder?.order_number }}</p>
+                        <h2 class="font-bold text-xl text-gray-900 dark:text-gray-100">Kirim Pesanan</h2>
+                        <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Order #{{ selectedOrder?.order_number }}</p>
                     </div>
-                    <button @click="closeShipModal" class="p-2 rounded-full hover:bg-gray-100 transition-colors">
-                        <span class="material-symbols-outlined text-gray-500">close</span>
+                    <button @click="closeShipModal" class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-surface-container-high transition-colors">
+                        <span class="material-symbols-outlined text-gray-500 dark:text-gray-400">close</span>
                     </button>
                 </div>
 
                 <div class="p-6 space-y-4">
                     <div>
-                        <label for="tracking_number" class="block text-sm font-semibold text-gray-700 mb-2">Nomor Resi / Tracking Number</label>
+                        <label for="tracking_number" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Nomor Resi / Tracking Number</label>
                         <input type="text" id="tracking_number" v-model="trackingNumber"
-                            class="w-full px-4 py-3 rounded-xl border border-gray-300 bg-white text-gray-900 placeholder:text-gray-400 focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all font-medium"
+                            class="w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-outline-variant/60 bg-white dark:bg-surface-container-low text-gray-900 dark:text-gray-100 placeholder:text-gray-400 dark:placeholder:text-gray-500 focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all font-medium"
                             placeholder="Masukkan nomor resi pengiriman">
                     </div>
 
                     <div class="flex gap-3 pt-4">
                         <button @click="closeShipModal"
-                            class="flex-1 py-3 text-gray-700 border border-gray-200 rounded-xl font-semibold hover:bg-gray-50 transition-colors">
+                            class="flex-1 py-3 text-gray-700 dark:text-gray-200 border border-gray-200 dark:border-outline-variant/50 rounded-xl font-semibold hover:bg-gray-50 dark:hover:bg-surface-container-high transition-colors">
                             Batal
                         </button>
                         <button @click="submitShip"

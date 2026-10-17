@@ -20,9 +20,15 @@ import { Button } from '@/components/ui/button'
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator } from '@/components/ui/dropdown-menu'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
 import EditProfile from '@/components/profile/EditProfile.vue'
+import { useAppearance } from '@/composables/useAppearance'
 
 const page = usePage()
 const user = computed(() => (page.props.auth as any)?.user)
+const { resolvedAppearance, updateAppearance } = useAppearance()
+
+const toggleTheme = () => {
+  updateAppearance(resolvedAppearance.value === 'dark' ? 'light' : 'dark')
+}
 
 const navigation = [
   { name: 'Dasbor', href: '/admin/dashboard', icon: 'dashboard' },
@@ -121,6 +127,20 @@ const isActive = (href: string) => page.url.startsWith(href)
         </div>
         
         <div class="flex items-center gap-md">
+          <!-- Dark Mode Toggle Button for Admin -->
+          <Button 
+            variant="ghost" 
+            size="icon" 
+            @click="toggleTheme"
+            class="text-on-surface-variant hover:text-primary rounded-full cursor-pointer"
+            :title="resolvedAppearance === 'dark' ? 'Beralih ke Mode Terang' : 'Beralih ke Mode Gelap'"
+            aria-label="Toggle Dark Mode"
+          >
+            <span class="material-symbols-outlined transition-transform duration-300 hover:rotate-12 text-[22px]">
+              {{ resolvedAppearance === 'dark' ? 'light_mode' : 'dark_mode' }}
+            </span>
+          </Button>
+
           <div class="relative hidden sm:block">
             <Input 
               class="bg-surface border-outline-variant rounded-full py-xs px-lg pl-10 text-label-md focus-visible:ring-1 focus-visible:ring-primary transition-colors w-64" 

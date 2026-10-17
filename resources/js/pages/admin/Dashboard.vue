@@ -4,8 +4,9 @@ import AdminLayout from '@/layouts/AdminLayout.vue'
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
 import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from '@/components/ui/table'
 import { Button } from '@/components/ui/button'
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import VueApexCharts from 'vue3-apexcharts'
+import { useAppearance } from '@/composables/useAppearance'
 
 const props = defineProps<{
     stats: any;
@@ -15,6 +16,8 @@ const props = defineProps<{
     recentReviews: any[];
     chart: any;
 }>()
+
+const { resolvedAppearance } = useAppearance()
 
 const formatRupiah = (value: number) => {
     return 'Rp ' + Math.round(value).toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
@@ -32,35 +35,51 @@ const translateStatus = (status: string) => {
     return statusMap[status] || status;
 };
 
-const chartOptions = {
-  chart: {
-    type: 'area',
-    toolbar: { show: false },
-    fontFamily: 'Inter, sans-serif'
-  },
-  colors: ['#8a4853'],
-  dataLabels: { enabled: false },
-  stroke: { curve: 'smooth', width: 2 },
-  xaxis: {
-    categories: props.chart?.categories || [],
-    axisBorder: { show: false },
-    axisTicks: { show: false },
-    labels: { style: { colors: '#64748B' } }
-  },
-  yaxis: {
-    labels: { formatter: (value: number) => 'Rp ' + (value / 1000) + 'k', style: { colors: '#64748B' } }
-  },
-  grid: { borderColor: '#f1f5f9', strokeDashArray: 4 },
-  fill: {
-    type: 'gradient',
-    gradient: { shadeIntensity: 1, opacityFrom: 0.4, opacityTo: 0.05, stops: [0, 90, 100] }
-  }
-}
+const chartOptions = computed(() => {
+  const isDark = resolvedAppearance.value === 'dark';
+  return {
+    chart: {
+      type: 'area',
+      toolbar: { show: false },
+      fontFamily: 'Inter, sans-serif',
+      background: 'transparent'
+    },
+    theme: {
+      mode: isDark ? 'dark' : 'light'
+    },
+    colors: [isDark ? '#ffb2bc' : '#8a4853'],
+    dataLabels: { enabled: false },
+    stroke: { curve: 'smooth', width: 2 },
+    xaxis: {
+      categories: props.chart?.categories || [],
+      axisBorder: { show: false },
+      axisTicks: { show: false },
+      labels: { style: { colors: isDark ? '#9ca3af' : '#64748B' } }
+    },
+    yaxis: {
+      labels: { 
+        formatter: (value: number) => 'Rp ' + (value / 1000) + 'k', 
+        style: { colors: isDark ? '#9ca3af' : '#64748B' } 
+      }
+    },
+    grid: { 
+      borderColor: isDark ? 'rgba(255, 255, 255, 0.08)' : '#f1f5f9', 
+      strokeDashArray: 4 
+    },
+    fill: {
+      type: 'gradient',
+      gradient: { shadeIntensity: 1, opacityFrom: 0.4, opacityTo: 0.05, stops: [0, 90, 100] }
+    },
+    tooltip: {
+      theme: isDark ? 'dark' : 'light'
+    }
+  };
+});
 
-const chartSeries = [{
+const chartSeries = computed(() => [{
   name: 'Pendapatan',
   data: props.chart?.data || []
-}]
+}]);
 </script>
 
 <template>
@@ -91,7 +110,7 @@ const chartSeries = [{
           </div>
           <div class="flex items-end justify-between mt-auto">
             <h3 class="text-[32px] font-bold text-on-surface">{{ stats?.todayOrders || 0 }}</h3>
-            <span class="text-[#4CAF50] text-label-sm font-bold bg-[#E8F5E9] px-2 py-1 rounded-full">Pesanan</span>
+            <span class="text-[#4CAF50] dark:text-emerald-400 text-label-sm font-bold bg-[#E8F5E9] dark:bg-emerald-950/40 px-2 py-1 rounded-full">Pesanan</span>
           </div>
         </Card>
 
@@ -105,7 +124,7 @@ const chartSeries = [{
           </div>
           <div class="flex items-end justify-between mt-auto">
             <h3 class="text-[32px] font-bold text-on-surface">{{ formatRupiah(stats?.revenueLast30Days || 0) }}</h3>
-            <span class="text-[#4CAF50] text-label-sm font-bold bg-[#E8F5E9] px-2 py-1 rounded-full">30 Hari Terakhir</span>
+            <span class="text-[#4CAF50] dark:text-emerald-400 text-label-sm font-bold bg-[#E8F5E9] dark:bg-emerald-950/40 px-2 py-1 rounded-full">30 Hari Terakhir</span>
           </div>
         </Card>
 
@@ -179,10 +198,10 @@ const chartSeries = [{
                   <TableCell>
                     <span class="px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wide"
                           :class="{
-                            'bg-[#FFF8E1] text-[#F57C00]': order.status === 'pending_payment',
-                            'bg-[#E3F2FD] text-[#1976D2]': order.status === 'processing',
-                            'bg-[#E8F5E9] text-[#2E7D32]': order.status === 'shipped' || order.status === 'delivered',
-                            'bg-[#FFEBEE] text-[#D32F2F]': order.status === 'cancelled'
+                            'bg-[#FFF8E1] text-[#F57C00] dark:bg-amber-950/50 dark:text-amber-400': order.status === 'pending_payment',
+                            'bg-[#E3F2FD] text-[#1976D2] dark:bg-sky-950/50 dark:text-sky-400': order.status === 'processing',
+                            'bg-[#E8F5E9] text-[#2E7D32] dark:bg-emerald-950/50 dark:text-emerald-400': order.status === 'shipped' || order.status === 'delivered',
+                            'bg-[#FFEBEE] text-[#D32F2F] dark:bg-rose-950/50 dark:text-rose-400': order.status === 'cancelled'
                           }">
                       {{ translateStatus(order.status) }}
                     </span>

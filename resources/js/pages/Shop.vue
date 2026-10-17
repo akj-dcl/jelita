@@ -426,28 +426,3 @@ const hasActiveFilters = computed(() => activeFilterCount.value > 0);
     </div>
 </template>
 
-<style scoped>
-.welcome-theme {
-    /* Scoped theme variables matching the Jelita Saung palette */
-    --background: #fbf9f8;
-    --foreground: #1b1c1c;
-    --primary: #8a4853;
-    --primary-foreground: #ffffff;
-    --secondary: #625d5f;
-    --secondary-foreground: #ffffff;
-    --border: #d7c1c3;
-    --outline: #857374;
-}
-
-:global(.dark) .welcome-theme {
-    /* Dark mode adjustments if the system theme is dark */
-    --background: #141213;
-    --foreground: #f3f0f0;
-    --primary: #ffb2bc;
-    --primary-foreground: #5a1b24;
-    --secondary: #ccc4c7;
-    --secondary-foreground: #332f31;
-    --border: #524345;
-    --outline: #9c8a8c;
-}
-</style>

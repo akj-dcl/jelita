@@ -163,7 +163,7 @@ const changeTab = (tab: string) => {
                     >
                         <span class="material-symbols-outlined text-[18px]">inventory_2</span>
                         <span>Pesanan Saya</span>
-                        <span v-if="orders.length > 0" class="ml-0.5 px-1.5 py-0.2 rounded-full text-[10px] font-bold" :class="(activeTab === 'orders' || activeTab === 'order_details') ? 'bg-white text-primary' : 'bg-primary/10 text-primary'">{{ orders.length }}</span>
+                        <span v-if="orders.length > 0" class="ml-0.5 px-1.5 py-0.2 rounded-full text-[10px] font-bold" :class="(activeTab === 'orders' || activeTab === 'order_details') ? 'bg-white dark:bg-card text-primary' : 'bg-primary/10 text-primary'">{{ orders.length }}</span>
                     </button>
 
                     <button 
@@ -369,96 +369,4 @@ const changeTab = (tab: string) => {
     }
 }
 
-/* THEME PRESERVATION (Anti-Black/White Grayscale Fallback Protection & Root Override) */
-.profile-theme {
-    --background: #fbf9f8;
-    --foreground: #1b1c1c;
-    --primary: #8a4853;
-    --primary-foreground: #ffffff;
-    --secondary: #625d5f;
-    --secondary-foreground: #ffffff;
-    --border: #d7c1c3;
-    --outline: #857374;
-
-    --color-primary: #8a4853;
-    --color-on-primary: #ffffff;
-    --color-primary-container: #a6606b;
-    --color-on-primary-container: #fffbff;
-    --color-primary-fixed: #ffd9dd;
-    --color-on-primary-fixed: #3a0915;
-    --color-secondary: #625d5f;
-    --color-on-secondary: #ffffff;
-    --color-secondary-container: #e9e0e3;
-    --color-on-secondary-container: #696365;
-    --color-secondary-fixed-variant: #4a4548;
-    --color-tertiary: #715822;
-    --color-tertiary-fixed: #ffdf9f;
-    --color-on-tertiary-fixed: #261a00;
-    --color-surface: #fbf9f8;
-    --color-surface-dim: #dcd9d9;
-    --color-surface-container-lowest: #ffffff;
-    --color-surface-container-low: #f6f3f2;
-    --color-surface-container: #f0eded;
-    --color-surface-container-highest: #e4e2e1;
-    --color-surface-variant: #e4e2e1;
-    --color-on-surface: #1b1c1c;
-    --color-on-surface-variant: #524345;
-    --color-outline: #857374;
-    --color-outline-variant: #d7c1c3;
-    --color-background: #fbf9f8;
-    --color-on-background: #1b1c1c;
-    --color-error: #ba1a1a;
-    --color-error-container: #ffdad6;
-    --color-on-error: #ffffff;
-
-    background-color: var(--color-background);
-    color: var(--color-on-surface);
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
-}
-
-:root.dark .profile-theme,
-:global(.dark) .profile-theme {
-    --background: #141213;
-    --foreground: #f3f0f0;
-    --primary: #ffb2bc;
-    --primary-foreground: #5a1b24;
-    --secondary: #ccc4c7;
-    --secondary-foreground: #332f31;
-    --border: #524345;
-    --outline: #9c8a8c;
-
-    --color-primary: #ffb2bc;
-    --color-on-primary: #5a1b24;
-    --color-primary-container: #70343e;
-    --color-on-primary-container: #ffd9dd;
-    --color-primary-fixed: #70343e;
-    --color-on-primary-fixed: #ffb2bc;
-    --color-secondary: #ccc4c7;
-    --color-on-secondary: #332f31;
-    --color-secondary-container: #332f31;
-    --color-on-secondary-container: #e9e0e3;
-    --color-secondary-fixed-variant: #ccc4c7;
-    --color-tertiary: #e3c281;
-    --color-tertiary-fixed: #5a430e;
-    --color-on-tertiary-fixed: #ffdf9f;
-    --color-surface: #141213;
-    --color-surface-dim: #1e1a1b;
-    --color-surface-container-lowest: #1a1617;
-    --color-surface-container-low: #221d1e;
-    --color-surface-container: #262122;
-    --color-surface-container-highest: #332d2e;
-    --color-surface-variant: #262122;
-    --color-on-surface: #f3f0f0;
-    --color-on-surface-variant: #ccc4c7;
-    --color-outline: #9c8a8c;
-    --color-outline-variant: #524345;
-    --color-background: #141213;
-    --color-on-background: #f3f0f0;
-    --color-error: #ffb4ab;
-    --color-error-container: #93000a;
-    --color-on-error: #690005;
-
-    background-color: var(--color-background);
-    color: var(--color-on-surface);
-}
 </style>

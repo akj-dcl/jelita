@@ -143,7 +143,7 @@ const handlePasswordSubmit = () => {
                                 v-if="photoPreview && authUser?.profile_photo"
                                 type="button"
                                 @click="photoPreview = null; photoFile = null"
-                                class="px-4 py-1.5 text-red-500 hover:bg-red-50 rounded-lg text-[13px] font-semibold transition-all"
+                                class="px-4 py-1.5 text-red-500 hover:bg-red-50 dark:hover:bg-red-950/30 rounded-lg text-[13px] font-semibold transition-all"
                             >
                                 Hapus
                             </button>
@@ -189,7 +189,7 @@ const handlePasswordSubmit = () => {
                 </div>
 
                 <!-- Success -->
-                <div v-if="profileSuccess" class="flex items-center gap-2 text-emerald-600 bg-emerald-50 border border-emerald-200 rounded-xl px-4 py-3 text-[14px] font-semibold">
+                <div v-if="profileSuccess" class="flex items-center gap-2 text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800/60 rounded-xl px-4 py-3 text-[14px] font-semibold">
                     <span class="material-symbols-outlined text-[20px]">check_circle</span>
                     {{ profileSuccess }}
                 </div>
@@ -275,7 +275,7 @@ const handlePasswordSubmit = () => {
                 </div>
 
                 <!-- Success -->
-                <div v-if="passwordSuccess" class="flex items-center gap-2 text-emerald-600 bg-emerald-50 border border-emerald-200 rounded-xl px-4 py-3 text-[14px] font-semibold">
+                <div v-if="passwordSuccess" class="flex items-center gap-2 text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800/60 rounded-xl px-4 py-3 text-[14px] font-semibold">
                     <span class="material-symbols-outlined text-[20px]">check_circle</span>
                     {{ passwordSuccess }}
                 </div>

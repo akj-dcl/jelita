@@ -278,21 +278,21 @@ const getIcon = (label: string) => labelIcons[label] || 'location_on';
         >
             <div class="modal-card">
                 <!-- Modal Header -->
-                <div class="flex items-center justify-between p-6 border-b border-gray-200 shrink-0">
+                <div class="flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-800 shrink-0">
                     <div>
-                        <h3 class="text-xl font-bold text-gray-900">{{ isEditing ? 'Edit Alamat Pengiriman' : 'Tambah Alamat Baru' }}</h3>
-                        <p class="text-xs text-gray-500 mt-0.5">Pastikan data alamat lengkap dan akurat</p>
+                        <h3 class="text-xl font-bold text-gray-900 dark:text-gray-100">{{ isEditing ? 'Edit Alamat Pengiriman' : 'Tambah Alamat Baru' }}</h3>
+                        <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">Pastikan data alamat lengkap dan akurat</p>
                     </div>
-                    <button @click="closeModal" class="w-9 h-9 flex items-center justify-center rounded-full hover:bg-gray-100 text-gray-500 transition-colors">
+                    <button @click="closeModal" class="w-9 h-9 flex items-center justify-center rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-500 dark:text-gray-400 transition-colors">
                         <span class="material-symbols-outlined text-[22px]">close</span>
                     </button>
                 </div>
 
                 <!-- Modal Body -->
-                <form @submit.prevent="handleSubmit" class="p-6 space-y-4 overflow-y-auto flex-grow text-gray-900">
+                <form @submit.prevent="handleSubmit" class="p-6 space-y-4 overflow-y-auto flex-grow text-gray-900 dark:text-gray-100">
                     <!-- Label -->
                     <div>
-                        <label class="block text-xs font-bold text-gray-700 mb-1.5 uppercase tracking-wider">Label Alamat</label>
+                        <label class="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-1.5 uppercase tracking-wider">Label Alamat</label>
                         <div class="flex gap-2 flex-wrap">
                             <button
                                 v-for="lbl in ['Rumah', 'Kantor', 'Kos', 'Lainnya']"
@@ -300,10 +300,10 @@ const getIcon = (label: string) => labelIcons[label] || 'location_on';
                                 type="button"
                                 @click="form.label = lbl"
                                 :class="[
-                                    'px-4 py-2 rounded-xl text-xs font-bold border transition-all',
+                                    'px-4 py-2 rounded-xl text-xs font-bold border transition-all cursor-pointer',
                                     form.label === lbl
                                         ? 'bg-primary text-white border-primary shadow-sm'
-                                        : 'border-gray-200 text-gray-700 hover:border-primary/50 bg-gray-50'
+                                        : 'border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:border-primary/50 bg-gray-50 dark:bg-surface-container-low'
                                 ]"
                             >
                                 {{ lbl }}
@@ -314,49 +314,49 @@ const getIcon = (label: string) => labelIcons[label] || 'location_on';
                     <!-- Recipient Name & Phone -->
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
-                            <label class="block text-xs font-bold text-gray-700 mb-1.5 uppercase tracking-wider">Nama Penerima <span class="text-red-500">*</span></label>
-                            <input v-model="form.recipient_name" type="text" required class="w-full bg-white border border-gray-300 rounded-xl px-4 py-3 text-sm text-gray-900 placeholder:text-gray-400 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all font-medium" placeholder="Contoh: Budi Santoso" />
+                            <label class="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-1.5 uppercase tracking-wider">Nama Penerima <span class="text-red-500">*</span></label>
+                            <input v-model="form.recipient_name" type="text" required class="w-full bg-white dark:bg-card border border-gray-300 dark:border-outline-variant/60 rounded-xl px-4 py-3 text-sm text-gray-900 dark:text-gray-100 placeholder:text-gray-400 dark:placeholder:text-gray-500 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all font-medium" placeholder="Contoh: Budi Santoso" />
                         </div>
                         <div>
-                            <label class="block text-xs font-bold text-gray-700 mb-1.5 uppercase tracking-wider">No. Telepon / WhatsApp <span class="text-red-500">*</span></label>
-                            <input v-model="form.phone" type="tel" required class="w-full bg-white border border-gray-300 rounded-xl px-4 py-3 text-sm text-gray-900 placeholder:text-gray-400 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all font-medium" placeholder="081234567890" />
+                            <label class="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-1.5 uppercase tracking-wider">No. Telepon / WhatsApp <span class="text-red-500">*</span></label>
+                            <input v-model="form.phone" type="tel" required class="w-full bg-white dark:bg-card border border-gray-300 dark:border-outline-variant/60 rounded-xl px-4 py-3 text-sm text-gray-900 dark:text-gray-100 placeholder:text-gray-400 dark:placeholder:text-gray-500 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all font-medium" placeholder="081234567890" />
                         </div>
                     </div>
 
                     <!-- Address Line -->
                     <div>
-                        <label class="block text-xs font-bold text-gray-700 mb-1.5 uppercase tracking-wider">Alamat Lengkap <span class="text-red-500">*</span></label>
-                        <input v-model="form.address_line" type="text" required class="w-full bg-white border border-gray-300 rounded-xl px-4 py-3 text-sm text-gray-900 placeholder:text-gray-400 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all font-medium" placeholder="Nama jalan, nomor rumah, RT/RW, patokan..." />
+                        <label class="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-1.5 uppercase tracking-wider">Alamat Lengkap <span class="text-red-500">*</span></label>
+                        <input v-model="form.address_line" type="text" required class="w-full bg-white dark:bg-card border border-gray-300 dark:border-outline-variant/60 rounded-xl px-4 py-3 text-sm text-gray-900 dark:text-gray-100 placeholder:text-gray-400 dark:placeholder:text-gray-500 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all font-medium" placeholder="Nama jalan, nomor rumah, RT/RW, patokan..." />
                     </div>
 
                     <!-- Kelurahan -->
                     <div>
-                        <label class="block text-xs font-bold text-gray-700 mb-1.5 uppercase tracking-wider">Kelurahan / Desa</label>
-                        <input v-model="form.kelurahan" type="text" class="w-full bg-white border border-gray-300 rounded-xl px-4 py-3 text-sm text-gray-900 placeholder:text-gray-400 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all font-medium" placeholder="Contoh: Kelurahan Cakranegara Barat" />
+                        <label class="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-1.5 uppercase tracking-wider">Kelurahan / Desa</label>
+                        <input v-model="form.kelurahan" type="text" class="w-full bg-white dark:bg-card border border-gray-300 dark:border-outline-variant/60 rounded-xl px-4 py-3 text-sm text-gray-900 dark:text-gray-100 placeholder:text-gray-400 dark:placeholder:text-gray-500 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all font-medium" placeholder="Contoh: Kelurahan Cakranegara Barat" />
                     </div>
 
                     <!-- RajaOngkir Destination Search -->
                     <div class="relative">
-                        <label class="block text-xs font-bold text-gray-700 mb-1.5 uppercase tracking-wider">Kecamatan / Kota Tujuan <span class="text-red-500">*</span></label>
+                        <label class="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-1.5 uppercase tracking-wider">Kecamatan / Kota Tujuan <span class="text-red-500">*</span></label>
                         <div class="relative">
                             <input
                                 v-model="destinationSearch"
                                 @input="searchDestinations"
                                 type="text"
                                 placeholder="Ketik minimal 3 huruf kecamatan/kota..."
-                                class="w-full bg-white border border-gray-300 rounded-xl px-4 py-3 text-sm text-gray-900 placeholder:text-gray-400 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all pr-10 font-medium"
+                                class="w-full bg-white dark:bg-card border border-gray-300 dark:border-outline-variant/60 rounded-xl px-4 py-3 text-sm text-gray-900 dark:text-gray-100 placeholder:text-gray-400 dark:placeholder:text-gray-500 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all pr-10 font-medium"
                             />
                             <div v-if="isSearchingDest" class="absolute right-3 top-3.5">
                                 <span class="material-symbols-outlined animate-spin text-primary text-[20px]">refresh</span>
                             </div>
                         </div>
                         <!-- Dropdown Search Results -->
-                        <div v-if="destinationResults.length > 0" class="absolute z-[100] w-full mt-1 bg-white border border-gray-200 rounded-2xl shadow-xl max-h-52 overflow-y-auto">
+                        <div v-if="destinationResults.length > 0" class="absolute z-[100] w-full mt-1 bg-white dark:bg-card border border-gray-200 dark:border-outline-variant rounded-2xl shadow-xl max-h-52 overflow-y-auto">
                             <div
                                 v-for="dest in destinationResults"
                                 :key="dest.id"
                                 @click="selectDestination(dest)"
-                                class="px-4 py-3 hover:bg-primary/10 cursor-pointer text-xs text-gray-900 border-b border-gray-100 last:border-0 font-medium"
+                                class="px-4 py-3 hover:bg-primary/10 cursor-pointer text-xs text-gray-900 dark:text-gray-100 border-b border-gray-100 dark:border-outline-variant/30 last:border-0 font-medium"
                             >
                                 {{ dest.label }}
                             </div>
@@ -370,12 +370,12 @@ const getIcon = (label: string) => labelIcons[label] || 'location_on';
                     <!-- Province & Postal Code -->
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
-                            <label class="block text-xs font-bold text-gray-700 mb-1.5 uppercase tracking-wider">Provinsi <span class="text-red-500">*</span></label>
-                            <input v-model="form.province" type="text" required class="w-full bg-white border border-gray-300 rounded-xl px-4 py-3 text-sm text-gray-900 placeholder:text-gray-400 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all font-medium" placeholder="Contoh: Nusa Tenggara Barat" />
+                            <label class="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-1.5 uppercase tracking-wider">Provinsi <span class="text-red-500">*</span></label>
+                            <input v-model="form.province" type="text" required class="w-full bg-white dark:bg-card border border-gray-300 dark:border-outline-variant/60 rounded-xl px-4 py-3 text-sm text-gray-900 dark:text-gray-100 placeholder:text-gray-400 dark:placeholder:text-gray-500 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all font-medium" placeholder="Contoh: Nusa Tenggara Barat" />
                         </div>
                         <div>
-                            <label class="block text-xs font-bold text-gray-700 mb-1.5 uppercase tracking-wider">Kode Pos</label>
-                            <input v-model="form.postal_code" type="text" class="w-full bg-white border border-gray-300 rounded-xl px-4 py-3 text-sm text-gray-900 placeholder:text-gray-400 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all font-medium" placeholder="Contoh: 83232" />
+                            <label class="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-1.5 uppercase tracking-wider">Kode Pos</label>
+                            <input v-model="form.postal_code" type="text" class="w-full bg-white dark:bg-card border border-gray-300 dark:border-outline-variant/60 rounded-xl px-4 py-3 text-sm text-gray-900 dark:text-gray-100 placeholder:text-gray-400 dark:placeholder:text-gray-500 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all font-medium" placeholder="Contoh: 83232" />
                         </div>
                     </div>
 
@@ -444,6 +444,7 @@ const getIcon = (label: string) => labelIcons[label] || 'location_on';
 :global(.dark) .modal-card {
     background-color: #1a1617 !important;
     border-color: rgba(75, 85, 99, 1) !important;
+    color: #f3f0f0 !important;
 }
 
 @keyframes fadeIn {

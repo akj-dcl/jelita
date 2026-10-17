@@ -201,7 +201,7 @@ const submitReview = () => {
         <!-- Review Modal -->
         <Teleport to="body">
             <div v-if="showReviewModal" class="fixed inset-0 z-[100] flex items-center justify-center bg-black/50 backdrop-blur-sm p-4 w-screen h-screen">
-                <div class="bg-white rounded-2xl p-6 md:p-8 w-[90vw] sm:w-[500px] max-w-lg min-w-[320px] shadow-2xl relative transform transition-all">
+                <div class="bg-surface-container-lowest dark:bg-card border border-transparent dark:border-outline-variant/30 text-on-surface rounded-2xl p-6 md:p-8 w-[90vw] sm:w-[500px] max-w-lg min-w-[320px] shadow-2xl relative transform transition-all">
                     <!-- Close button -->
                     <button @click="showReviewModal = false" class="absolute top-4 right-4 text-on-surface-variant hover:text-on-surface transition-colors cursor-pointer">
                         <span class="material-symbols-outlined text-2xl">close</span>
@@ -226,13 +226,13 @@ const submitReview = () => {
                                 <textarea 
                                     v-model="reviewForm.comment"
                                     rows="4" 
-                                    class="w-full px-4 py-3 rounded-xl border border-outline-variant focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all resize-none text-on-surface"
+                                    class="w-full px-4 py-3 rounded-xl border border-outline-variant bg-surface-container-low dark:bg-card focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all resize-none text-on-surface placeholder:text-on-surface-variant/60"
                                     placeholder="Ceritakan pengalaman Anda dengan produk ini..."></textarea>
                                 <div v-if="reviewForm.errors.comment" class="text-error text-xs mt-1">{{ reviewForm.errors.comment }}</div>
                             </div>
 
                             <div class="pt-4 flex justify-end gap-3">
-                                <button type="button" @click="showReviewModal = false" class="px-6 py-2 rounded-xl text-primary font-semibold hover:bg-primary/5 transition-colors">
+                                <button type="button" @click="showReviewModal = false" class="px-6 py-2 rounded-xl text-primary font-semibold hover:bg-primary/5 dark:hover:bg-primary/20 transition-colors">
                                     Batal
                                 </button>
                                 <button type="submit" :disabled="reviewForm.processing" class="px-6 py-2 rounded-xl bg-primary text-white font-semibold hover:bg-primary/90 transition-colors disabled:opacity-50">

@@ -49,7 +49,7 @@ const submit = () => {
         <!-- Left Column (Personal Info & Security) -->
         <div class="lg:col-span-2 space-y-gutter">
           <!-- Photo Upload Card (Coming Soon) -->
-          <Card class="bg-surface-container-lowest rounded-xl border-0 shadow-[0px_4px_20px_rgba(0,0,0,0.04)] p-md opacity-50 pointer-events-none">
+          <Card class="bg-surface-container-lowest border border-transparent dark:border-outline-variant/30 rounded-xl shadow-[0px_4px_20px_rgba(0,0,0,0.04)] dark:shadow-none p-md opacity-50 pointer-events-none">
             <h3 class="font-headline-md text-headline-md text-on-surface mb-sm">Foto Profil (Segera Hadir)</h3>
             <p class="font-body-md text-body-md text-on-surface-variant mb-md">Unggah foto profil untuk pelanggan ini.</p>
             <div class="flex items-center gap-md">
@@ -68,26 +68,26 @@ const submit = () => {
           </Card>
           
           <!-- Personal Information Card -->
-          <Card class="bg-surface-container-lowest rounded-xl border-0 shadow-[0px_4px_20px_rgba(0,0,0,0.04)] p-md">
+          <Card class="bg-surface-container-lowest border border-transparent dark:border-outline-variant/30 rounded-xl shadow-[0px_4px_20px_rgba(0,0,0,0.04)] dark:shadow-none p-md">
             <h3 class="font-headline-md text-headline-md text-on-surface mb-sm">Informasi Pribadi</h3>
             <p class="font-body-md text-body-md text-on-surface-variant mb-md">Masukkan detail dasar untuk profil pelanggan baru.</p>
             
             <div class="space-y-md">
               <div>
                 <label class="block font-label-md text-label-md text-on-surface mb-xs" for="fullName">Nama Lengkap</label>
-                <Input v-model="form.name" class="w-full border-surface-variant" id="fullName" placeholder="Misalnya: Budi Santoso" type="text" required/>
+                <Input v-model="form.name" class="w-full border-surface-variant bg-surface-container-low/50 text-on-surface" id="fullName" placeholder="Misalnya: Budi Santoso" type="text" required/>
                 <div v-if="form.errors.name" class="text-error text-sm mt-1">{{ form.errors.name }}</div>
               </div>
               
               <div class="grid grid-cols-1 md:grid-cols-2 gap-md">
                 <div>
                   <label class="block font-label-md text-label-md text-on-surface mb-xs" for="email">Alamat Email</label>
-                  <Input v-model="form.email" class="w-full border-surface-variant" id="email" placeholder="budi@example.com" type="email" required/>
+                  <Input v-model="form.email" class="w-full border-surface-variant bg-surface-container-low/50 text-on-surface" id="email" placeholder="budi@example.com" type="email" required/>
                   <div v-if="form.errors.email" class="text-error text-sm mt-1">{{ form.errors.email }}</div>
                 </div>
                 <div>
                   <label class="block font-label-md text-label-md text-on-surface mb-xs" for="phone">Nomor Telepon</label>
-                  <Input v-model="form.phone" class="w-full border-surface-variant" id="phone" placeholder="08123456789" type="tel"/>
+                  <Input v-model="form.phone" class="w-full border-surface-variant bg-surface-container-low/50 text-on-surface" id="phone" placeholder="08123456789" type="tel"/>
                   <div v-if="form.errors.phone" class="text-error text-sm mt-1">{{ form.errors.phone }}</div>
                 </div>
               </div>
@@ -95,12 +95,12 @@ const submit = () => {
           </Card>
           
           <!-- Security Card -->
-          <Card class="bg-surface-container-lowest rounded-xl border-0 shadow-[0px_4px_20px_rgba(0,0,0,0.04)] p-md">
+          <Card class="bg-surface-container-lowest border border-transparent dark:border-outline-variant/30 rounded-xl shadow-[0px_4px_20px_rgba(0,0,0,0.04)] dark:shadow-none p-md">
             <h3 class="font-headline-md text-headline-md text-on-surface mb-sm">Keamanan</h3>
             <p class="font-body-md text-body-md text-on-surface-variant mb-md">Ubah kata sandi untuk akun. Biarkan kosong untuk mempertahankan kata sandi saat ini.</p>
             <div>
               <label class="block font-label-md text-label-md text-on-surface mb-xs" for="password">Kata Sandi (Opsional)</label>
-              <Input v-model="form.password" class="w-full border-surface-variant" id="password" placeholder="••••••••" type="password"/>
+              <Input v-model="form.password" class="w-full border-surface-variant bg-surface-container-low/50 text-on-surface" id="password" placeholder="••••••••" type="password"/>
               <p class="font-label-sm text-label-sm text-on-surface-variant mt-2">Kata sandi harus minimal 8 karakter.</p>
               <div v-if="form.errors.password" class="text-error text-sm mt-1">{{ form.errors.password }}</div>
             </div>

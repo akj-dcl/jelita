@@ -115,32 +115,32 @@ const handleAddProduct = () => {
 
       <!-- Stats Bar -->
       <div class="grid grid-cols-1 md:grid-cols-4 gap-md mb-lg">
-        <Card class="bg-white p-md rounded-xl border-0 soft-elevation flex flex-col gap-xs min-h-[120px] justify-center">
+        <Card class="bg-surface-container-lowest border border-transparent dark:border-outline-variant/30 p-md rounded-xl soft-elevation flex flex-col gap-xs min-h-[120px] justify-center">
           <span class="text-on-surface-variant font-label-md text-label-md">Total Produk</span>
           <span class="text-headline-md font-headline-md text-on-surface font-bold">{{ stats?.total || 0 }}</span>
         </Card>
-        <Card class="bg-white p-md rounded-xl border-0 soft-elevation flex flex-col gap-xs min-h-[120px] justify-center">
+        <Card class="bg-surface-container-lowest border border-transparent dark:border-outline-variant/30 p-md rounded-xl soft-elevation flex flex-col gap-xs min-h-[120px] justify-center">
           <span class="text-on-surface-variant font-label-md text-label-md">Daftar Aktif</span>
           <span class="text-headline-md font-headline-md text-on-surface font-bold">{{ stats?.active || 0 }}</span>
         </Card>
-        <Card class="bg-white p-md rounded-xl border-0 soft-elevation border-l-4 border-l-error/40 flex flex-col gap-xs min-h-[120px] justify-center">
+        <Card class="bg-surface-container-lowest border border-transparent dark:border-outline-variant/30 border-l-4 border-l-error/60 dark:border-l-error p-md rounded-xl soft-elevation flex flex-col gap-xs min-h-[120px] justify-center">
           <span class="text-on-surface-variant font-label-md text-label-md">Peringatan Stok Rendah</span>
           <span class="text-headline-md font-headline-md text-error font-bold">{{ stats?.low_stock || 0 }}</span>
           <span class="text-error font-label-sm text-label-sm font-bold">Perlu perhatian</span>
         </Card>
-        <Card class="bg-white p-md rounded-xl border-0 soft-elevation flex flex-col gap-xs min-h-[120px] justify-center">
+        <Card class="bg-surface-container-lowest border border-transparent dark:border-outline-variant/30 p-md rounded-xl soft-elevation flex flex-col gap-xs min-h-[120px] justify-center">
           <span class="text-on-surface-variant font-label-md text-label-md">Daftar Draf</span>
           <span class="text-headline-md font-headline-md text-on-surface font-bold">{{ stats?.draft || 0 }}</span>
         </Card>
       </div>
 
       <!-- Table Filters & Actions -->
-      <Card class="bg-white rounded-xl border-0 soft-elevation overflow-hidden">
+      <Card class="bg-surface-container-lowest border border-transparent dark:border-outline-variant/30 rounded-xl soft-elevation overflow-hidden">
         <div class="p-md border-b border-surface-container flex flex-wrap items-center justify-between gap-md">
           <div class="flex items-center gap-md w-full md:w-auto">
             <div class="relative w-full md:w-80">
               <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant/50 text-[20px]">search</span>
-              <Input v-model="searchQuery" class="pl-10 pr-md py-sm rounded-lg border-outline-variant bg-surface-container-lowest focus-visible:ring-1 focus-visible:ring-primary transition-colors text-label-md w-full h-10" placeholder="Filter berdasarkan nama produk atau SKU..." type="text" />
+              <Input v-model="searchQuery" class="pl-10 pr-md py-sm rounded-lg border-outline-variant bg-surface-container-low/50 focus-visible:ring-1 focus-visible:ring-primary transition-colors text-label-md w-full h-10 text-on-surface" placeholder="Filter berdasarkan nama produk atau SKU..." type="text" />
             </div>
             <Button variant="outline" class="flex items-center gap-sm h-10 border-outline-variant text-on-surface-variant hover:text-on-surface">
               <span class="material-symbols-outlined text-[20px]">filter_list</span>
@@ -150,7 +150,7 @@ const handleAddProduct = () => {
           <div class="flex items-center gap-sm w-full md:w-auto">
             <span class="text-label-sm font-label-sm text-on-surface-variant font-bold">Aksi Massal:</span>
             <Select>
-              <SelectTrigger class="w-[140px] h-10 border-outline-variant bg-white">
+              <SelectTrigger class="w-[140px] h-10 border-outline-variant bg-surface-container-lowest text-on-surface">
                 <SelectValue placeholder="Terpilih (0)" />
               </SelectTrigger>
               <SelectContent>
@@ -249,7 +249,7 @@ const handleAddProduct = () => {
 
       <!-- Toast Notification -->
       <div 
-        class="fixed top-24 left-1/2 -translate-x-1/2 bg-white px-md py-sm rounded-full shadow-lg border border-primary/20 flex items-center gap-sm transition-all duration-500 z-50 pointer-events-none"
+        class="fixed top-24 left-1/2 -translate-x-1/2 bg-surface-container-lowest dark:bg-card px-md py-sm rounded-full shadow-lg border border-primary/20 flex items-center gap-sm transition-all duration-500 z-50 pointer-events-none"
         :class="showToast ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-5'"
       >
         <span class="material-symbols-outlined text-primary" style="font-size: 20px;">check_circle</span>

@@ -121,7 +121,7 @@ const toggleWishlist = () => {
                         </button>
                     </div>
                     <!-- Main Display -->
-                    <div class="flex-grow aspect-[4/5] rounded-xl overflow-hidden bg-white shadow-[0px_4px_20px_rgba(0,0,0,0.04)]">
+                    <div class="flex-grow aspect-[4/5] rounded-xl overflow-hidden bg-white dark:bg-card shadow-[0px_4px_20px_rgba(0,0,0,0.04)] border border-transparent dark:border-outline-variant/30">
                         <img 
                             class="w-full h-full object-cover transition-opacity duration-150" 
                             :src="images[currentImageIndex]" 
@@ -188,12 +188,12 @@ const toggleWishlist = () => {
                                 <label class="text-sm font-semibold text-on-surface-variant">Jumlah</label>
                                 <span class="text-xs text-primary font-medium bg-primary/10 px-2 py-1 rounded-full">Stok: {{ displayStock }}</span>
                             </div>
-                            <div class="flex items-center w-fit border border-outline-variant/30 rounded-[16px] overflow-hidden bg-white">
-                                <button @click="adjustQty(-1)" class="p-3 hover:bg-surface-container-low transition-colors text-primary cursor-pointer active:scale-90">
+                            <div class="flex items-center w-fit border border-outline-variant/30 rounded-[16px] overflow-hidden bg-white dark:bg-surface-container-low">
+                                <button @click="adjustQty(-1)" class="p-3 hover:bg-surface-container-low dark:hover:bg-surface-container transition-colors text-primary cursor-pointer active:scale-90">
                                     <span class="material-symbols-outlined">remove</span>
                                 </button>
                                 <span class="px-6 font-bold text-on-surface">{{ quantity }}</span>
-                                <button @click="adjustQty(1)" class="p-3 hover:bg-surface-container-low transition-colors text-primary cursor-pointer active:scale-90">
+                                <button @click="adjustQty(1)" class="p-3 hover:bg-surface-container-low dark:hover:bg-surface-container transition-colors text-primary cursor-pointer active:scale-90">
                                     <span class="material-symbols-outlined">add</span>
                                 </button>
                             </div>
@@ -212,11 +212,23 @@ const toggleWishlist = () => {
                     
                     <!-- Ulasan Pembeli -->
                     <div class="mt-8 border-t border-surface-variant/30 pt-8">
-                        <h3 class="text-lg font-bold text-on-surface mb-6">Ulasan Pembeli</h3>
+                        <div class="flex items-center justify-between mb-6">
+                            <h3 class="text-lg font-bold text-on-surface">Ulasan Pembeli</h3>
+                            <span v-if="props.product.reviews && props.product.reviews.length > 0" class="text-xs font-semibold px-2.5 py-1 rounded-full bg-surface-variant text-gray-700 dark:text-gray-300">
+                                {{ props.product.reviews.length }} Ulasan
+                            </span>
+                        </div>
                         <div v-if="!props.product.reviews || props.product.reviews.length === 0" class="text-on-surface-variant text-sm italic">
                             Belum ada ulasan untuk produk ini.
                         </div>
-                        <div v-else class="space-y-6">
+                        <div 
+                            v-else 
+                            :class="[
+                                props.product.reviews.length > 1 
+                                    ? 'max-h-[360px] overflow-y-auto pr-3 overscroll-contain reviews-scroll space-y-6 [scrollbar-width:thin] [scrollbar-color:#d1d5db_transparent]' 
+                                    : 'space-y-6'
+                            ]"
+                        >
                             <div v-for="review in props.product.reviews" :key="review.id" class="border-b border-surface-variant/30 pb-6 last:border-0 last:pb-0">
                                 <div class="flex items-center justify-between mb-2">
                                     <span class="font-bold text-on-surface text-sm">{{ review.user?.name || 'Anonim' }}</span>
@@ -237,7 +249,7 @@ const toggleWishlist = () => {
                 <div class="flex justify-between items-end mb-10">
                     <div>
                         <h2 class="text-2xl font-bold text-primary mb-1">Anda mungkin juga suka</h2>
-                        <p class="text-secondary text-sm">Temukan lebih banyak karya kerajinan tangan</p>
+                        <p class="text-gray-600 dark:text-gray-300 text-sm">Temukan lebih banyak karya kerajinan tangan</p>
                     </div>
                     <div class="flex gap-2">
                         <button class="w-10 h-10 rounded-full border border-outline-variant/30 flex items-center justify-center hover:bg-primary hover:text-white hover:border-primary transition-all cursor-pointer">
@@ -250,7 +262,7 @@ const toggleWishlist = () => {
                 </div>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-gutter">
                     <Link v-for="rel in props.relatedProducts" :key="rel.id" :href="'/product/' + rel.id" class="group cursor-pointer block">
-                        <div class="aspect-[3/4] rounded-xl overflow-hidden bg-white shadow-[0px_4px_20px_rgba(0,0,0,0.04)] mb-2 transition-transform duration-500 group-hover:-translate-y-2">
+                        <div class="aspect-[3/4] rounded-xl overflow-hidden bg-white dark:bg-card border border-transparent dark:border-outline-variant/30 shadow-[0px_4px_20px_rgba(0,0,0,0.04)] mb-2 transition-transform duration-500 group-hover:-translate-y-2">
                             <img class="w-full h-full object-cover" :src="rel.image ? '/storage/' + rel.image : 'https://placehold.co/400x500/e2e8f0/64748b?text=No+Image'" :alt="rel.name" />
                         </div>
                         <div class="px-1">
@@ -292,29 +304,6 @@ const toggleWishlist = () => {
 </template>
 
 <style scoped>
-.welcome-theme {
-    /* Scoped theme variables matching the Jelita Saung palette */
-    --background: #fbf9f8;
-    --foreground: #1b1c1c;
-    --primary: #8a4853;
-    --primary-foreground: #ffffff;
-    --secondary: #625d5f;
-    --secondary-foreground: #ffffff;
-    --border: #d7c1c3;
-    --outline: #857374;
-}
-
-:global(.dark) .welcome-theme {
-    /* Dark mode adjustments if the system theme is dark */
-    --background: #141213;
-    --foreground: #f3f0f0;
-    --primary: #ffb2bc;
-    --primary-foreground: #5a1b24;
-    --secondary: #ccc4c7;
-    --secondary-foreground: #332f31;
-    --border: #524345;
-    --outline: #9c8a8c;
-}
 
 /* Custom scrollbars for thumbnail tray */
 .no-scrollbar::-webkit-scrollbar {
@@ -323,5 +312,20 @@ const toggleWishlist = () => {
 .no-scrollbar {
     -ms-overflow-style: none;
     scrollbar-width: none;
+}
+
+/* Custom sleek scrollbar for reviews */
+.reviews-scroll::-webkit-scrollbar {
+    width: 5px;
+}
+.reviews-scroll::-webkit-scrollbar-track {
+    background: transparent;
+}
+.reviews-scroll::-webkit-scrollbar-thumb {
+    background: #d1d5db;
+    border-radius: 9999px;
+}
+.reviews-scroll::-webkit-scrollbar-thumb:hover {
+    background: #9ca3af;
 }
 </style>

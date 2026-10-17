@@ -60,53 +60,53 @@
     --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
     --color-sidebar-border: var(--sidebar-border);
     --color-sidebar-ring: var(--sidebar-ring);
+
+    /* Material Design Dynamic Color Tokens */
+    --color-surface-container-high: var(--surface-container-high);
+    --color-secondary-fixed: var(--secondary-fixed);
+    --color-inverse-on-surface: var(--inverse-on-surface);
+    --color-surface-tint: var(--surface-tint);
+    --color-inverse-surface: var(--inverse-surface);
+    --color-surface-variant: var(--surface-variant);
+    --color-on-tertiary: var(--on-tertiary);
+    --color-on-primary-fixed-variant: var(--on-primary-fixed-variant);
+    --color-inverse-primary: var(--inverse-primary);
+    --color-surface-dim: var(--surface-dim);
+    --color-primary-fixed-dim: var(--primary-fixed-dim);
+    --color-secondary-container: var(--secondary-container);
+    --color-tertiary-fixed-dim: var(--tertiary-fixed-dim);
+    --color-on-tertiary-container: var(--on-tertiary-container);
+    --color-surface-container-highest: var(--surface-container-highest);
+    --color-outline-variant: var(--outline-variant);
+    --color-on-secondary-container: var(--on-secondary-container);
+    --color-on-secondary-fixed: var(--on-secondary-fixed);
+    --color-primary-fixed: var(--primary-fixed);
+    --color-surface-container-low: var(--surface-container-low);
+    --color-on-tertiary-fixed-variant: var(--on-tertiary-fixed-variant);
+    --color-on-surface-variant: var(--on-surface-variant);
+    --color-surface-container-lowest: var(--surface-container-lowest);
+    --color-tertiary-fixed: var(--tertiary-fixed);
+    --color-on-primary-fixed: var(--on-primary-fixed);
+    --color-on-primary-container: var(--on-primary-container);
+    --color-secondary-fixed-dim: var(--secondary-fixed-dim);
+    --color-surface-container: var(--surface-container);
+    --color-tertiary-container: var(--tertiary-container);
+    --color-surface-bright: var(--surface-bright);
+    --color-on-error-container: var(--on-error-container);
+    --color-on-secondary-fixed-variant: var(--on-secondary-fixed-variant);
+    --color-on-tertiary-fixed: var(--on-tertiary-fixed);
+    --color-primary-container: var(--primary-container);
+    --color-surface: var(--surface);
+    --color-on-surface: var(--on-surface);
+    --color-on-background: var(--on-background);
+    --color-tertiary: var(--tertiary);
+    --color-dusty-rose: var(--dusty-rose);
+    --color-soft-gold: var(--soft-gold);
+    --color-gold: var(--gold);
+    --color-pale-pink: var(--pale-pink);
 }
 
 @theme {
-    /* Custom Colors */
-    --color-surface-container-high: #eae7e7;
-    --color-secondary-fixed: #e9e0e3;
-    --color-inverse-on-surface: #f3f0f0;
-    --color-surface-tint: #8c4b55;
-    --color-inverse-surface: #303030;
-    --color-surface-variant: #e4e2e1;
-    --color-on-tertiary: #ffffff;
-    --color-on-primary-fixed-variant: #70343e;
-    --color-inverse-primary: #ffb2bc;
-    --color-surface-dim: #dcd9d9;
-    --color-primary-fixed-dim: #ffb2bc;
-    --color-secondary-container: #e9e0e3;
-    --color-tertiary-fixed-dim: #e3c281;
-    --color-on-tertiary-container: #fffbff;
-    --color-surface-container-highest: #e4e2e1;
-    --color-outline-variant: #d7c1c3;
-    --color-on-secondary-container: #696365;
-    --color-on-secondary-fixed: #1e1a1d;
-    --color-primary-fixed: #ffd9dd;
-    --color-surface-container-low: #f6f3f2;
-    --color-on-tertiary-fixed-variant: #5a430e;
-    --color-on-surface-variant: #524345;
-    --color-surface-container-lowest: #ffffff;
-    --color-tertiary-fixed: #ffdf9f;
-    --color-on-primary-fixed: #3a0915;
-    --color-on-primary-container: #fffbff;
-    --color-secondary-fixed-dim: #ccc4c7;
-    --color-surface-container: #f0eded;
-    --color-tertiary-container: #8b7138;
-    --color-surface-bright: #fbf9f8;
-    --color-on-error-container: #93000a;
-    --color-on-secondary-fixed-variant: #4a4548;
-    --color-on-tertiary-fixed: #261a00;
-    --color-primary-container: #a6606b;
-    --color-surface: #fbf9f8;
-    --color-on-surface: #1b1c1c;
-    --color-on-background: #1b1c1c;
-    --color-tertiary: #755919;
-    --color-dusty-rose: #B76E79;
-    --color-soft-gold: #C8A96A;
-    --color-gold: #C8A96A;
-    --color-pale-pink: #F7EEF1;
-
     /* Custom spacing */
     --spacing-margin-desktop: 80px;
     --spacing-gutter: 24px;
@@ -222,6 +222,51 @@
     --sidebar-border: #d7c1c3;
     --sidebar-ring: #8a4853;
     --sidebar: #f6f3f2;
+
+    /* Material Design & Custom Brand Tokens */
+    --surface-container-high: #eae7e7;
+    --secondary-fixed: #e9e0e3;
+    --inverse-on-surface: #f3f0f0;
+    --surface-tint: #8c4b55;
+    --inverse-surface: #303030;
+    --surface-variant: #e4e2e1;
+    --on-tertiary: #ffffff;
+    --on-primary-fixed-variant: #70343e;
+    --inverse-primary: #ffb2bc;
+    --surface-dim: #dcd9d9;
+    --primary-fixed-dim: #ffb2bc;
+    --secondary-container: #e9e0e3;
+    --tertiary-fixed-dim: #e3c281;
+    --on-tertiary-container: #fffbff;
+    --surface-container-highest: #e4e2e1;
+    --outline: #857374;
+    --outline-variant: #d7c1c3;
+    --on-secondary-container: #696365;
+    --on-secondary-fixed: #1e1a1d;
+    --primary-fixed: #ffd9dd;
+    --surface-container-low: #f6f3f2;
+    --on-tertiary-fixed-variant: #5a430e;
+    --on-surface-variant: #524345;
+    --surface-container-lowest: #ffffff;
+    --tertiary-fixed: #ffdf9f;
+    --on-primary-fixed: #3a0915;
+    --on-primary-container: #fffbff;
+    --secondary-fixed-dim: #ccc4c7;
+    --surface-container: #f0eded;
+    --tertiary-container: #8b7138;
+    --surface-bright: #fbf9f8;
+    --on-error-container: #93000a;
+    --on-secondary-fixed-variant: #4a4548;
+    --on-tertiary-fixed: #261a00;
+    --primary-container: #a6606b;
+    --surface: #fbf9f8;
+    --on-surface: #1b1c1c;
+    --on-background: #1b1c1c;
+    --tertiary: #755919;
+    --dusty-rose: #B76E79;
+    --soft-gold: #C8A96A;
+    --gold: #C8A96A;
+    --pale-pink: #F7EEF1;
 }
 
 .dark {
@@ -258,6 +303,51 @@
     --sidebar-border: #524345;
     --sidebar-ring: #ffb2bc;
     --sidebar: #1a1617;
+
+    /* Material Design & Custom Brand Tokens */
+    --surface-container-high: #2c2627;
+    --secondary-fixed: #4a4548;
+    --inverse-on-surface: #1b1c1c;
+    --surface-tint: #ffb2bc;
+    --inverse-surface: #f3f0f0;
+    --surface-variant: #524345;
+    --on-tertiary: #261a00;
+    --on-primary-fixed-variant: #ffb2bc;
+    --inverse-primary: #8a4853;
+    --surface-dim: #141213;
+    --primary-fixed-dim: #3a0915;
+    --secondary-container: #332f31;
+    --tertiary-fixed-dim: #4a3600;
+    --on-tertiary-container: #ffdf9f;
+    --surface-container-highest: #332d2e;
+    --outline: #9c8a8c;
+    --outline-variant: #524345;
+    --on-secondary-container: #e9e0e3;
+    --on-secondary-fixed: #f3f0f0;
+    --primary-fixed: #5a1b24;
+    --surface-container-low: #1e1a1b;
+    --on-tertiary-fixed-variant: #e3c281;
+    --on-surface-variant: #ccc4c7;
+    --surface-container-lowest: #1a1617;
+    --tertiary-fixed: #5a430e;
+    --on-primary-fixed: #ffb2bc;
+    --on-primary-container: #ffd9dd;
+    --secondary-fixed-dim: #332f31;
+    --surface-container: #262122;
+    --tertiary-container: #5a430e;
+    --surface-bright: #3b3637;
+    --on-error-container: #ffb4ab;
+    --on-secondary-fixed-variant: #ccc4c7;
+    --on-tertiary-fixed: #ffdf9f;
+    --primary-container: #70343e;
+    --surface: #141213;
+    --on-surface: #f3f0f0;
+    --on-background: #f3f0f0;
+    --tertiary: #e3c281;
+    --dusty-rose: #ffb2bc;
+    --soft-gold: #e3c281;
+    --gold: #e3c281;
+    --pale-pink: #332f31;
 }
 
 @layer base {
@@ -266,7 +356,7 @@
     }
 
     body {
-        @apply bg-background text-foreground;
+        @apply bg-background text-foreground transition-colors duration-200;
     }
 }
 
@@ -281,4 +371,19 @@
     word-wrap: normal;
     direction: ltr;
     -webkit-font-smoothing: antialiased;
+}
+
+/* Global storefront theme container rule ensuring proper theme background cascade */
+.welcome-theme {
+    background-color: var(--background);
+    color: var(--on-background);
+}
+
+/* Ensure text-secondary has optimal contrast in both light and dark modes */
+.text-secondary {
+    color: var(--secondary-foreground, #625d5f) !important;
+}
+
+.dark .text-secondary {
+    color: var(--on-surface-variant, #ccc4c7) !important;
 }

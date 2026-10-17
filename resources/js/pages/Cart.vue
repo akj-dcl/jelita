@@ -258,7 +258,7 @@ const formatRupiah = (val: number) => {
                             <div class="flex gap-2">
                                 <input 
                                     v-model="promoCode"
-                                    class="flex-grow bg-white border border-outline-variant rounded-lg px-4 py-2 text-sm outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all text-on-surface" 
+                                    class="flex-grow bg-white dark:bg-card border border-outline-variant rounded-lg px-4 py-2 text-sm outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all text-on-surface" 
                                     id="promo" 
                                     placeholder="Masukkan kode (misal: ARTISAN10)" 
                                     type="text"
@@ -290,7 +290,7 @@ const formatRupiah = (val: number) => {
                     >
                         <div class="relative aspect-[3/4] bg-surface-variant rounded-xl overflow-hidden mb-4 shadow-[0px_4px_20px_rgba(0,0,0,0.04)]">
                             <img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" :src="prod.image" :alt="prod.name" />
-                            <button class="absolute bottom-4 right-4 bg-white/90 backdrop-blur-md p-2 rounded-full opacity-0 group-hover:opacity-100 transition-all shadow-lg hover:bg-primary hover:text-white">
+                            <button class="absolute bottom-4 right-4 bg-white/90 dark:bg-card/90 backdrop-blur-md p-2 rounded-full opacity-0 group-hover:opacity-100 transition-all shadow-lg hover:bg-primary hover:text-white">
                                 <span class="material-symbols-outlined text-primary hover:text-inherit text-[20px]">add_shopping_cart</span>
                             </button>
                         </div>
@@ -313,31 +313,5 @@ const formatRupiah = (val: number) => {
 @keyframes float {
     0%, 100% { transform: translateY(0); }
     50% { transform: translateY(-10px); }
-}
-.bg-dusty-rose { background-color: #B76E79; }
-.bg-pale-pink { background-color: #F7EEF1; }
-
-.welcome-theme {
-    /* Scoped theme variables matching the Jelita Saung palette */
-    --background: #fbf9f8;
-    --foreground: #1b1c1c;
-    --primary: #8a4853;
-    --primary-foreground: #ffffff;
-    --secondary: #625d5f;
-    --secondary-foreground: #ffffff;
-    --border: #d7c1c3;
-    --outline: #857374;
-}
-
-:global(.dark) .welcome-theme {
-    /* Dark mode adjustments */
-    --background: #141213;
-    --foreground: #f3f0f0;
-    --primary: #ffb2bc;
-    --primary-foreground: #5a1b24;
-    --secondary: #ccc4c7;
-    --secondary-foreground: #332f31;
-    --border: #524345;
-    --outline: #9c8a8c;
 }
 </style>

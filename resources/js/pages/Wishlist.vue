@@ -127,7 +127,7 @@ onMounted(() => {
                     <!-- Remove Item Button -->
                     <button 
                         @click="removeItem(item.id)" 
-                        class="remove-btn absolute top-3 right-3 z-10 p-2 bg-surface-container-lowest/90 backdrop-blur-md rounded-full text-secondary hover:text-error hover:bg-white transition-all duration-200 shadow-sm sm:opacity-0 group-hover:opacity-100 focus:opacity-100 cursor-pointer"
+                        class="remove-btn absolute top-3 right-3 z-10 p-2 bg-surface-container-lowest/90 backdrop-blur-md rounded-full text-secondary hover:text-error hover:bg-white dark:hover:bg-card transition-all duration-200 shadow-sm sm:opacity-0 group-hover:opacity-100 focus:opacity-100 cursor-pointer"
                         :title="'Hapus ' + item.name"
                     >
                         <span class="material-symbols-outlined text-[20px] leading-none">close</span>
@@ -258,74 +258,5 @@ onMounted(() => {
 @keyframes float {
     0%, 100% { transform: translateY(0); }
     50% { transform: translateY(-10px); }
-}
-
-/* Welcome theme palette encapsulation matching Jelita Saung mockups & preventing grayscale fallback */
-.welcome-theme {
-    /* Scoped root theme variables for Tailwind v4 bindings */
-    --background: #fbf9f8;
-    --foreground: #1b1c1c;
-    --primary: #8a4853;
-    --primary-foreground: #ffffff;
-    --secondary: #625d5f;
-    --secondary-foreground: #ffffff;
-    --border: #d7c1c3;
-    --outline: #857374;
-
-    /* Custom expanded color tokens */
-    --color-surface: #fbf9f8;
-    --color-surface-dim: #dcd9d9;
-    --color-surface-container-lowest: #ffffff;
-    --color-surface-container-low: #f6f3f2;
-    --color-surface-container: #f0eded;
-    --color-surface-container-highest: #e4e2e1;
-    --color-on-surface: #1b1c1c;
-    --color-on-surface-variant: #524345;
-    --color-primary: #8a4853;
-    --color-on-primary: #ffffff;
-    --color-primary-fixed: #ffd9dd;
-    --color-on-primary-fixed: #3a0915;
-    --color-secondary: #625d5f;
-    --color-secondary-fixed-variant: #4a4548;
-    --color-secondary-container: #e9e0e3;
-    --color-tertiary: #715822;
-    --color-tertiary-fixed: #ffdf9f;
-    --color-tertiary-fixed-dim: #e3c281;
-    --color-outline-variant: #d7c1c3;
-    --color-background: #fbf9f8;
-    --color-on-background: #1b1c1c;
-}
-
-:global(.dark) .welcome-theme {
-    /* Dark mode adjustments */
-    --background: #141213;
-    --foreground: #f3f0f0;
-    --primary: #ffb2bc;
-    --primary-foreground: #5a1b24;
-    --secondary: #ccc4c7;
-    --secondary-foreground: #332f31;
-    --border: #524345;
-    --outline: #9c8a8c;
-
-    --color-surface: #141213;
-    --color-surface-dim: #1e1a1b;
-    --color-surface-container-lowest: #1a1617;
-    --color-surface-container-low: #221d1e;
-    --color-surface-container: #262122;
-    --color-surface-container-highest: #332d2e;
-    --color-on-surface: #f3f0f0;
-    --color-on-surface-variant: #ccc4c7;
-    --color-primary: #ffb2bc;
-    --color-on-primary: #5a1b24;
-    --color-primary-fixed: #5a1b24;
-    --color-on-primary-fixed: #ffb2bc;
-    --color-secondary: #ccc4c7;
-    --color-secondary-fixed-variant: #e4e2e1;
-    --color-secondary-container: #332f31;
-    --color-tertiary: #e3c281;
-    --color-tertiary-fixed: #5a430e;
-    --color-outline-variant: #524345;
-    --color-background: #141213;
-    --color-on-background: #f3f0f0;
 }
 </style>

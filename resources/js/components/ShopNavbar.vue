@@ -2,8 +2,14 @@
 import { Link, usePage } from '@inertiajs/vue3';
 import { login, register, myProfile } from '@/routes';
 import { onMounted, onUnmounted, ref, watch } from 'vue';
+import { useAppearance } from '@/composables/useAppearance';
 
 const page = usePage();
+const { resolvedAppearance, updateAppearance } = useAppearance();
+
+const toggleTheme = () => {
+    updateAppearance(resolvedAppearance.value === 'dark' ? 'light' : 'dark');
+};
 
 // Mobile menu state
 const isMobileMenuOpen = ref(false);
@@ -85,7 +91,20 @@ onUnmounted(() => {
                 </Link>
             </div>
             
-            <div class="flex items-center gap-3 sm:gap-6">
+            <div class="flex items-center gap-1.5 sm:gap-4">
+                <!-- Dark Mode Toggle Button -->
+                <button 
+                    type="button"
+                    @click="toggleTheme" 
+                    class="w-10 h-10 rounded-full transition-all active:scale-95 cursor-pointer flex items-center justify-center text-on-surface-variant hover:text-primary hover:bg-surface-container-high" 
+                    :title="resolvedAppearance === 'dark' ? 'Beralih ke Mode Terang' : 'Beralih ke Mode Gelap'"
+                    aria-label="Toggle Dark Mode"
+                >
+                    <span class="material-symbols-outlined transition-transform duration-300 hover:rotate-12 text-[22px]">
+                        {{ resolvedAppearance === 'dark' ? 'light_mode' : 'dark_mode' }}
+                    </span>
+                </button>
+
                 <Link :href="'/wishlist'" class="w-10 h-10 rounded-full transition-all active:scale-95 cursor-pointer flex items-center justify-center hover:bg-surface-container-high" :class="page.component === 'Wishlist' ? 'text-primary' : 'text-on-surface-variant hover:text-primary'" title="Favorit">
                     <span class="material-symbols-outlined" :style="page.component === 'Wishlist' ? 'font-variation-settings: \'FILL\' 1;' : ''">favorite</span>
                 </Link>
@@ -215,7 +234,29 @@ onUnmounted(() => {
                     </nav>
                 </div>
 
-                <div class="pt-4 border-t border-outline-variant/20">
+                <div class="pt-4 border-t border-outline-variant/20 space-y-3">
+                    <!-- Theme Toggle Switch Row -->
+                    <div class="flex items-center justify-between px-3.5 py-2.5 rounded-xl bg-surface-container-low transition-colors">
+                        <span class="flex items-center gap-2.5 text-sm font-medium text-on-surface">
+                            <span class="material-symbols-outlined text-[20px] text-primary">
+                                {{ resolvedAppearance === 'dark' ? 'dark_mode' : 'light_mode' }}
+                            </span>
+                            <span>Mode {{ resolvedAppearance === 'dark' ? 'Gelap' : 'Terang' }}</span>
+                        </span>
+                        <button 
+                            type="button" 
+                            @click="toggleTheme"
+                            class="relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none cursor-pointer"
+                            :class="resolvedAppearance === 'dark' ? 'bg-primary' : 'bg-outline-variant/60'"
+                            aria-label="Ubah Tema"
+                        >
+                            <span 
+                                class="inline-block h-4 w-4 transform rounded-full bg-white transition-transform duration-200 ease-in-out shadow-xs"
+                                :class="resolvedAppearance === 'dark' ? 'translate-x-6' : 'translate-x-1'"
+                            />
+                        </button>
+                    </div>
+
                     <template v-if="$page.props.auth.user">
                         <Link 
                             :href="myProfile()" 

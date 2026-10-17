@@ -158,7 +158,7 @@ const submitOrder = async () => {
                         </label>
                     </div>
 
-                    <div v-if="paymentMethod === 'qris'" class="mt-6 flex flex-col items-center border border-outline-variant p-6 rounded-2xl bg-white shadow-xs">
+                    <div v-if="paymentMethod === 'qris'" class="mt-6 flex flex-col items-center border border-outline-variant/60 p-6 rounded-2xl bg-white dark:bg-card shadow-xs">
                         <p class="text-sm text-secondary-foreground mb-3 font-medium">Scan QR di bawah ini dengan mobile banking atau e-wallet Anda</p>
                         <img src="/images/qris-jelita.jpg" alt="QRIS Kantin Koperasi Jelita" class="w-64 max-w-full h-auto rounded-xl shadow-xs" />
                         <p class="text-xs font-semibold text-secondary-foreground mt-3 tracking-wide">KANTIN KOPERASI JELITA · NMID: ID1026489299812</p>
@@ -193,23 +193,3 @@ const submitOrder = async () => {
     </div>
 </template>
 
-<style scoped>
-/* Theme logic unchanged */
-.welcome-theme {
-    --background: #fbf9f8;
-    --foreground: #1b1c1c;
-    --primary: #8a4853;
-    --primary-foreground: #ffffff;
-    --secondary: #625d5f;
-    --secondary-foreground: #ffffff;
-    --border: #d7c1c3;
-    --outline: #857374;
-    --color-surface: #fbf9f8;
-    --color-surface-container-low: #f6f3f2;
-    --color-on-surface: #1b1c1c;
-    --color-on-surface-variant: #524345;
-    --color-primary: #8a4853;
-    --color-secondary: #625d5f;
-    --color-outline-variant: #d7c1c3;
-}
-</style>

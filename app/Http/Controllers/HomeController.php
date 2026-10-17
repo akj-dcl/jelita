@@ -20,7 +20,7 @@ class HomeController extends Controller
             ->whereNotNull('comment')
             ->where('comment', '!=', '')
             ->latest()
-            ->take(6)
+            ->take(20)
             ->get()
             ->map(fn($r) => [
                 'id'           => $r->id,

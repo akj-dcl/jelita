@@ -293,7 +293,7 @@ onMounted(() => {
                         <div class="space-y-4">
                             <div>
                                 <label class="block text-sm font-medium mb-2 text-on-surface-variant">Alamat Email <span class="text-red-500">*</span></label>
-                                <input v-model="form.email" type="email" placeholder="nama@contoh.com" class="w-full h-14 px-4 rounded-2xl border border-gray-300 dark:border-gray-600 focus:border-primary focus:ring-2 focus:ring-primary/20 bg-white dark:bg-white text-gray-900 dark:text-gray-900 placeholder:text-gray-400 font-medium transition-all duration-200 outline-none" required />
+                                <input v-model="form.email" type="email" placeholder="nama@contoh.com" class="w-full h-14 px-4 rounded-2xl border border-gray-300 dark:border-outline-variant/60 focus:border-primary focus:ring-2 focus:ring-primary/20 bg-white dark:bg-card text-gray-900 dark:text-gray-100 placeholder:text-gray-400 dark:placeholder:text-gray-500 font-medium transition-all duration-200 outline-none" required />
                             </div>
                         </div>
                     </section>
@@ -340,17 +340,17 @@ onMounted(() => {
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
                             <div class="sm:col-span-1">
                                 <label class="block text-sm font-medium mb-2 text-on-surface-variant">Nama Depan <span class="text-red-500">*</span></label>
-                                <input v-model="form.firstName" type="text" class="w-full h-14 px-4 rounded-2xl border border-gray-300 dark:border-gray-600 focus:border-primary focus:ring-2 focus:ring-primary/20 bg-white dark:bg-white text-gray-900 dark:text-gray-900 placeholder:text-gray-400 font-medium transition-all outline-none" required />
+                                <input v-model="form.firstName" type="text" class="w-full h-14 px-4 rounded-2xl border border-gray-300 dark:border-outline-variant/60 focus:border-primary focus:ring-2 focus:ring-primary/20 bg-white dark:bg-card text-gray-900 dark:text-gray-100 placeholder:text-gray-400 dark:placeholder:text-gray-500 font-medium transition-all outline-none" required />
                             </div>
                             <div class="sm:col-span-1">
                                 <label class="block text-sm font-medium mb-2 text-on-surface-variant">Nama Belakang</label>
-                                <input v-model="form.lastName" type="text" class="w-full h-14 px-4 rounded-2xl border border-gray-300 dark:border-gray-600 focus:border-primary focus:ring-2 focus:ring-primary/20 bg-white dark:bg-white text-gray-900 dark:text-gray-900 placeholder:text-gray-400 font-medium transition-all outline-none" />
+                                <input v-model="form.lastName" type="text" class="w-full h-14 px-4 rounded-2xl border border-gray-300 dark:border-outline-variant/60 focus:border-primary focus:ring-2 focus:ring-primary/20 bg-white dark:bg-card text-gray-900 dark:text-gray-100 placeholder:text-gray-400 dark:placeholder:text-gray-500 font-medium transition-all outline-none" />
                             </div>
                             <div class="sm:col-span-2">
                                 <label class="block text-sm font-medium mb-2 text-on-surface-variant">
                                     {{ deliveryType === 'cod' ? 'Alamat Pengantaran / Lokasi Anda' : 'Alamat' }} <span class="text-red-500">*</span>
                                 </label>
-                                <input v-model="form.address" type="text" :placeholder="deliveryType === 'cod' ? 'Jl. Contoh No. 12 (atau Catatan Ambil di Tempat)' : 'Jl. Sudirman No. 45'" class="w-full h-14 px-4 rounded-2xl border border-gray-300 dark:border-gray-600 focus:border-primary focus:ring-2 focus:ring-primary/20 bg-white dark:bg-white text-gray-900 dark:text-gray-900 placeholder:text-gray-400 font-medium transition-all outline-none" required />
+                                <input v-model="form.address" type="text" :placeholder="deliveryType === 'cod' ? 'Jl. Contoh No. 12 (atau Catatan Ambil di Tempat)' : 'Jl. Sudirman No. 45'" class="w-full h-14 px-4 rounded-2xl border border-gray-300 dark:border-outline-variant/60 focus:border-primary focus:ring-2 focus:ring-primary/20 bg-white dark:bg-card text-gray-900 dark:text-gray-100 placeholder:text-gray-400 dark:placeholder:text-gray-500 font-medium transition-all outline-none" required />
                             </div>
                             <div v-if="deliveryType === 'shipping'" class="sm:col-span-2 relative">
                                 <label class="block text-sm font-medium mb-2 text-on-surface-variant">Kota/Kecamatan Tujuan <span class="text-red-500">*</span></label>
@@ -360,7 +360,7 @@ onMounted(() => {
                                         @input="searchDestinations"
                                         type="text" 
                                         placeholder="Ketik nama Kecamatan atau Kota..." 
-                                        class="w-full h-14 px-4 rounded-2xl border border-gray-300 dark:border-gray-600 focus:border-primary focus:ring-2 focus:ring-primary/20 bg-white dark:bg-white text-gray-900 dark:text-gray-900 placeholder:text-gray-400 font-medium transition-all outline-none" 
+                                        class="w-full h-14 px-4 rounded-2xl border border-gray-300 dark:border-outline-variant/60 focus:border-primary focus:ring-2 focus:ring-primary/20 bg-white dark:bg-card text-gray-900 dark:text-gray-100 placeholder:text-gray-400 dark:placeholder:text-gray-500 font-medium transition-all outline-none" 
                                         required 
                                     />
                                     <div v-if="isSearching" class="absolute right-4 top-4">
@@ -369,12 +369,12 @@ onMounted(() => {
                                 </div>
                                 
                                 <!-- Dropdown Results -->
-                                <div v-if="destinations.length > 0" class="absolute z-10 w-full mt-2 bg-white dark:bg-white border border-gray-200 rounded-2xl shadow-lg max-h-60 overflow-y-auto">
+                                <div v-if="destinations.length > 0" class="absolute z-10 w-full mt-2 bg-white dark:bg-card border border-gray-200 dark:border-outline-variant rounded-2xl shadow-lg max-h-60 overflow-y-auto">
                                     <div 
                                         v-for="dest in destinations" 
                                         :key="dest.id"
                                         @click="selectDestination(dest)"
-                                        class="p-4 hover:bg-primary/5 cursor-pointer text-gray-900 dark:text-gray-900 text-sm border-b border-gray-100 last:border-0 font-medium"
+                                        class="p-4 hover:bg-primary/10 cursor-pointer text-gray-900 dark:text-gray-100 text-sm border-b border-gray-100 dark:border-outline-variant/30 last:border-0 font-medium"
                                     >
                                         {{ dest.label }}
                                     </div>
@@ -382,11 +382,11 @@ onMounted(() => {
                             </div>
                             <div class="sm:col-span-1">
                                 <label class="block text-sm font-medium mb-2 text-on-surface-variant">Kode Pos</label>
-                                <input v-model="form.postalCode" type="text" class="w-full h-14 px-4 rounded-2xl border border-gray-300 dark:border-gray-600 focus:border-primary focus:ring-2 focus:ring-primary/20 bg-white dark:bg-white text-gray-900 dark:text-gray-900 placeholder:text-gray-400 font-medium transition-all outline-none" />
+                                <input v-model="form.postalCode" type="text" class="w-full h-14 px-4 rounded-2xl border border-gray-300 dark:border-outline-variant/60 focus:border-primary focus:ring-2 focus:ring-primary/20 bg-white dark:bg-card text-gray-900 dark:text-gray-100 placeholder:text-gray-400 dark:placeholder:text-gray-500 font-medium transition-all outline-none" />
                             </div>
                             <div class="sm:col-span-1">
                                 <label class="block text-sm font-medium mb-2 text-on-surface-variant">Nomor Telepon (WhatsApp) <span class="text-red-500">*</span></label>
-                                <input v-model="form.phone" type="tel" class="w-full h-14 px-4 rounded-2xl border border-gray-300 dark:border-gray-600 focus:border-primary focus:ring-2 focus:ring-primary/20 bg-white dark:bg-white text-gray-900 dark:text-gray-900 placeholder:text-gray-400 font-medium transition-all outline-none" required />
+                                <input v-model="form.phone" type="tel" class="w-full h-14 px-4 rounded-2xl border border-gray-300 dark:border-outline-variant/60 focus:border-primary focus:ring-2 focus:ring-primary/20 bg-white dark:bg-card text-gray-900 dark:text-gray-100 placeholder:text-gray-400 dark:placeholder:text-gray-500 font-medium transition-all outline-none" required />
                             </div>
                         </div>
                     </section>
@@ -397,7 +397,7 @@ onMounted(() => {
                         
                         <div class="mb-6">
                             <label class="block text-sm font-medium mb-2 text-on-surface-variant">Kurir Pengiriman</label>
-                            <select v-model="form.courier" @change="fetchShippingCost" :disabled="!form.destination_id" class="w-full h-14 px-4 rounded-2xl border border-gray-300 dark:border-gray-600 focus:border-primary focus:ring-2 focus:ring-primary/20 bg-white dark:bg-white text-gray-900 dark:text-gray-900 font-medium transition-all outline-none">
+                            <select v-model="form.courier" @change="fetchShippingCost" :disabled="!form.destination_id" class="w-full h-14 px-4 rounded-2xl border border-gray-300 dark:border-outline-variant/60 focus:border-primary focus:ring-2 focus:ring-primary/20 bg-white dark:bg-card text-gray-900 dark:text-gray-100 font-medium transition-all outline-none">
                                 <option value="jne">JNE</option>
                                 <option value="pos">POS Indonesia</option>
                                 <option value="tiki">TIKI</option>
@@ -523,57 +523,4 @@ onMounted(() => {
     </div>
 </template>
 
-<style scoped>
-/* Theme logic unchanged */
-.welcome-theme {
-    --background: #fbf9f8;
-    --foreground: #1b1c1c;
-    --primary: #8a4853;
-    --primary-foreground: #ffffff;
-    --secondary: #625d5f;
-    --secondary-foreground: #ffffff;
-    --border: #d7c1c3;
-    --outline: #857374;
-    --color-surface: #fbf9f8;
-    --color-surface-dim: #dcd9d9;
-    --color-surface-container-lowest: #ffffff;
-    --color-surface-container-low: #f6f3f2;
-    --color-surface-container: #f0eded;
-    --color-surface-container-highest: #e4e2e1;
-    --color-on-surface: #1b1c1c;
-    --color-on-surface-variant: #524345;
-    --color-primary: #8a4853;
-    --color-on-primary: #ffffff;
-    --color-secondary: #625d5f;
-    --color-secondary-fixed-variant: #4a4548;
-    --color-outline-variant: #d7c1c3;
-    --color-background: #fbf9f8;
-    --color-on-background: #1b1c1c;
-}
 
-:global(.dark) .welcome-theme {
-    --background: #141213;
-    --foreground: #f3f0f0;
-    --primary: #ffb2bc;
-    --primary-foreground: #5a1b24;
-    --secondary: #ccc4c7;
-    --secondary-foreground: #332f31;
-    --border: #524345;
-    --outline: #9c8a8c;
-    --color-surface: #141213;
-    --color-surface-dim: #1e1a1b;
-    --color-surface-container-lowest: #1a1617;
-    --color-surface-container-low: #221d1e;
-    --color-surface-container: #262122;
-    --color-surface-container-highest: #332d2e;
-    --color-on-surface: #f3f0f0;
-    --color-on-surface-variant: #ccc4c7;
-    --color-primary: #ffb2bc;
-    --color-on-primary: #5a1b24;
-    --color-secondary: #ccc4c7;
-    --color-secondary-fixed-variant: #e4e2e1;
-    --color-outline-variant: #524345;
-    --color-background: #141213;
-    --color-on-background: #f3f0f0;
-}
-</style>

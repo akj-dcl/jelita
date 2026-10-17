@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Head, Link } from '@inertiajs/vue3';
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import ShopNavbar from '@/components/ShopNavbar.vue';
 import ShopFooter from '@/components/ShopFooter.vue';
 
@@ -9,6 +9,16 @@ const props = defineProps<{
     products: Array<any>;
     reviews?: Array<any>;
 }>();
+
+// Duplikasi review secara seamless jika data ulasan sedikit agar marquee bergerak tanpa jeda kosong
+const displayReviews = computed(() => {
+    if (!props.reviews || props.reviews.length === 0) return [];
+    let list = [...props.reviews];
+    while (list.length < 8) {
+        list = [...list, ...props.reviews];
+    }
+    return list;
+});
 
 // FAQ Accordion state
 const openFaqIndex = ref<number | null>(null);
@@ -39,19 +49,19 @@ const toggleFaq = (index: number) => {
             <section class="relative min-h-[600px] md:min-h-[819px] flex items-center overflow-hidden">
                 <div class="absolute inset-0 z-0">
                     <div class="w-full h-full bg-cover bg-center" style="background-image: url('/storage/template/banner-utama-home.jpg')"></div>
-                    <div class="absolute inset-0 bg-white/20"></div>
+                    <div class="absolute inset-0 bg-black/20 dark:bg-black/60"></div>
                 </div>
                 <div class="relative z-10 w-full max-w-[1440px] mx-auto px-margin-mobile md:px-margin-desktop py-16">
-                    <div class="max-w-2xl bg-white/40 backdrop-blur-md p-6 md:p-16 rounded-xl animate-in fade-in slide-in-from-bottom duration-500">
+                    <div class="max-w-2xl bg-white/40 dark:bg-card/75 backdrop-blur-md p-6 md:p-16 rounded-xl animate-in fade-in slide-in-from-bottom duration-500 border border-white/20 dark:border-outline-variant/30">
                         <h1 class="font-display-lg text-[40px] md:text-[48px] text-on-background mb-2 leading-tight">Karya Berkualitas yang Menginspirasi</h1>
                         <p class="text-lg text-secondary mb-10 leading-relaxed">
                             Setiap produk merupakan hasil pembinaan keterampilan yang dibuat dengan dedikasi tinggi, menghadirkan kualitas terbaik sekaligus mendukung pemberdayaan perempuan.
                         </p>
                         <div class="flex flex-wrap gap-4 sm:gap-6">
-                            <Link href="/shop" class="bg-dusty-rose text-white px-8 sm:px-10 py-3 rounded-full font-label-md text-label-md hover:opacity-90 transition-all active:scale-95 shadow-sm cursor-pointer inline-flex items-center justify-center">
+                            <Link href="/shop" class="bg-dusty-rose text-white dark:bg-primary dark:text-primary-foreground px-8 sm:px-10 py-3 rounded-full font-label-md text-label-md hover:opacity-90 transition-all active:scale-95 shadow-sm cursor-pointer inline-flex items-center justify-center font-medium">
                                 Belanja Koleksi
                             </Link>
-                            <Link href="/story" class="bg-pale-pink text-dusty-rose px-8 sm:px-10 py-3 rounded-full font-label-md text-label-md hover:bg-white transition-all active:scale-95 shadow-sm cursor-pointer inline-flex items-center justify-center">
+                            <Link href="/story" class="bg-pale-pink text-dusty-rose dark:bg-surface-container-highest dark:text-primary dark:hover:bg-surface-container-high px-8 sm:px-10 py-3 rounded-full font-label-md text-label-md hover:bg-white transition-all active:scale-95 shadow-sm cursor-pointer inline-flex items-center justify-center font-medium">
                                 Cerita Kami
                             </Link>
                         </div>
@@ -72,7 +82,7 @@ const toggleFaq = (index: number) => {
                         <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110" :style="`background-image: url('${category.image ? '/storage/' + category.image : 'https://placehold.co/600x400/e2e8f0/64748b?text=' + encodeURIComponent(category.name)}')`"></div>
                         <div class="absolute inset-0 bg-black/10 group-hover:bg-black/20 transition-all"></div>
                         <div class="absolute inset-0 flex items-center justify-center p-6">
-                            <div class="bg-white/90 px-10 py-6 rounded-lg text-center backdrop-blur-sm">
+                            <div class="bg-white/90 dark:bg-card/90 px-10 py-6 rounded-lg text-center backdrop-blur-sm shadow-sm border border-transparent dark:border-outline-variant/30">
                                 <span class="text-2xl font-bold text-on-surface">{{ category.name }}</span>
                             </div>
                         </div>
@@ -94,7 +104,7 @@ const toggleFaq = (index: number) => {
                         <a class="text-dusty-rose font-label-md underline underline-offset-4 hover:opacity-70 transition-all animate-pulse" href="#">Lihat Semua</a>
                     </div>
                     <div class="grid grid-cols-2 md:grid-cols-4 gap-gutter">
-                        <Link v-for="product in props.products" :key="product.id" :href="`/product/${product.id}`" class="product-card bg-white rounded-xl overflow-hidden transition-all-300 cursor-pointer block">
+                        <Link v-for="product in props.products" :key="product.id" :href="`/product/${product.id}`" class="product-card bg-white dark:bg-card rounded-xl overflow-hidden transition-all-300 cursor-pointer block border border-transparent dark:border-outline-variant/30">
                             <div class="relative h-64 md:h-80 bg-surface-container overflow-hidden p-2">
                                 <img class="w-full h-full object-cover rounded-lg" :src="product.image ? `/storage/${product.image}` : 'https://placehold.co/400x500/e2e8f0/64748b?text=No+Image'" :alt="product.name"/>
                             </div>
@@ -131,31 +141,31 @@ const toggleFaq = (index: number) => {
             </section>
 
             <!-- Why Buy From Us -->
-            <section class="py-16 bg-pale-pink/30">
+            <section class="py-16 bg-pale-pink/30 dark:bg-surface-container-low/50">
                 <div class="max-w-[1440px] mx-auto px-margin-mobile md:px-margin-desktop grid grid-cols-2 md:grid-cols-4 gap-10 text-center">
                     <div class="flex flex-col items-center">
-                        <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center text-dusty-rose shadow-sm mb-6">
+                        <div class="w-16 h-16 bg-white dark:bg-card rounded-full flex items-center justify-center text-dusty-rose shadow-sm mb-6 border border-transparent dark:border-outline-variant/30">
                             <span class="material-symbols-outlined text-[32px]">back_hand</span>
                         </div>
                         <h4 class="font-bold text-on-background text-[18px] mb-1">Buatan Tangan</h4>
                         <p class="text-sm text-secondary px-4">Dibuat dengan ketelitian tinggi oleh tangan, bukan mesin.</p>
                     </div>
                     <div class="flex flex-col items-center">
-                        <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center text-dusty-rose shadow-sm mb-6">
+                        <div class="w-16 h-16 bg-white dark:bg-card rounded-full flex items-center justify-center text-dusty-rose shadow-sm mb-6 border border-transparent dark:border-outline-variant/30">
                             <span class="material-symbols-outlined text-[32px]">female</span>
                         </div>
                         <h4 class="font-bold text-on-background text-[18px] mb-1">Pemberdayaan</h4>
                         <p class="text-sm text-secondary px-4">Mendukung kemandirian perempuan lokal.</p>
                     </div>
                     <div class="flex flex-col items-center">
-                        <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center text-dusty-rose shadow-sm mb-6">
+                        <div class="w-16 h-16 bg-white dark:bg-card rounded-full flex items-center justify-center text-dusty-rose shadow-sm mb-6 border border-transparent dark:border-outline-variant/30">
                             <span class="material-symbols-outlined text-[32px]">eco</span>
                         </div>
                         <h4 class="font-bold text-on-background text-[18px] mb-1">Berkelanjutan</h4>
                         <p class="text-sm text-secondary px-4">Menggunakan bahan lokal yang ramah lingkungan.</p>
                     </div>
                     <div class="flex flex-col items-center">
-                        <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center text-dusty-rose shadow-sm mb-6">
+                        <div class="w-16 h-16 bg-white dark:bg-card rounded-full flex items-center justify-center text-dusty-rose shadow-sm mb-6 border border-transparent dark:border-outline-variant/30">
                             <span class="material-symbols-outlined text-[32px]">workspace_premium</span>
                         </div>
                         <h4 class="font-bold text-on-background text-[18px] mb-1">Kualitas Premium</h4>
@@ -165,35 +175,77 @@ const toggleFaq = (index: number) => {
             </section>
 
             <!-- Testimonials -->
-            <section class="py-16 max-w-[1440px] mx-auto px-margin-mobile md:px-margin-desktop text-center">
-                <span class="text-gold font-label-md uppercase tracking-[0.2em] mb-1 block">Ulasan</span>
-                <h2 class="text-3xl font-bold mb-16">Suara Apresiasi</h2>
-                <div v-if="props.reviews && props.reviews.length > 0" class="grid grid-cols-1 md:grid-cols-3 gap-10">
-                    <div v-for="review in props.reviews.slice(0, 3)" :key="review.id"
-                        class="bg-white p-10 rounded-xl shadow-[0px_4px_20px_rgba(0,0,0,0.04)] italic flex flex-col justify-between text-center">
-                        <div>
-                            <div class="flex justify-center text-gold mb-6 gap-1">
-                                <span v-for="i in 5" :key="i"
-                                    class="material-symbols-outlined"
-                                    :style="i <= review.rating ? 'font-variation-settings: \'FILL\' 1;' : ''">
-                                    star
+            <section class="py-20 overflow-hidden text-center bg-surface-container-low/40">
+                <div class="max-w-[1440px] mx-auto px-margin-mobile md:px-margin-desktop mb-12">
+                    <span class="text-gold font-label-md uppercase tracking-[0.2em] mb-2 block font-semibold">Ulasan Pelanggan</span>
+                    <h2 class="text-3xl md:text-4xl font-bold text-on-background">Suara Apresiasi</h2>
+                    <p class="text-gray-600 dark:text-gray-400 text-sm sm:text-base mt-2 max-w-[600px] mx-auto leading-relaxed">Cerita dan pengalaman autentik dari para pembeli produk Jelita Saung</p>
+                </div>
+
+                <div v-if="props.reviews && props.reviews.length > 0" class="relative w-full overflow-hidden marquee-mask py-4">
+                    <div class="flex w-max gap-6 animate-marquee hover:[animation-play-state:paused]">
+                        <!-- Track Set 1 -->
+                        <div v-for="(review, index) in displayReviews" :key="'r1-' + index"
+                            class="w-[320px] sm:w-[380px] bg-white dark:bg-surface-container p-8 rounded-2xl shadow-[0px_4px_24px_rgba(0,0,0,0.04)] border border-outline-variant/40 flex flex-col justify-between text-left shrink-0 transition-transform duration-300 hover:scale-[1.02]">
+                            <div>
+                                <div class="flex text-gold mb-4 gap-1">
+                                    <span v-for="i in 5" :key="i"
+                                        class="material-symbols-outlined text-[18px]"
+                                        :style="i <= review.rating ? 'font-variation-settings: \'FILL\' 1;' : ''">
+                                        star
+                                    </span>
+                                </div>
+                                <p class="text-on-surface-variant mb-6 text-sm leading-relaxed italic line-clamp-4">
+                                    "{{ review.comment }}"
+                                </p>
+                            </div>
+                            <div class="pt-4 border-t border-surface-variant/40 flex items-center justify-between">
+                                <div>
+                                    <span class="font-semibold text-primary text-sm block">
+                                        {{ review.user_name }}
+                                    </span>
+                                    <p v-if="review.product_name" class="text-xs text-gray-500 dark:text-gray-400 mt-0.5 line-clamp-1 max-w-[200px]" :title="review.product_name">
+                                        {{ review.product_name }}
+                                    </p>
+                                </div>
+                                <span v-if="review.created_at" class="text-[11px] text-gray-400">
+                                    {{ review.created_at }}
                                 </span>
                             </div>
-                            <p class="text-on-surface-variant mb-6 leading-relaxed line-clamp-4">
-                                "{{ review.comment }}"
-                            </p>
                         </div>
-                        <div>
-                            <span class="font-label-md text-primary not-italic block font-semibold">
-                                — {{ review.user_name }}
-                            </span>
-                            <p v-if="review.product_name" class="text-xs text-secondary not-italic mt-1 line-clamp-1">
-                                {{ review.product_name }}
-                            </p>
+
+                        <!-- Track Set 2 (Clone untuk continuous seamless looping) -->
+                        <div v-for="(review, index) in displayReviews" :key="'r2-' + index"
+                            class="w-[320px] sm:w-[380px] bg-white dark:bg-surface-container p-8 rounded-2xl shadow-[0px_4px_24px_rgba(0,0,0,0.04)] border border-outline-variant/40 flex flex-col justify-between text-left shrink-0 transition-transform duration-300 hover:scale-[1.02]">
+                            <div>
+                                <div class="flex text-gold mb-4 gap-1">
+                                    <span v-for="i in 5" :key="i"
+                                        class="material-symbols-outlined text-[18px]"
+                                        :style="i <= review.rating ? 'font-variation-settings: \'FILL\' 1;' : ''">
+                                        star
+                                    </span>
+                                </div>
+                                <p class="text-on-surface-variant mb-6 text-sm leading-relaxed italic line-clamp-4">
+                                    "{{ review.comment }}"
+                                </p>
+                            </div>
+                            <div class="pt-4 border-t border-surface-variant/40 flex items-center justify-between">
+                                <div>
+                                    <span class="font-semibold text-primary text-sm block">
+                                        {{ review.user_name }}
+                                    </span>
+                                    <p v-if="review.product_name" class="text-xs text-gray-500 dark:text-gray-400 mt-0.5 line-clamp-1 max-w-[200px]" :title="review.product_name">
+                                        {{ review.product_name }}
+                                    </p>
+                                </div>
+                                <span v-if="review.created_at" class="text-[11px] text-gray-400">
+                                    {{ review.created_at }}
+                                </span>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div v-else class="text-secondary py-8 italic">
+                <div v-else class="text-gray-500 py-8 italic">
                     Belum ada ulasan dari pelanggan.
                 </div>
             </section>
@@ -243,17 +295,17 @@ const toggleFaq = (index: number) => {
             <!-- Newsletter -->
             <section class="py-16">
                 <div class="max-w-[1440px] mx-auto px-margin-mobile md:px-margin-desktop">
-                    <div class="bg-dusty-rose rounded-3xl p-10 md:p-16 text-center text-white relative overflow-hidden">
+                    <div class="bg-dusty-rose dark:bg-card dark:border dark:border-primary/20 rounded-3xl p-10 md:p-16 text-center text-white dark:text-foreground relative overflow-hidden">
                         <!-- Subtle pattern overlay -->
                         <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(#fff 1px, transparent 1px); background-size: 20px 20px;"></div>
                         <div class="relative z-10 max-w-2xl mx-auto py-4">
                             <h2 class="text-2xl md:text-3xl font-bold mb-3 tracking-tight">Bergabung dalam Perjalanan Kerajinan</h2>
-                            <p class="text-sm md:text-base text-white/90 mb-8 max-w-2xl mx-auto leading-relaxed">
+                            <p class="text-sm md:text-base text-white/90 dark:text-muted-foreground mb-8 max-w-2xl mx-auto leading-relaxed">
                                 Berlangganan untuk menerima koleksi eksklusif, cerita perajin, dan penawaran spesial.
                             </p>
-                            <form class="flex flex-col sm:flex-row gap-3 items-stretch justify-center max-w-xl mx-auto" @submit.prevent>
-                                <input class="flex-grow px-6 py-3.5 rounded-full bg-white/10 border border-white/25 text-white placeholder:text-white/60 focus:outline-none focus:bg-white/20 focus:border-white/40 transition-all text-sm" placeholder="Alamat email Anda" type="email" required/>
-                                <button class="bg-white text-dusty-rose hover:bg-pale-pink px-8 py-3.5 rounded-full font-semibold text-sm hover:shadow-lg transition-all active:scale-95 cursor-pointer whitespace-nowrap" type="submit">
+                            <form class="flex flex-col sm:flex-row gap-3 items-stretch justify-center max-w-[520px] mx-auto" @submit.prevent>
+                                <input class="flex-grow px-6 py-3.5 rounded-full bg-white/10 dark:bg-input border border-white/25 dark:border-outline-variant text-white dark:text-foreground placeholder:text-white/60 dark:placeholder:text-muted-foreground focus:outline-none focus:bg-white/20 dark:focus:bg-input focus:border-white/40 dark:focus:border-primary transition-all text-sm" placeholder="Alamat email Anda" type="email" required/>
+                                <button class="bg-white dark:bg-primary text-dusty-rose dark:text-primary-foreground hover:bg-pale-pink dark:hover:opacity-90 px-8 py-3.5 rounded-full font-semibold text-sm hover:shadow-lg transition-all active:scale-95 cursor-pointer whitespace-nowrap" type="submit">
                                     Berlangganan
                                 </button>
                             </form>
@@ -267,32 +319,7 @@ const toggleFaq = (index: number) => {
         <ShopFooter />
     </div>
 </template>
-
 <style scoped>
-.welcome-theme {
-    /* Scoped theme variables matching the Jelita Saung palette */
-    --background: #fbf9f8;
-    --foreground: #1b1c1c;
-    --primary: #8a4853;
-    --primary-foreground: #ffffff;
-    --secondary: #625d5f;
-    --secondary-foreground: #ffffff;
-    --border: #d7c1c3;
-    --outline: #857374;
-}
-
-:global(.dark) .welcome-theme {
-    /* Dark mode adjustments if the system theme is dark */
-    --background: #141213;
-    --foreground: #f3f0f0;
-    --primary: #ffb2bc;
-    --primary-foreground: #5a1b24;
-    --secondary: #ccc4c7;
-    --secondary-foreground: #332f31;
-    --border: #524345;
-    --outline: #9c8a8c;
-}
-
 .product-card:hover {
     transform: translateY(-4px);
     box-shadow: 0px 12px 40px rgba(0, 0, 0, 0.06);
@@ -300,5 +327,30 @@ const toggleFaq = (index: number) => {
 
 .transition-all-300 {
     transition: all 0.3s ease;
+}
+
+/* Infinite Marquee */
+@keyframes marquee {
+    0% {
+        transform: translateX(0%);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+.animate-marquee {
+    display: flex;
+    width: max-content;
+    animation: marquee 35s linear infinite;
+}
+
+.animate-marquee:hover {
+    animation-play-state: paused;
+}
+
+.marquee-mask {
+    -webkit-mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+    mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
 }
 </style>
