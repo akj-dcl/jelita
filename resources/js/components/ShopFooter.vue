@@ -45,7 +45,7 @@ import { Link } from '@inertiajs/vue3';
                 </p>
                 <p class="text-on-surface-variant">
                     hello@jelitasaung.com<br/>
-                    +62 812 3456 7890
+                    0896 5915 4275
                 </p>
             </div>
         </div>

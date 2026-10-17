@@ -25,8 +25,8 @@ const props = defineProps<{
             <!-- Hero Section -->
             <section class="bg-surface-variant/30 py-16 md:py-24">
                 <div class="max-w-[1440px] mx-auto px-margin-mobile md:px-margin-desktop text-center">
-                    <h1 class="font-display-lg text-4xl md:text-5xl text-on-background mb-4">Koleksi Kami</h1>
-                    <p class="text-on-surface-variant max-w-2xl mx-auto text-lg leading-relaxed font-medium">
+                    <h1 class="font-display-lg text-4xl md:text-5xl text-gray-900 dark:text-white font-bold mb-4">Koleksi Kami</h1>
+                    <p class="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto text-lg leading-relaxed font-normal">
                         Jelajahi berbagai kategori produk unggulan kami. Setiap karya dibuat dengan ketelitian dan dedikasi penuh.
                     </p>
                 </div>
@@ -35,7 +35,7 @@ const props = defineProps<{
             <!-- Collections Grid -->
             <section class="py-16 md:py-24">
                 <div class="max-w-[1440px] mx-auto px-margin-mobile md:px-margin-desktop">
-                    <div v-if="categories.length === 0" class="text-center py-12 text-secondary">
+                    <div v-if="categories.length === 0" class="text-center py-12 text-gray-500 dark:text-gray-400">
                         Belum ada kategori koleksi.
                     </div>
                     
@@ -58,13 +58,13 @@ const props = defineProps<{
                                 </div>
                             </div>
                             <div class="p-6">
-                                <h3 class="font-display-md text-2xl font-semibold mb-2 group-hover:text-primary transition-colors">{{ category.name }}</h3>
-                                <p v-if="category.description" class="text-secondary text-sm line-clamp-2 mb-4">{{ category.description }}</p>
+                                <h3 class="font-display-md text-2xl font-bold text-gray-900 dark:text-white mb-2 group-hover:text-primary transition-colors">{{ category.name }}</h3>
+                                <p v-if="category.description" class="text-gray-600 dark:text-gray-300 text-sm line-clamp-2 mb-4 leading-relaxed font-normal">{{ category.description }}</p>
                                 <div class="flex items-center justify-between mt-auto">
-                                    <span class="text-sm font-medium bg-surface-variant px-3 py-1 rounded-full">
+                                    <span class="text-xs font-semibold bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 px-3 py-1 rounded-full">
                                         {{ category.products_count }} Produk
                                     </span>
-                                    <span class="text-primary font-medium flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+                                    <span class="text-primary font-semibold flex items-center gap-1 group-hover:translate-x-1 transition-transform">
                                         Lihat Koleksi <span class="material-symbols-outlined text-sm">arrow_forward</span>
                                     </span>
                                 </div>

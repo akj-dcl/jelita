@@ -87,10 +87,33 @@ class CheckoutController extends Controller
             'payment_proof'  => $isCod ? 'nullable|image|max:5120' : 'required|image|max:5120',
         ]);
 
+        $userId = auth()->id();
+        $cart = Cart::where('user_id', $userId)->first();
+        if (!$cart || $cart->items()->count() === 0) {
+            return response()->json(['error' => 'Keranjang belanja Anda kosong.'], 400);
+        }
+
+        $cartItems = $cart->items()->with(['product', 'variant'])->get();
+
+        // Validasi ketersediaan stok sebelum checkout
+        foreach ($cartItems as $item) {
+            $availableStock = $item->variant_id && $item->variant
+                ? $item->variant->stock
+                : ($item->product ? $item->product->stock : 0);
+
+            if ($item->quantity > $availableStock) {
+                $name = $item->product ? $item->product->name : 'Produk';
+                if ($item->variant) {
+                    $name .= ' - ' . $item->variant->name;
+                }
+                return response()->json([
+                    'error' => "Stok untuk '{$name}' tidak mencukupi (tersisa {$availableStock}). Silakan sesuaikan jumlah di keranjang."
+                ], 422);
+            }
+        }
+
         try {
             DB::beginTransaction();
-
-            $userId = auth()->id();
 
             // Create Order
             $order = Order::create([
@@ -112,30 +135,39 @@ class CheckoutController extends Controller
                 'notes'           => $isCod ? 'Metode Pembayaran: COD (Bayar di Tempat)' : null,
             ]);
 
-            // Save cart items as order items with variant name and price
-            $cart = Cart::where('user_id', $userId)->first();
-            if ($cart) {
-                foreach ($cart->items()->with(['product', 'variant'])->get() as $item) {
-                    $productName = $item->product->name;
-                    $price = $item->product->price;
+            // Save cart items as order items with variant name, price, and decrement stock
+            foreach ($cartItems as $item) {
+                $productName = $item->product ? $item->product->name : 'Produk';
+                $price = $item->product ? $item->product->price : 0;
 
-                    if ($item->variant) {
-                        $productName .= ' - ' . $item->variant->name;
-                        $price = $item->variant->price;
-                    }
-
-                    OrderItem::create([
-                        'order_id'      => $order->id,
-                        'product_id'    => $item->product_id,
-                        'product_name'  => $productName,
-                        'product_price' => $price,
-                        'quantity'      => $item->quantity,
-                        'subtotal'      => $price * $item->quantity,
-                    ]);
+                if ($item->variant) {
+                    $productName .= ' - ' . $item->variant->name;
+                    $price = $item->variant->price;
                 }
-                // Clear the cart after order is placed
-                $cart->items()->delete();
+
+                OrderItem::create([
+                    'order_id'      => $order->id,
+                    'product_id'    => $item->product_id,
+                    'variant_id'    => $item->variant_id,
+                    'product_name'  => $productName,
+                    'product_price' => $price,
+                    'quantity'      => $item->quantity,
+                    'subtotal'      => $price * $item->quantity,
+                ]);
+
+                // Kurangi stok varian jika ada
+                if ($item->variant_id && $item->variant) {
+                    $item->variant->decrement('stock', $item->quantity);
+                }
+
+                // Kurangi stok produk utama
+                if ($item->product) {
+                    $item->product->decrement('stock', $item->quantity);
+                }
             }
+
+            // Clear the cart after order is placed
+            $cart->items()->delete();
 
             // Handle payment proof upload
             $path = null;

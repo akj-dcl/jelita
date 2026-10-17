@@ -293,7 +293,7 @@ onMounted(() => {
                         <div class="space-y-4">
                             <div>
                                 <label class="block text-sm font-medium mb-2 text-on-surface-variant">Alamat Email <span class="text-red-500">*</span></label>
-                                <input v-model="form.email" type="email" placeholder="nama@contoh.com" class="w-full h-14 px-4 rounded-2xl border border-outline-variant focus:border-primary focus:ring-2 focus:ring-primary/20 bg-surface text-black dark:text-white transition-all duration-200 outline-none" required />
+                                <input v-model="form.email" type="email" placeholder="nama@contoh.com" class="w-full h-14 px-4 rounded-2xl border border-gray-300 dark:border-gray-600 focus:border-primary focus:ring-2 focus:ring-primary/20 bg-white dark:bg-white text-gray-900 dark:text-gray-900 placeholder:text-gray-400 font-medium transition-all duration-200 outline-none" required />
                             </div>
                         </div>
                     </section>
@@ -340,17 +340,17 @@ onMounted(() => {
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
                             <div class="sm:col-span-1">
                                 <label class="block text-sm font-medium mb-2 text-on-surface-variant">Nama Depan <span class="text-red-500">*</span></label>
-                                <input v-model="form.firstName" type="text" class="w-full h-14 px-4 rounded-2xl border border-outline-variant focus:border-primary focus:ring-2 focus:ring-primary/20 bg-surface text-black dark:text-white transition-all outline-none" required />
+                                <input v-model="form.firstName" type="text" class="w-full h-14 px-4 rounded-2xl border border-gray-300 dark:border-gray-600 focus:border-primary focus:ring-2 focus:ring-primary/20 bg-white dark:bg-white text-gray-900 dark:text-gray-900 placeholder:text-gray-400 font-medium transition-all outline-none" required />
                             </div>
                             <div class="sm:col-span-1">
                                 <label class="block text-sm font-medium mb-2 text-on-surface-variant">Nama Belakang</label>
-                                <input v-model="form.lastName" type="text" class="w-full h-14 px-4 rounded-2xl border border-outline-variant focus:border-primary focus:ring-2 focus:ring-primary/20 bg-surface text-black dark:text-white transition-all outline-none" />
+                                <input v-model="form.lastName" type="text" class="w-full h-14 px-4 rounded-2xl border border-gray-300 dark:border-gray-600 focus:border-primary focus:ring-2 focus:ring-primary/20 bg-white dark:bg-white text-gray-900 dark:text-gray-900 placeholder:text-gray-400 font-medium transition-all outline-none" />
                             </div>
                             <div class="sm:col-span-2">
                                 <label class="block text-sm font-medium mb-2 text-on-surface-variant">
                                     {{ deliveryType === 'cod' ? 'Alamat Pengantaran / Lokasi Anda' : 'Alamat' }} <span class="text-red-500">*</span>
                                 </label>
-                                <input v-model="form.address" type="text" :placeholder="deliveryType === 'cod' ? 'Jl. Contoh No. 12 (atau Catatan Ambil di Tempat)' : 'Jl. Sudirman No. 45'" class="w-full h-14 px-4 rounded-2xl border border-outline-variant focus:border-primary focus:ring-2 focus:ring-primary/20 bg-surface text-black dark:text-white transition-all outline-none" required />
+                                <input v-model="form.address" type="text" :placeholder="deliveryType === 'cod' ? 'Jl. Contoh No. 12 (atau Catatan Ambil di Tempat)' : 'Jl. Sudirman No. 45'" class="w-full h-14 px-4 rounded-2xl border border-gray-300 dark:border-gray-600 focus:border-primary focus:ring-2 focus:ring-primary/20 bg-white dark:bg-white text-gray-900 dark:text-gray-900 placeholder:text-gray-400 font-medium transition-all outline-none" required />
                             </div>
                             <div v-if="deliveryType === 'shipping'" class="sm:col-span-2 relative">
                                 <label class="block text-sm font-medium mb-2 text-on-surface-variant">Kota/Kecamatan Tujuan <span class="text-red-500">*</span></label>
@@ -360,7 +360,7 @@ onMounted(() => {
                                         @input="searchDestinations"
                                         type="text" 
                                         placeholder="Ketik nama Kecamatan atau Kota..." 
-                                        class="w-full h-14 px-4 rounded-2xl border border-outline-variant focus:border-primary focus:ring-2 focus:ring-primary/20 bg-surface text-black dark:text-white transition-all outline-none" 
+                                        class="w-full h-14 px-4 rounded-2xl border border-gray-300 dark:border-gray-600 focus:border-primary focus:ring-2 focus:ring-primary/20 bg-white dark:bg-white text-gray-900 dark:text-gray-900 placeholder:text-gray-400 font-medium transition-all outline-none" 
                                         required 
                                     />
                                     <div v-if="isSearching" class="absolute right-4 top-4">
@@ -369,12 +369,12 @@ onMounted(() => {
                                 </div>
                                 
                                 <!-- Dropdown Results -->
-                                <div v-if="destinations.length > 0" class="absolute z-10 w-full mt-2 bg-surface border border-outline-variant rounded-2xl shadow-lg max-h-60 overflow-y-auto">
+                                <div v-if="destinations.length > 0" class="absolute z-10 w-full mt-2 bg-white dark:bg-white border border-gray-200 rounded-2xl shadow-lg max-h-60 overflow-y-auto">
                                     <div 
                                         v-for="dest in destinations" 
                                         :key="dest.id"
                                         @click="selectDestination(dest)"
-                                        class="p-4 hover:bg-primary/5 cursor-pointer text-on-surface text-sm border-b border-outline-variant/30 last:border-0"
+                                        class="p-4 hover:bg-primary/5 cursor-pointer text-gray-900 dark:text-gray-900 text-sm border-b border-gray-100 last:border-0 font-medium"
                                     >
                                         {{ dest.label }}
                                     </div>
@@ -382,11 +382,11 @@ onMounted(() => {
                             </div>
                             <div class="sm:col-span-1">
                                 <label class="block text-sm font-medium mb-2 text-on-surface-variant">Kode Pos</label>
-                                <input v-model="form.postalCode" type="text" class="w-full h-14 px-4 rounded-2xl border border-outline-variant focus:border-primary focus:ring-2 focus:ring-primary/20 bg-surface text-black dark:text-white transition-all outline-none" />
+                                <input v-model="form.postalCode" type="text" class="w-full h-14 px-4 rounded-2xl border border-gray-300 dark:border-gray-600 focus:border-primary focus:ring-2 focus:ring-primary/20 bg-white dark:bg-white text-gray-900 dark:text-gray-900 placeholder:text-gray-400 font-medium transition-all outline-none" />
                             </div>
                             <div class="sm:col-span-1">
                                 <label class="block text-sm font-medium mb-2 text-on-surface-variant">Nomor Telepon (WhatsApp) <span class="text-red-500">*</span></label>
-                                <input v-model="form.phone" type="tel" class="w-full h-14 px-4 rounded-2xl border border-outline-variant focus:border-primary focus:ring-2 focus:ring-primary/20 bg-surface text-black dark:text-white transition-all outline-none" required />
+                                <input v-model="form.phone" type="tel" class="w-full h-14 px-4 rounded-2xl border border-gray-300 dark:border-gray-600 focus:border-primary focus:ring-2 focus:ring-primary/20 bg-white dark:bg-white text-gray-900 dark:text-gray-900 placeholder:text-gray-400 font-medium transition-all outline-none" required />
                             </div>
                         </div>
                     </section>
@@ -397,7 +397,7 @@ onMounted(() => {
                         
                         <div class="mb-6">
                             <label class="block text-sm font-medium mb-2 text-on-surface-variant">Kurir Pengiriman</label>
-                            <select v-model="form.courier" @change="fetchShippingCost" :disabled="!form.destination_id" class="w-full h-14 px-4 rounded-2xl border border-outline-variant focus:border-primary focus:ring-2 focus:ring-primary/20 bg-surface text-black dark:text-white transition-all outline-none">
+                            <select v-model="form.courier" @change="fetchShippingCost" :disabled="!form.destination_id" class="w-full h-14 px-4 rounded-2xl border border-gray-300 dark:border-gray-600 focus:border-primary focus:ring-2 focus:ring-primary/20 bg-white dark:bg-white text-gray-900 dark:text-gray-900 font-medium transition-all outline-none">
                                 <option value="jne">JNE</option>
                                 <option value="pos">POS Indonesia</option>
                                 <option value="tiki">TIKI</option>

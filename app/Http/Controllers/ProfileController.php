@@ -18,7 +18,7 @@ class ProfileController extends Controller
 
         // Fetch orders for the logged-in user with items and payment
         $orders = Order::where('user_id', $userId)
-            ->with(['items.product', 'payment', 'reviews'])
+            ->with(['items.product.images', 'items.variant', 'payment', 'reviews'])
             ->latest()
             ->get()
             ->map(function ($order) {
@@ -40,18 +40,20 @@ class ProfileController extends Controller
                     'ship_province'    => $order->ship_province,
                     'ship_postal_code' => $order->ship_postal_code,
                     'notes'            => $order->notes,
-                    'created_at'       => $order->created_at->format('d M Y, H:i'),
+                    'created_at'       => $order->created_at->setTimezone('Asia/Jakarta')->format('d M Y, H:i') . ' WIB',
                     'items'            => $order->items->map(function($i) use ($order) {
                         $review = $order->reviews->where('product_id', $i->product_id)->first();
+                        $imagePath = $i->product?->image ?? $i->product?->images?->first()?->image_path;
                         return [
                             'id'            => $i->id,
                             'product_id'    => $i->product_id,
+                            'variant_id'    => $i->variant_id,
                             'product_name'  => $i->product_name,
                             'product_price' => $i->product_price,
                             'quantity'      => $i->quantity,
                             'subtotal'      => $i->subtotal,
-                            'product_image' => $i->product && $i->product->image
-                                ? (str_starts_with($i->product->image, 'http') ? $i->product->image : asset('storage/' . $i->product->image))
+                            'product_image' => $imagePath
+                                ? (str_starts_with($imagePath, 'http') ? $imagePath : asset('storage/' . $imagePath))
                                 : null,
                             'review'        => $review ? [
                                 'rating' => $review->rating,
@@ -66,7 +68,7 @@ class ProfileController extends Controller
                         'transfer_proof' => $payment->transfer_proof
                             ? asset('storage/' . $payment->transfer_proof)
                             : null,
-                        'paid_at'        => $payment->paid_at?->format('d M Y'),
+                        'paid_at'        => $payment->paid_at?->setTimezone('Asia/Jakarta')->format('d M Y, H:i') . ' WIB',
                     ] : null,
                 ];
             });

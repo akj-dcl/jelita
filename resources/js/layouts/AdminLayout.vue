@@ -39,8 +39,8 @@ const isActive = (href: string) => page.url.startsWith(href)
   <SidebarProvider>
     <Sidebar variant="inset" class="bg-surface-container-low dark:bg-surface-container-low border-r-0 shadow-sm z-50">
       <SidebarHeader class="px-md py-md mb-xs">
-        <h1 class="font-headline-md text-headline-md text-primary font-bold">Artisan Admin</h1>
-        <p class="text-on-surface-variant font-label-md text-label-md opacity-70">Manajemen Premium</p>
+        <h1 class="font-headline-md text-headline-md text-primary font-bold">Jelita Saung</h1>
+        <p class="text-on-surface-variant font-label-md text-label-md opacity-70">Manajemen Admin</p>
       </SidebarHeader>
 
       <SidebarContent>

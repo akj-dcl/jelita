@@ -205,35 +205,35 @@ const toggleFaq = (index: number) => {
                     <div class="space-y-6">
                         <div class="border-b border-outline-variant pb-6 cursor-pointer group" @click="toggleFaq(0)">
                             <div class="flex justify-between items-center py-2">
-                                <h3 class="font-label-md text-on-background">Bagaimana cara memesan produk kustom?</h3>
+                                <h3 class="font-label-md text-on-background font-semibold">Bagaimana cara memesan produk di website Jelita Saung?</h3>
                                 <span class="material-symbols-outlined group-hover:text-primary transition-colors">
                                     {{ openFaqIndex === 0 ? 'remove' : 'add' }}
                                 </span>
                             </div>
-                            <p v-show="openFaqIndex === 0" class="text-secondary mt-2 animate-in fade-in duration-200">
-                                Anda dapat menghubungi tim kami melalui WhatsApp atau menu 'Contact Us' untuk mendiskusikan kebutuhan desain khusus Anda.
+                            <p v-show="openFaqIndex === 0" class="text-secondary mt-2 animate-in fade-in duration-200 leading-relaxed">
+                                Pilih produk yang diinginkan, tentukan jumlah pesanan, lalu masukkan ke keranjang belanja dan lanjutkan ke proses checkout sesuai petunjuk pada website.
                             </p>
                         </div>
                         <div class="border-b border-outline-variant pb-6 cursor-pointer group" @click="toggleFaq(1)">
                             <div class="flex justify-between items-center py-2">
-                                <h3 class="font-label-md text-on-background">Apakah Anda melayani pengiriman internasional?</h3>
+                                <h3 class="font-label-md text-on-background font-semibold">Apakah produk Jelita Saung selalu tersedia?</h3>
                                 <span class="material-symbols-outlined group-hover:text-primary transition-colors">
                                     {{ openFaqIndex === 1 ? 'remove' : 'add' }}
                                 </span>
                             </div>
-                            <p v-show="openFaqIndex === 1" class="text-secondary mt-2 animate-in fade-in duration-200">
-                                Ya, kami dapat mengirimkan produk kami ke seluruh dunia menggunakan kurir internasional terpercaya.
+                            <p v-show="openFaqIndex === 1" class="text-secondary mt-2 animate-in fade-in duration-200 leading-relaxed">
+                                Ketersediaan produk bergantung pada stok dan proses produksi. Pelanggan dapat menghubungi admin untuk memastikan ketersediaan produk sebelum melakukan pemesanan.
                             </p>
                         </div>
                         <div class="border-b border-outline-variant pb-6 cursor-pointer group" @click="toggleFaq(2)">
                             <div class="flex justify-between items-center py-2">
-                                <h3 class="font-label-md text-on-background">Bahan apa yang digunakan dalam produk tekstil?</h3>
+                                <h3 class="font-label-md text-on-background font-semibold">Bagaimana cara melakukan pembayaran pesanan?</h3>
                                 <span class="material-symbols-outlined group-hover:text-primary transition-colors">
                                     {{ openFaqIndex === 2 ? 'remove' : 'add' }}
                                 </span>
                             </div>
-                            <p v-show="openFaqIndex === 2" class="text-secondary mt-2 animate-in fade-in duration-200">
-                                Kami menggunakan sutra alam berkualitas tinggi dan pewarna ramah lingkungan yang diproduksi secara lokal.
+                            <p v-show="openFaqIndex === 2" class="text-secondary mt-2 animate-in fade-in duration-200 leading-relaxed">
+                                Pelanggan dapat melakukan pembayaran melalui metode yang tersedia pada website. Pastikan mengikuti petunjuk pembayaran dan melakukan konfirmasi apabila diperlukan.
                             </p>
                         </div>
                     </div>

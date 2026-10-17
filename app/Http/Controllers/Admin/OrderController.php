@@ -11,7 +11,7 @@ class OrderController extends Controller
 {
     public function index()
     {
-        $orders = Order::with(['user', 'items.product', 'payment'])->latest()->paginate(15);
+        $orders = Order::with(['user', 'items.product.images', 'items.variant', 'payment'])->latest()->paginate(15);
         
         $stats = [
             'pending_payment' => Order::where('status', 'pending_payment')->count(),
@@ -43,15 +43,22 @@ class OrderController extends Controller
                 'customer_name'   => $order->user ? $order->user->name : $order->ship_name,
                 'customer_email'  => $order->user ? $order->user->email : '',
                 'items_count'     => $order->items->count(),
-                'items'           => $order->items->map(fn($i) => [
-                    'product_name'  => $i->product_name,
-                    'product_price' => $i->product_price,
-                    'quantity'      => $i->quantity,
-                    'subtotal'      => $i->subtotal,
-                    'product_image' => $i->product && $i->product->image
-                        ? (str_starts_with($i->product->image, 'http') ? $i->product->image : asset('storage/' . $i->product->image))
-                        : null,
-                ]),
+                'items'           => $order->items->map(function ($i) {
+                    $imagePath = $i->product?->image ?? $i->product?->images?->first()?->image_path;
+                    return [
+                        'id'            => $i->id,
+                        'product_id'    => $i->product_id,
+                        'variant_id'    => $i->variant_id,
+                        'product_name'  => $i->product_name,
+                        'product_price' => $i->product_price,
+                        'quantity'      => $i->quantity,
+                        'subtotal'      => $i->subtotal,
+                        'variant_name'  => $i->variant ? $i->variant->name : null,
+                        'product_image' => $imagePath
+                            ? (str_starts_with($imagePath, 'http') ? $imagePath : asset('storage/' . $imagePath))
+                            : null,
+                    ];
+                }),
                 'payment' => $payment ? [
                     'id'             => $payment->id,
                     'method'         => $payment->method,
@@ -74,6 +81,18 @@ class OrderController extends Controller
 
     public function destroy(Order $order)
     {
+        // Kembalikan stok jika pesanan belum selesai dan belum dibatalkan
+        if (!in_array($order->status, ['delivered', 'cancelled'])) {
+            foreach ($order->items as $item) {
+                if ($item->variant_id) {
+                    \App\Models\ProductVariant::where('id', $item->variant_id)->increment('stock', $item->quantity);
+                }
+                if ($item->product_id) {
+                    \App\Models\Product::where('id', $item->product_id)->increment('stock', $item->quantity);
+                }
+            }
+        }
+
         $order->items()->delete();
         $order->payment()->delete();
         $order->delete();
@@ -99,6 +118,18 @@ class OrderController extends Controller
 
     public function reject(Order $order)
     {
+        // Kembalikan stok jika pesanan sebelumnya bukan cancelled
+        if ($order->status !== 'cancelled') {
+            foreach ($order->items as $item) {
+                if ($item->variant_id) {
+                    \App\Models\ProductVariant::where('id', $item->variant_id)->increment('stock', $item->quantity);
+                }
+                if ($item->product_id) {
+                    \App\Models\Product::where('id', $item->product_id)->increment('stock', $item->quantity);
+                }
+            }
+        }
+
         $order->update(['status' => 'cancelled']);
 
         $payment = $order->payment;

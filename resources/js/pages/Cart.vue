@@ -32,7 +32,7 @@ const subtotal = computed(() => {
 });
 
 const shipping = computed(() => {
-    return props.cartItems.length > 0 ? 50000 : 0; // Flat shipping rate Rp 50.000
+    return 0; // Ongkir dihitung di checkout berdasarkan kurir & alamat
 });
 
 const tax = computed(() => {
@@ -48,7 +48,7 @@ const discount = computed(() => {
 });
 
 const total = computed(() => {
-    return Math.max(0, subtotal.value + shipping.value + tax.value - discount.value);
+    return Math.max(0, subtotal.value + tax.value - discount.value);
 });
 
 // Quantity controls
@@ -222,8 +222,8 @@ const formatRupiah = (val: number) => {
                                 <span>-{{ formatRupiah(discount) }}</span>
                             </div>
                             <div class="flex justify-between items-center">
-                                <span class="text-on-surface-variant">Estimasi Ongkir</span>
-                                <span class="text-on-surface font-semibold">{{ formatRupiah(shipping) }}</span>
+                                <span class="text-on-surface-variant">Ongkos Kirim</span>
+                                <span class="text-xs text-on-surface-variant italic font-medium">Dihitung saat checkout</span>
                             </div>
                             <div class="flex justify-between items-center">
                                 <div class="flex items-center gap-1">
